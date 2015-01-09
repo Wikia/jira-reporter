@@ -123,6 +123,7 @@ class PHPErrorsSource(KibanaSource):
     ENV_PRODUCTION = 'Production'
 
     PREVIEW_HOST = 'staging-s3'
+    REPORT_LABEL = 'PHPFatals'
     REPORT_TEMPLATE = """
 {full_message}
 
@@ -218,7 +219,7 @@ Env: {env}
         "DOMDocument::loadHTML(): Tag figure invalid in Entity, line: 62 in /includes/wikia/InfoboxExtractor.class.php on line 53": 1,
         """
 
-        return '{}-{}'.format(message, env)
+        return 'PHP-{}-{}-{}'.format(self._query, message, env)
 
     def _get_report(self, entry):
         """
@@ -234,5 +235,6 @@ Env: {env}
 
         return Report(
             summary='{}: {}'.format(self._query, entry.get('message_normalized')),
-            description=description
+            description=description,
+            label=self.REPORT_LABEL
         )

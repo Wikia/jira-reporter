@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import logging
+from pprint import pprint
 
+from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource
 
 logging.basicConfig(level=logging.INFO)
@@ -67,12 +69,20 @@ logging.basicConfig(level=logging.INFO)
 
 """
 
+issue = Jira()._jira.issue('ER-5166')
+pprint(issue.fields())
+
 #source = PHPErrorsSource(period=3600)
 source = PHPErrorsSource(period=3600*8)
 source.LIMIT = 25000
 
-res = source.query("PHP Warning")
+#res = source.query("PHP Warning")
 res = source.query("PHP Fatal Error", threshold=10)
+
+reporter = Jira()
+
+for report in res:
+    reporter.report(report)
 
 """
 for item in res:

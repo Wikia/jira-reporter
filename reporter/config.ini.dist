@@ -1,6 +1,0 @@
-# JIRA access config
-# @see http://jira-python.readthedocs.org/en/latest/#jira.config.get_jira
-[wikia]
-url=
-user=
-pass=

@@ -57,4 +57,4 @@ target/
 .idea/
 
 # config files
-reporter/config.ini
+reporter/config.py

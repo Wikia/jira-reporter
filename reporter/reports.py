@@ -1,7 +1,3 @@
-import logging
-from jira import client, config
-
-
 class Report(object):
     """
     issue_dict = {
@@ -13,9 +9,10 @@ class Report(object):
 
     @see http://jira-python.readthedocs.org/en/latest/
     """
-    def __init__(self, summary, description):
+    def __init__(self, summary, description, label=False):
         self._summary = summary
         self._description = description
+        self._label = label
 
         self._unique_id = False
         self._counter = False
@@ -37,3 +34,6 @@ class Report(object):
 
     def get_description(self):
         return self._description
+
+    def get_label(self):
+        return self._label
