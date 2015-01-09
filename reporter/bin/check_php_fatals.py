@@ -1,10 +1,7 @@
 #!/usr/bin/env python
-import json
 import logging
-import re
 
-from reporter.sources import KibanaSource
-from reporter.report import Report
+from reporter.sources import PHPErrorsSource
 
 logging.basicConfig(level=logging.INFO)
 
@@ -54,60 +51,31 @@ logging.basicConfig(level=logging.INFO)
   "@context": {}
 }
 
+{
+  "@timestamp": "2015-01-09T09:50:24.822466+00:00",
+  "@message": "PHP Fatal Error: Call to a member function getNamespace() on a non-object in /usr/wikia/slot1/2644/src/includes/Article.php on line 109",
+  "@fields": {
+    "db_name": "spinpasta",
+    "city_id": "671024",
+    "url": "/wikia.php?controller=MercuryApi&method=getArticle&title=Spinpasta_Wiki",
+    "ip": "10.12.66.115",
+    "http_method": "GET",
+    "server": "spinpasta.wikia.com",
+    "request_id": "mw54afa460bf79a5.05013646"
+  }
+}
+
 """
 
-
-class PHPErrorsSource(KibanaSource):
-    def query(self, query):
-        """
-        Search for messages starting with "query"
-        """
-        return super(PHPErrorsSource, self).query({"@message": "/^" + query + ".*/"})
-
-    def _filter(self, entry):
-        message = entry.get('@message')
-        host = entry.get('@source_host')
-
-        # filter out by host
-        # "@source_host": "ap-s10",
-        if re.search(r'^(ap|task|cron|liftium)\-s', host) is None:
-            return False
-
-        # filter out errors without a clear context
-        # on line 115
-        if re.search(r'on line \d+', message) is None:
-            return False
-
-        return True
-
-    def _normalize(self, entry):
-        """
-        Normalize given message by removing variables like server name
-        to improve grouping of messages
-
-        PHP Fatal Error: Call to a member function getText() on a non-object in /usr/wikia/slot1/3006/src/includes/api/ApiParse.php on line 20
-
-        will become:
-
-        Call to a member function getText() on a non-object in /includes/api/ApiParse.php on line 20
-        """
-        message = entry.get('@message')
-
-        # remove the prefix
-        # PHP Fatal error:
-        message = re.sub(r'PHP (Fatal error|Warning):', '', message, flags=re.IGNORECASE).strip()
-
-        # remove release-specific part
-        # /usr/wikia/slot1/3006/src
-        message = re.sub(r'/usr/wikia/slot1/\d+/src', '', message)
-
-        #self._logger.info(message)
-
-        return message
-
-source = PHPErrorsSource(period=3600)
-res = source.query("PHP Warning")
-logging.info(json.dumps(res, indent=True))
+#source = PHPErrorsSource(period=3600)
+source = PHPErrorsSource(period=3600*6)
+source.LIMIT = 5000
+#res = source.query("PHP Warning")
+#logging.info(res)
 
 res = source.query("PHP Fatal Error")
-logging.info(json.dumps(res, indent=True))
+
+for item in res:
+    print '\n\nHash: {}\nCounter: {}'.format(item.get_unique_id(), item.get_counter())
+    print item.get_summary() + "\n-----\n"
+    print item.get_description()
