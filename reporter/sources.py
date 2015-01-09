@@ -15,7 +15,7 @@ class Source(object):
     def __init__(self):
         self._logger = logging.getLogger(self.__class__.__name__)
 
-    def query(self, query):
+    def query(self, query, threshold=50):
         # filter the entries
         entries = [entry for entry in self._get_entries(query) if self._filter(entry)]
         self._logger.info("Got {} entries after filtering".format(len(entries)))
@@ -24,7 +24,16 @@ class Source(object):
         normalized = self._normalize_entries(entries)
 
         # generate reports
-        reports = self._generate_reports(normalized)
+        reports = self._generate_reports(normalized, threshold)
+
+        # log all reports
+        self._logger.info("Returning {} reports (with threshold set to {} applied)".format(len(reports), threshold))
+
+        for report in reports:
+            self._logger.info("> {summary} ({counter} instances)".format(
+                summary=report.get_summary(),
+                counter=report.get_counter()
+            ))
 
         return reports
 
@@ -51,11 +60,15 @@ class Source(object):
 
         return normalized
 
-    def _generate_reports(self, items):
+    def _generate_reports(self, items, threshold):
         reports = list()
 
         for key, item in items.iteritems():
             report = self._get_report(item['entry'])
+
+            if item['cnt'] < threshold:
+                self._logger.info('Skipped "{}" ({} occurrences)'.format(report.get_summary(), item['cnt']))
+                continue
 
             # update the report with the "hash" generated previously via _normalize
             m = hashlib.md5()
@@ -125,14 +138,14 @@ Env: {env}
 
     _query = ''
 
-    def query(self, query):
+    def query(self, query, threshold=50):
         self._query = query
         self._logger.info("Query: '{}'".format(query))
 
         """
         Search for messages starting with "query"
         """
-        return super(PHPErrorsSource, self).query({"@message": "/^" + query + ".*/"})
+        return super(PHPErrorsSource, self).query({"@message": "/^" + query + "/"}, threshold)
 
     def _filter(self, entry):
         message = entry.get('@message')
@@ -191,7 +204,12 @@ Env: {env}
         # update the entry
         entry['env'] = env
         entry['message_normalized'] = message
-        entry['url'] = 'http://{}{}'.format(fields.get('server'), fields.get('url')) if fields.get('server') else False
+
+        try:
+            if fields.get('server'):
+                entry['url'] = 'http://{}{}'.format(fields.get('server'), fields.get('url'))
+        except UnicodeEncodeError:
+            self._logger.error('URL parsing failed', exc_info=True)
 
         """
         TODO: normalize:

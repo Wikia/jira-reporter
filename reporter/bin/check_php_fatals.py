@@ -68,14 +68,15 @@ logging.basicConfig(level=logging.INFO)
 """
 
 #source = PHPErrorsSource(period=3600)
-source = PHPErrorsSource(period=3600*6)
-source.LIMIT = 5000
-#res = source.query("PHP Warning")
-#logging.info(res)
+source = PHPErrorsSource(period=3600*8)
+source.LIMIT = 25000
 
-res = source.query("PHP Fatal Error")
+res = source.query("PHP Warning")
+res = source.query("PHP Fatal Error", threshold=10)
 
+"""
 for item in res:
     print '\n\nHash: {}\nCounter: {}'.format(item.get_unique_id(), item.get_counter())
     print item.get_summary() + "\n-----\n"
     print item.get_description()
+"""
