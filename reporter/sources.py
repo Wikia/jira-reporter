@@ -104,6 +104,11 @@ class KibanaSource(Source):
     """ elasticsearch-powered data provider """
     LIMIT = 100000
 
+    ENV_PREVIEW = 'Preview'
+    ENV_PRODUCTION = 'Production'
+
+    PREVIEW_HOST = 'staging-s3'
+
     """ Kibana/elasticsearch-powered data-provider"""
     def __init__(self, period):
         super(KibanaSource, self).__init__()
@@ -112,17 +117,39 @@ class KibanaSource(Source):
     def _get_entries(self, query):
         return self._kibana.get_rows(query, limit=self.LIMIT)
 
-    def _filter(self, entry):
-        return True
+    # helper methods
+    def _get_url_from_entry(self, entry):
+        """
+        Get URL from given log entry
+        :param entry: dict
+        :return: bool|string
+        """
+        fields = entry.get('@fields', {})
+
+        url = False
+        try:
+            if fields.get('server') and fields.get('url'):
+                url = 'http://{}{}'.format(fields.get('server'), fields.get('url'))
+        except UnicodeEncodeError:
+            self._logger.error('URL parsing failed', exc_info=True)
+
+        return url
+
+    def _get_env_from_entry(self, entry):
+        """
+        Get environment for given log entry
+        :param entry: dict
+        :return: string
+        """
+        # preview -> staging-s3
+        is_preview = entry.get('@source_host', '') == self.PREVIEW_HOST
+        env = self.ENV_PREVIEW if is_preview is True else self.ENV_PRODUCTION
+
+        return env
 
 
 class PHPErrorsSource(KibanaSource):
     """ Get PHP errors from elasticsearch """
-
-    ENV_PREVIEW = 'Preview'
-    ENV_PRODUCTION = 'Production'
-
-    PREVIEW_HOST = 'staging-s3'
     REPORT_LABEL = 'PHPErrors'
     REPORT_TEMPLATE = """
 {full_message}
@@ -222,32 +249,3 @@ Env: {env}
             description=description,
             label=self.REPORT_LABEL
         )
-
-    def _get_url_from_entry(self, entry):
-        """
-        Get URL from given log entry
-        :param entry: dict
-        :return: bool|string
-        """
-        fields = entry.get('@fields', {})
-
-        url = False
-        try:
-            if fields.get('server') and fields.get('url'):
-                url = 'http://{}{}'.format(fields.get('server'), fields.get('url'))
-        except UnicodeEncodeError:
-            self._logger.error('URL parsing failed', exc_info=True)
-
-        return url
-
-    def _get_env_from_entry(self, entry):
-        """
-        Get environment for given log entry
-        :param entry: dict
-        :return: string
-        """
-        # preview -> staging-s3
-        is_preview = entry.get('@source_host', '') == self.PREVIEW_HOST
-        env = self.ENV_PREVIEW if is_preview is True else self.ENV_PRODUCTION
-
-        return env
