@@ -58,3 +58,6 @@ target/
 
 # config files
 reporter/config.py
+
+# code coverage
+.coverage*

@@ -10,6 +10,7 @@ class Report(object):
     @see http://jira-python.readthedocs.org/en/latest/
     """
     def __init__(self, summary, description, label=False):
+        """ Set up the report """
         self._summary = summary
         self._description = description
         self._label = label
@@ -18,9 +19,11 @@ class Report(object):
         self._counter = False
 
     def set_unique_id(self, unique_id):
+        """ Set the hash used to avoid duplicates reported to JIRA """
         self._unique_id = unique_id
 
     def get_unique_id(self):
+        """ Get the hash """
         return self._unique_id
 
     def set_counter(self, counter):

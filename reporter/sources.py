@@ -123,7 +123,7 @@ class PHPErrorsSource(KibanaSource):
     ENV_PRODUCTION = 'Production'
 
     PREVIEW_HOST = 'staging-s3'
-    REPORT_LABEL = 'PHPFatals'
+    REPORT_LABEL = 'PHPErrors'
     REPORT_TEMPLATE = """
 {full_message}
 
@@ -149,8 +149,8 @@ Env: {env}
         return super(PHPErrorsSource, self).query({"@message": "/^" + query + "/"}, threshold)
 
     def _filter(self, entry):
-        message = entry.get('@message')
-        host = entry.get('@source_host')
+        message = entry.get('@message', '')
+        host = entry.get('@source_host', '')
 
         if not message.startswith(self._query):
             return False
@@ -197,27 +197,11 @@ Env: {env}
         # /usr/wikia/slot1/3006/src
         message = re.sub(r'/usr/wikia/slot1/\d+/src', '', message)
 
-        # environment detection
-        # preview -> staging-s3
-        is_preview = entry.get('@source_host', '') == self.PREVIEW_HOST
-        env = self.ENV_PREVIEW if is_preview is True else self.ENV_PRODUCTION
-
         # update the entry
-        entry['env'] = env
-        entry['message_normalized'] = message
+        entry['@message_normalized'] = message
 
-        try:
-            if fields.get('server'):
-                entry['url'] = 'http://{}{}'.format(fields.get('server'), fields.get('url'))
-        except UnicodeEncodeError:
-            self._logger.error('URL parsing failed', exc_info=True)
-
-        """
-        TODO: normalize:
-
-        "DOMDocument::loadHTML(): Tag figcaption invalid in Entity, line: 56 in /includes/wikia/InfoboxExtractor.class.php on line 53": 1,
-        "DOMDocument::loadHTML(): Tag figure invalid in Entity, line: 62 in /includes/wikia/InfoboxExtractor.class.php on line 53": 1,
-        """
+        # production or preview?
+        env = self._get_env_from_entry(entry)
 
         return 'PHP-{}-{}-{}'.format(self._query, message, env)
 
@@ -226,15 +210,44 @@ Env: {env}
         Format the report to be reported to JIRA
         """
         description = self.REPORT_TEMPLATE.format(
-            env=entry.get('env'),
+            env=self._get_env_from_entry(entry),
             context_formatted=json.dumps(entry.get('@context', {}), indent=True),
             fields_formatted=json.dumps(entry.get('@fields', {}), indent=True),
             full_message=entry.get('@message'),
-            url=entry.get('url', 'n/a')
+            url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
 
         return Report(
-            summary='{}: {}'.format(self._query, entry.get('message_normalized')),
+            summary='{}: {}'.format(self._query, entry.get('@message_normalized')),
             description=description,
             label=self.REPORT_LABEL
         )
+
+    def _get_url_from_entry(self, entry):
+        """
+        Get URL from given log entry
+        :param entry: dict
+        :return: bool|string
+        """
+        fields = entry.get('@fields', {})
+
+        url = False
+        try:
+            if fields.get('server') and fields.get('url'):
+                url = 'http://{}{}'.format(fields.get('server'), fields.get('url'))
+        except UnicodeEncodeError:
+            self._logger.error('URL parsing failed', exc_info=True)
+
+        return url
+
+    def _get_env_from_entry(self, entry):
+        """
+        Get environment for given log entry
+        :param entry: dict
+        :return: string
+        """
+        # preview -> staging-s3
+        is_preview = entry.get('@source_host', '') == self.PREVIEW_HOST
+        env = self.ENV_PREVIEW if is_preview is True else self.ENV_PRODUCTION
+
+        return env
