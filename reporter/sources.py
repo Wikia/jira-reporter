@@ -178,7 +178,10 @@ class PHPErrorsSource(PHPLogsSource):
         """
         Search for messages starting with "query"
         """
-        return super(PHPErrorsSource, self).query({"@message": query}, threshold)
+        return super(PHPErrorsSource, self).query(query, threshold)
+
+    def _get_entries(self, query):
+        return self._kibana.query_by_string(query='@message:"^{}"'.format(query), limit=self.LIMIT)
 
     def _filter(self, entry):
         message = entry.get('@message', '')
