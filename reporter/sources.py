@@ -169,10 +169,7 @@ class PHPErrorsSource(PHPLogsSource):
     """ Get PHP errors from elasticsearch """
     REPORT_LABEL = 'PHPErrors'
 
-    _query = ''
-
     def query(self, query, threshold=50):
-        self._query = query
         self._logger.info("Query: '{}'".format(query))
 
         """
@@ -186,9 +183,6 @@ class PHPErrorsSource(PHPLogsSource):
     def _filter(self, entry):
         message = entry.get('@message', '')
         host = entry.get('@source_host', '')
-
-        if not message.startswith(self._query):
-            return False
 
         # filter out by host
         # "@source_host": "ap-s10",
@@ -215,10 +209,6 @@ class PHPErrorsSource(PHPLogsSource):
         """
         message = entry.get('@message')
 
-        # remove the prefix
-        # PHP Fatal error:
-        message = re.sub(r'PHP (Fatal error|Warning):', '', message, flags=re.IGNORECASE).strip()
-
         # remove exception prefix
         # Exception from line 141 of /includes/wikia/nirvana/WikiaView.class.php:
         message = re.sub(r'Exception from line \d+ of [^:]+:', 'Exception:', message)
@@ -237,7 +227,7 @@ class PHPErrorsSource(PHPLogsSource):
         # production or preview?
         env = self._get_env_from_entry(entry)
 
-        return 'PHP-{}-{}-{}'.format(self._query, message, env)
+        return 'PHP-{}-{}'.format(message, env).lower().replace(' ', '')
 
     def _get_report(self, entry):
         """
@@ -252,7 +242,7 @@ class PHPErrorsSource(PHPLogsSource):
         ).strip()
 
         return Report(
-            summary='{}: {}'.format(self._query, entry.get('@message_normalized')),
+            summary=entry.get('@message_normalized'),
             description=description,
             label=self.REPORT_LABEL
         )

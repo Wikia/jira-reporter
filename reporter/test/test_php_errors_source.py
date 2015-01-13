@@ -15,29 +15,27 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         self._source._query = 'PHP Fatal Error'
 
     def test_filter(self):
-        # message needs to to begin with "foo" (our current query)
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': self._source.PREVIEW_HOST}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-s32'}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is False  # reston DC
-        assert self._source._filter({'@message': 'bar on line 22', '@source_host': self._source.PREVIEW_HOST}) is False  # no prefix
         assert self._source._filter({}) is False  # empty message
 
     def test_normalize(self):
         # normalize file path
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
-        }) == 'PHP-PHP Fatal Error-Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Production'
+        }) == 'php-phpfatalerror:maximumexecutiontimeof180secondsexceededin/includes/linker.phponline184-production'
 
         # remove URLs
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Missing or invalid pubid from http://dragonball.wikia.com/__varnish_liftium/config in /var/www/liftium/delivery/config.php on line 17'
-        }) == 'PHP-PHP Fatal Error-Missing or invalid pubid from <URL> in /var/www/liftium/delivery/config.php on line 17-Production'
+        }) == 'php-phpfatalerror:missingorinvalidpubidfrom<url>in/var/www/liftium/delivery/config.phponline17-production'
 
         # error from preview
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184',
             '@source_host': 'staging-s3'
-        }) == 'PHP-PHP Fatal Error-Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Preview'
+        }) == 'php-phpfatalerror:maximumexecutiontimeof180secondsexceededin/includes/linker.phponline184-preview'
 
     def test_get_report(self):
         entry = {
@@ -70,7 +68,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         print report.get_description()  # print out to stdout, pytest will show it in case of a failure
 
         # report should be sent with a normalized summary set
-        assert report.get_summary() == 'PHP Fatal Error: Call to a member function getText() on a non-object in /includes/wikia/services/ArticleService.class.php on line 187'
+        assert report.get_summary() == 'PHP Fatal Error:  Call to a member function getText() on a non-object in /includes/wikia/services/ArticleService.class.php on line 187'
 
         # the full message should be kept in the description
         assert entry.get('@message') in report.get_description()
