@@ -6,6 +6,7 @@ import json
 import logging
 import re
 
+from reporter.helpers import is_main_dc_host
 from reporter.reports import Report
 from wikia.common.kibana import Kibana
 
@@ -177,7 +178,7 @@ class PHPErrorsSource(PHPLogsSource):
         """
         Search for messages starting with "query"
         """
-        return super(PHPErrorsSource, self).query({"@message": "/^" + query + "/"}, threshold)
+        return super(PHPErrorsSource, self).query({"@message": query}, threshold)
 
     def _filter(self, entry):
         message = entry.get('@message', '')
@@ -188,7 +189,7 @@ class PHPErrorsSource(PHPLogsSource):
 
         # filter out by host
         # "@source_host": "ap-s10",
-        if re.search(r'^(ap|task|cron|liftium|staging)\-s', host) is None:
+        if not is_main_dc_host(host):
             return False
 
         # filter out errors without a clear context
@@ -276,7 +277,7 @@ Backtrace:
 
         # filter out by host
         # "@source_host": "ap-s10",
-        if re.search(r'^(ap|task|cron|liftium|staging)\-s', host) is None:
+        if not is_main_dc_host(host):
             return False
 
         return True
