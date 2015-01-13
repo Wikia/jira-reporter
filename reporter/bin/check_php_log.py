@@ -5,7 +5,7 @@ This script checks PHP log for both fatals and warnings and reports issues to JI
 import logging
 
 from reporter.reporters import Jira
-from reporter.sources import PHPErrorsSource
+from reporter.sources import PHPErrorsSource, DBQueryErrorsSource
 
 logging.basicConfig(level=logging.INFO)
 
@@ -13,10 +13,15 @@ logging.basicConfig(level=logging.INFO)
 reports = []
 
 # PHP warnings and errors
-source = PHPErrorsSource(period=3600)
-
+'''
+source = PHPErrorsSource()
 reports += source.query("PHP Fatal Error", threshold=5)
 reports += source.query("PHP Warning", threshold=50)
+'''
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
+source = DBQueryErrorsSource()
+reports += source.query(threshold=1)
 
 # report to JIRA
 reporter = Jira()

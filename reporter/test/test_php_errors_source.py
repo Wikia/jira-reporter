@@ -3,7 +3,7 @@ Set of unit tests for PHPErrorsSource
 """
 import unittest
 
-from reporter.sources import PHPErrorsSource
+from reporter.sources import DBQueryErrorsSource, PHPErrorsSource
 
 
 class PHPErrorsSourceTestClass(unittest.TestCase):
@@ -101,3 +101,55 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         # preview / verify
         assert self._source._get_env_from_entry({'@source_host': 'staging-s3'}) is self._source.ENV_PREVIEW
         assert self._source._get_env_from_entry({'@source_host': 'staging-s4'}) is self._source.ENV_PRODUCTION
+
+
+class DBErrorsSourceTestClass(unittest.TestCase):
+    """
+    Unit tests for PHPErrorsSource class
+    """
+    def setUp(self):
+        self._source = DBQueryErrorsSource()
+
+    def test_generalize_sql(self):
+        assert DBQueryErrorsSource._generalize_sql("UPDATE  `category` SET cat_pages = cat_pages + 1,cat_files = cat_files + 1 WHERE cat_title = 'foo'") ==\
+            "UPDATE `category` SET cat_pages = cat_pages + N,cat_files = cat_files + N WHERE cat_title = X"
+
+        assert DBQueryErrorsSource._generalize_sql("SELECT  entity_key  FROM `wall_notification_queue`  WHERE (wiki_id = ) AND (event_date > '20150105141012')") ==\
+            "SELECT entity_key FROM `wall_notification_queue` WHERE (wiki_id = ) AND (event_date > X)"
+
+        assert DBQueryErrorsSource._generalize_sql("UPDATE  `user` SET user_touched = '20150112143631' WHERE user_id = '25239755'") ==\
+            "UPDATE `user` SET user_touched = X"
+
+        # multiline query
+        sql = """
+SELECT page_title
+    FROM page
+    WHERE page_namespace = '10'
+    AND page_title COLLATE LATIN1_GENERAL_CI LIKE '%{{Cata%'
+        """
+
+        assert DBQueryErrorsSource._generalize_sql(sql) ==\
+            "SELECT page_title FROM page WHERE page_namespace = X AND page_title COLLATE LATINN_GENERAL_CI LIKE X"
+
+    def test_get_context_from_entry(self):
+        context = DBQueryErrorsSource._get_context_from_entry({
+            "@exception": {
+                "message": "A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script\nQuery: SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500\nFunction: DPLMain:dynamicPageList\nError: 1317 Query execution was interrupted (10.8.38.37)\n"
+            },
+            "@context": {
+                "errno": 1317,
+                "err": "Query execution was interrupted (10.8.38.37)"
+            },
+        })
+
+        assert context.get('function') == 'DPLMain:dynamicPageList'
+        assert context.get('query') == "SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500"
+        assert context.get('error') == '1317 Query execution was interrupted (10.8.38.37)'
+
+        assert DBQueryErrorsSource._get_context_from_entry({}) is None
+
+    def test_filter(self):
+        assert self._source._filter({'@source_host': self._source.PREVIEW_HOST}) is True
+        assert self._source._filter({'@source_host': 'ap-s32'}) is True
+        assert self._source._filter({'@source_host': 'ap-r32'}) is False  # reston DC
+        assert self._source._filter({}) is False  # empty message

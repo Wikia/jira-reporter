@@ -110,7 +110,7 @@ class KibanaSource(Source):
     PREVIEW_HOST = 'staging-s3'
 
     """ Kibana/elasticsearch-powered data-provider"""
-    def __init__(self, period):
+    def __init__(self, period=3600):
         super(KibanaSource, self).__init__()
         self._kibana = Kibana(period=period)
 
@@ -148,9 +148,8 @@ class KibanaSource(Source):
         return env
 
 
-class PHPErrorsSource(KibanaSource):
-    """ Get PHP errors from elasticsearch """
-    REPORT_LABEL = 'PHPErrors'
+class PHPLogsSource(KibanaSource):
+    """ Shared between PHP logs providers """
     REPORT_TEMPLATE = """
 {full_message}
 
@@ -163,6 +162,11 @@ Env: {env}
 @fields = {fields_formatted}
 {{code}}
     """
+
+
+class PHPErrorsSource(PHPLogsSource):
+    """ Get PHP errors from elasticsearch """
+    REPORT_LABEL = 'PHPErrors'
 
     _query = ''
 
@@ -206,7 +210,6 @@ Env: {env}
         Call to a member function getText() on a non-object in /includes/api/ApiParse.php on line 20
         """
         message = entry.get('@message')
-        fields = entry.get('@fields', {})
 
         # remove the prefix
         # PHP Fatal error:
@@ -249,3 +252,131 @@ Env: {env}
             description=description,
             label=self.REPORT_LABEL
         )
+
+
+class DBQueryErrorsSource(PHPLogsSource):
+    """ Get DB errors triggered by PHP application from elasticsearch """
+    REPORT_LABEL = 'DBQueryErrors'
+
+    FULL_MESSAGE_TEMPLATE = """
+Query: {query}
+Function: {function}
+Error: {error}
+
+Backtrace:
+* {backtrace}
+"""
+
+    def query(self, query='DBQueryError', threshold=50):
+        self._logger.info("Query: exceptions of class '{}'".format(query))
+        return super(DBQueryErrorsSource, self).query({"@exception.class": query}, threshold)
+
+    def _filter(self, entry):
+        host = entry.get('@source_host', '')
+
+        # filter out by host
+        # "@source_host": "ap-s10",
+        if re.search(r'^(ap|task|cron|liftium|staging)\-s', host) is None:
+            return False
+
+        return True
+
+    def _normalize(self, entry):
+        """
+        Normalize given SQL error using normalized query and error code
+        """
+        context = self._get_context_from_entry(entry)
+
+        if context is not None:
+            query = context.get('query')
+
+            if query is not None:
+                entry.get('@context', {}).update(context)
+                return '{}-{}'.format(self._generalize_sql(query), context.get('errno'))
+
+        return None
+
+    def _get_report(self, entry):
+        context = entry.get('@context')
+
+        query = context.get('query')
+        normalized = self._generalize_sql(query)
+
+        backtrace = entry.get('@exception', {}).get('trace', [])
+
+        # format the report
+        full_message = self.FULL_MESSAGE_TEMPLATE.format(
+            query=query,
+            error=context.get('error'),
+            function=context.get('function'),
+            backtrace='\n* '.join(backtrace)
+        ).strip()
+
+        description = self.REPORT_TEMPLATE.format(
+            env=self._get_env_from_entry(entry),
+            context_formatted=json.dumps(entry.get('@context', {}), indent=True),
+            fields_formatted=json.dumps(entry.get('@fields', {}), indent=True),
+            full_message=full_message,
+            url=self._get_url_from_entry(entry) or 'n/a'
+        ).strip()
+
+        return Report(
+            summary='[DB error {}] {}'.format(context.get('error'), normalized),
+            description=description,
+            label=self.REPORT_LABEL
+        )
+
+    @staticmethod
+    def _get_context_from_entry(entry):
+        exception = entry.get('@exception', {})
+        context = entry.get('@context', {})
+        message = exception.get('message')
+
+        if message is None:
+            return None
+
+        message = message.strip()
+
+        """
+        A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script
+        Query: SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500
+        Function: DPLMain:dynamicPageList
+        Error: 1317 Query execution was interrupted (10.8.38.37)
+        """
+
+        # parse multiline message
+        parsed = dict()
+
+        for line in message.split("\n")[1:]:
+            [key, value] = line.split(":", 1)
+            parsed[key] = value.strip()
+
+        context = {
+            'query': parsed.get('Query'),
+            'function': parsed.get('Function'),
+            'error': '{} {}'.format(context.get('errno'), context.get('err')),
+        }
+
+        return context
+
+    @staticmethod
+    def _generalize_sql(sql):
+        if sql is None:
+            return None
+
+        """
+        Based on Mediawiki's Database::generalizeSQL
+        """
+        sql = re.sub(r"\\\\", '', sql)
+        sql = re.sub(r"\\'", '', sql)
+        sql = re.sub(r'\\"', '', sql)
+        sql = re.sub(r"'.*'", 'X', sql)
+        sql = re.sub(r'".*"', 'X', sql)
+
+        # All newlines, tabs, etc replaced by single space
+        sql = re.sub(r'\s+', ' ', sql)
+
+        # All numbers => N
+        sql = re.sub(r'-?[0-9]+', 'N', sql)
+
+        return sql.strip()
