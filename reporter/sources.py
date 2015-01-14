@@ -73,7 +73,11 @@ class Source(object):
         reports = list()
 
         for key, item in items.iteritems():
-            report = self._get_report(item['entry'])
+            try:
+                report = self._get_report(item['entry'])
+            except Exception:
+                self._logger.error('get_report raised an exception', exc_info=True)
+                continue
 
             if item['cnt'] < threshold:
                 self._logger.info('Skipped "{}" ({} occurrences)'.format(report.get_summary(), item['cnt']))
@@ -364,8 +368,9 @@ Backtrace:
         parsed = dict()
 
         for line in message.split("\n")[1:]:
-            [key, value] = line.split(":", 1)
-            parsed[key] = value.strip()
+            if ':' in line:
+                [key, value] = line.split(":", 1)
+                parsed[key] = value.strip()
 
         context = {
             'query': parsed.get('Query'),
