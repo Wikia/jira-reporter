@@ -43,7 +43,15 @@ class Source(object):
         normalized = dict()
 
         for entry in entries:
-            key = self._normalize(entry)
+            try:
+                key = self._normalize(entry)
+
+                # extra normalization
+                key = key.lower().replace(' ', '')
+            except UnicodeError:
+                # ignore UTF parsing errors
+                self._logger.error('Entry parsing error', exc_info=True)
+                continue
 
             # all entries will be grouped
             # using the key return by _normalize method
@@ -221,13 +229,27 @@ class PHPErrorsSource(PHPLogsSource):
         # /usr/wikia/slot1/3006/src
         message = re.sub(r'/usr/wikia/slot1/\d+/src', '', message)
 
+        # remove XML parsing errors details
+        # Tag figure invalid in Entity, line: 286
+        # Tag X invalid in Entity, line: N
+        message = re.sub(r'Tag \w+ invalid in Entity, line: \d+', 'Tag X invalid in Entity, line: N', message)
+
+        # remove popen() arguments
+        message = re.sub(r'popen\([^\)]+\)', 'popen(X)', message)
+
+        # remove exec arguments
+        message = re.sub(r'Unable to fork \[[^\]]+\]', 'Unable to fork [X]', message)
+
+        # normalize /tmp paths
+        message = re.sub(r'/tmp/\w+', '/tmp/X', message)
+
         # update the entry
         entry['@message_normalized'] = message
 
         # production or preview?
         env = self._get_env_from_entry(entry)
 
-        return 'PHP-{}-{}'.format(message, env).lower().replace(' ', '')
+        return 'PHP-{}-{}'.format(message, env)
 
     def _get_report(self, entry):
         """

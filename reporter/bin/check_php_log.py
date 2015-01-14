@@ -13,17 +13,15 @@ logging.basicConfig(level=logging.INFO)
 reports = []
 
 # PHP warnings and errors
-'''
 source = PHPErrorsSource()
 reports += source.query("PHP Fatal Error", threshold=5)
 reports += source.query("PHP Warning", threshold=50)
-'''
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
 source = DBQueryErrorsSource()
-reports += source.query(threshold=1)
+reports += source.query(threshold=5)
 
-# report to JIRA
+logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
 
 for report in reports:

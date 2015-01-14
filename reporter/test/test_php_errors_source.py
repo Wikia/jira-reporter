@@ -24,18 +24,38 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         # normalize file path
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
-        }) == 'php-phpfatalerror:maximumexecutiontimeof180secondsexceededin/includes/linker.phponline184-production'
+        }) == 'PHP-PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Production'
 
         # remove URLs
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Missing or invalid pubid from http://dragonball.wikia.com/__varnish_liftium/config in /var/www/liftium/delivery/config.php on line 17'
-        }) == 'php-phpfatalerror:missingorinvalidpubidfrom<url>in/var/www/liftium/delivery/config.phponline17-production'
+        }) == 'PHP-PHP Fatal Error: Missing or invalid pubid from <URL> in /var/www/liftium/delivery/config.php on line 17-Production'
+
+        # normalize "Tag figure invalid in Entity, line: 286" part
+        assert self._source._normalize({
+            '@message': 'PHP Warning: DOMDocument::loadHTML(): Tag figure invalid in Entity, line: 286 in /includes/wikia/InfoboxExtractor.class.php on line 53'
+        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): Tag X invalid in Entity, line: N in /includes/wikia/InfoboxExtractor.class.php on line 53-Production'
+
+        # normalize popen() logs
+        assert self._source._normalize({
+            '@message': "PHP Warning: popen(/usr/bin/diff -u '/tmp/merge-old-8JOqT1' '/tmp/merge-your-BGuKlc',r): Cannot allocate memory in /includes/GlobalFunctions.php on line 3134"
+        }) == "PHP-PHP Warning: popen(X): Cannot allocate memory in /includes/GlobalFunctions.php on line 3134-Production"
+
+        # normalize failed forks
+        assert self._source._normalize({
+            '@message': "PHP Warning: exec(): Unable to fork [/var/lib/gems/1.8/bin/sass /extensions/wikia/WikiaMobile/css/404.scss /tmp/X --scss -t nested -I   --cache-location /tmp/X -r /extensions/wikia/SASS/wikia_sass.rb background-dynamic=1 background-image=/skins/oasis/images/themes/carbon.png background-image-height=800 background-image-width=2000 color-body=\#1a1a1a color-body-middle=\#1a1a1a color-buttons=\#012e59 color-header=\#012e59 color-links=\#b0e0e6 color-page=\#474646 page-opacity=100 widthType=2 2&gt;&amp;1] in /includes/wikia/services/sass/Compiler/ExternalRubyCompiler.class.php on line 55"
+        }) == "PHP-PHP Warning: exec(): Unable to fork [X] in /includes/wikia/services/sass/Compiler/ExternalRubyCompiler.class.php on line 55-Production"
+
+        # normalize /tmp/AMInu3uOpA paths
+        assert self._source._normalize({
+            '@message': "PHP Warning: shell_exec(): Unable to execute 'cat /tmp/AMInu3uOpA | /lib/vendor/jsmin' in /extensions/wikia/AssetsManager/builders/AssetsManagerBaseBuilder.class.php on line 110"
+        }) == "PHP-PHP Warning: shell_exec(): Unable to execute 'cat /tmp/X | /lib/vendor/jsmin' in /extensions/wikia/AssetsManager/builders/AssetsManagerBaseBuilder.class.php on line 110-Production"
 
         # error from preview
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184',
             '@source_host': 'staging-s3'
-        }) == 'php-phpfatalerror:maximumexecutiontimeof180secondsexceededin/includes/linker.phponline184-preview'
+        }) == 'PHP-PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Preview'
 
     def test_get_report(self):
         entry = {
