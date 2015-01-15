@@ -9,6 +9,7 @@ import re
 from reporter.helpers import is_main_dc_host
 from reporter.reports import Report
 from wikia.common.kibana import Kibana
+from wikia.common.perfmonitoring import PerfMonitoring
 
 
 class Source(object):
@@ -17,6 +18,8 @@ class Source(object):
         self._logger = logging.getLogger(self.__class__.__name__)
 
     def query(self, query, threshold=50):
+        self._logger.info("Query: '{}'".format(query))
+
         # filter the entries
         entries = [entry for entry in self._get_entries(query) if self._filter(entry)]
         self._logger.info("Got {} entries after filtering".format(len(entries)))
@@ -36,6 +39,7 @@ class Source(object):
                 counter=report.get_counter()
             ))
 
+        self._send_stats(query, entries, reports)
         return reports
 
     def _normalize_entries(self, entries):
@@ -112,6 +116,20 @@ class Source(object):
         """
         raise Exception("This method needs to be overwritten in your class!")
 
+    def _send_stats(self, query, entries, reports):
+        """
+        Send metrics to InfluxDB
+
+        They will be stored in 'jirareporter_reports' time series
+        """
+        metrics = PerfMonitoring(app_name='JIRAreporter', series_name='reports')
+
+        metrics.set('type', self.__class__.__name__)
+        metrics.set('query', query)
+        metrics.set('entries', len(entries))
+        metrics.set('reports', len(reports))
+        metrics.push()
+
 
 class KibanaSource(Source):
     """ elasticsearch-powered data provider """
@@ -180,14 +198,6 @@ Env: {env}
 class PHPErrorsSource(PHPLogsSource):
     """ Get PHP errors from elasticsearch """
     REPORT_LABEL = 'PHPErrors'
-
-    def query(self, query, threshold=50):
-        self._logger.info("Query: '{}'".format(query))
-
-        """
-        Search for messages starting with "query"
-        """
-        return super(PHPErrorsSource, self).query(query, threshold)
 
     def _get_entries(self, query):
         return self._kibana.query_by_string(query='@message:"^{}"'.format(query), limit=self.LIMIT)
@@ -288,8 +298,10 @@ Backtrace:
 """
 
     def query(self, query='DBQueryError', threshold=50):
-        self._logger.info("Query: exceptions of class '{}'".format(query))
-        return super(DBQueryErrorsSource, self).query({"@exception.class": query}, threshold)
+        return super(DBQueryErrorsSource, self).query(query, threshold)
+
+    def _get_entries(self, query):
+        return self._kibana.get_rows(match={"@exception.class": query}, limit=self.LIMIT)
 
     def _filter(self, entry):
         host = entry.get('@source_host', '')
