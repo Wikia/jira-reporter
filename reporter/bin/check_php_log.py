@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-This script checks PHP log for both fatals and warnings and reports issues to JIRA when given thresholds are reached
+This script checks PHP log for fatals, warnings, DB queries errors
+and reports issues to JIRA when given thresholds are reached
 """
 import logging
 
@@ -21,8 +22,13 @@ reports += source.query("PHP Warning", threshold=50)
 source = DBQueryErrorsSource()
 reports += source.query(threshold=5)
 
+
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
 
+reported = 0
 for report in reports:
-    reporter.report(report)
+    if reporter.report(report):
+        reported += 1
+
+logging.info('Reported {} tickets'.format(reported))
