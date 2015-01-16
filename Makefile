@@ -18,5 +18,5 @@ coverage:
 lint:
 	pep8 $(project_name)/; pylint $(project_name)/
 
-check:
+check-php:
 	python $(project_name)/bin/check_php_log.py
