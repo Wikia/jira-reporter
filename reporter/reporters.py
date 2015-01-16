@@ -1,3 +1,6 @@
+"""
+Contains handling of different services that reports can be sent to
+"""
 import json
 import logging
 
@@ -7,9 +10,14 @@ from reporter.config import JIRA_CONFIG
 
 
 class Jira(object):
+    """
+    Send reports to Jira
+
+    @see http://jira-python.readthedocs.org/en/latest/
+    """
+
     JQL = "project = '{project}' AND {hash_field} ~ '{hash_value}'"
 
-    """ Send reports to Jira """
     def __init__(self):
         self._logger = logging.getLogger('Jira')
         self._jira = JIRA(server=JIRA_CONFIG['url'], basic_auth=[JIRA_CONFIG['user'], JIRA_CONFIG['password']])
@@ -37,6 +45,11 @@ class Jira(object):
             return False
 
     def report(self, report):
+        """
+        Send given report to JIRA
+
+        It checks if it hasn't been reported already
+        """
         self._logger.info('Reporting "{}"'.format(report.get_summary()))
 
         # let's first check if the report is already in JIRA

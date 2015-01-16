@@ -1,14 +1,11 @@
-class Report(object):
-    """
-    issue_dict = {
-        'project': {'key': 'PROJ'},
-        'summary': 'New issue from jira-python',
-        'description': 'Look into this one',
-        'issuetype': {'name': 'Bug'},
-    }
+"""
+A report wrapper
+"""
 
-    @see http://jira-python.readthedocs.org/en/latest/
-    """
+
+class Report(object):
+    """ A report wrapper """
+
     def __init__(self, summary, description, label=False):
         """ Set up the report """
         self._summary = summary
@@ -27,16 +24,21 @@ class Report(object):
         return self._unique_id
 
     def set_counter(self, counter):
+        """ Set occurrences counter """
         self._counter = counter
 
     def get_counter(self):
+        """ Get occurrences counter """
         return self._counter
 
     def get_summary(self):
+        """ Get report title / summary """
         return self._summary
 
     def get_description(self):
+        """ Get report detailed description """
         return self._description
 
     def get_label(self):
+        """ Get report label """
         return self._label

@@ -18,6 +18,16 @@ class Source(object):
         self._logger = logging.getLogger(self.__class__.__name__)
 
     def query(self, query, threshold=50):
+        """
+        The Source class entry point
+
+        - the provided query is passed to _get_entries method.
+        - returned entries are than filtered using _filter method.
+        - filtered entries are normalized using _normalize_entries method
+        - reports are grouped (using the key returned by _normalize_entries)
+        - each report is than formatted
+        """
+
         self._logger.info("Query: '{}'".format(query))
 
         # filter the entries
@@ -74,6 +84,9 @@ class Source(object):
         return normalized
 
     def _generate_reports(self, items, threshold):
+        """
+        Turn grouped entries from the log into Report instances
+        """
         reports = list()
 
         for key, item in items.iteritems():
@@ -98,9 +111,11 @@ class Source(object):
         return reports
 
     def _get_entries(self, query):
+        """ This method will query the source and return matching entries """
         raise Exception("This method needs to be overwritten in your class!")
 
     def _filter(self, entry):
+        """ Callback used to filter entries """
         raise Exception("This method needs to be overwritten in your class!")
 
     def _normalize(self, entry):
@@ -140,12 +155,12 @@ class KibanaSource(Source):
 
     PREVIEW_HOST = 'staging-s3'
 
-    """ Kibana/elasticsearch-powered data-provider"""
     def __init__(self, period=3600):
         super(KibanaSource, self).__init__()
         self._kibana = Kibana(period=period)
 
     def _get_entries(self, query):
+        """ Send the query to elasticsearch """
         return self._kibana.get_rows(query, limit=self.LIMIT)
 
     # helper methods
@@ -200,9 +215,11 @@ class PHPErrorsSource(PHPLogsSource):
     REPORT_LABEL = 'PHPErrors'
 
     def _get_entries(self, query):
+        """ Return matching entries by given prefix """
         return self._kibana.query_by_string(query='@message:"^{}"'.format(query), limit=self.LIMIT)
 
     def _filter(self, entry):
+        """ Remove log entries that are not coming from main DC or lack key information """
         message = entry.get('@message', '')
         host = entry.get('@source_host', '')
 
@@ -266,9 +283,7 @@ class PHPErrorsSource(PHPLogsSource):
         return 'PHP-{}-{}'.format(message, env)
 
     def _get_report(self, entry):
-        """
-        Format the report to be reported to JIRA
-        """
+        """ Format the report to be sent to JIRA """
         description = self.REPORT_TEMPLATE.format(
             env=self._get_env_from_entry(entry),
             context_formatted=json.dumps(entry.get('@context', {}), indent=True),
@@ -297,13 +312,12 @@ Backtrace:
 * {backtrace}
 """
 
-    def query(self, query='DBQueryError', threshold=50):
-        return super(DBQueryErrorsSource, self).query(query, threshold)
-
     def _get_entries(self, query):
+        """ Return matching exception logs """
         return self._kibana.get_rows(match={"@exception.class": query}, limit=self.LIMIT)
 
     def _filter(self, entry):
+        """ Remove log entries that are not coming from main DC """
         host = entry.get('@source_host', '')
 
         # filter out by host
@@ -329,6 +343,7 @@ Backtrace:
         return None
 
     def _get_report(self, entry):
+        """ Format the report to be sent to JIRA """
         context = entry.get('@context')
 
         query = context.get('query')
@@ -360,6 +375,7 @@ Backtrace:
 
     @staticmethod
     def _get_context_from_entry(entry):
+        """ Parse message coming from MediaWiki and extract key information """
         exception = entry.get('@exception', {})
         context = entry.get('@context', {})
         message = exception.get('message')
@@ -394,12 +410,13 @@ Backtrace:
 
     @staticmethod
     def _generalize_sql(sql):
+        """
+        Removes most variables from an SQL query and replaces them with X or N for numbers.
+
+        Based on Mediawiki's DatabaseBase::generalizeSQL
+        """
         if sql is None:
             return None
-
-        """
-        Based on Mediawiki's Database::generalizeSQL
-        """
         sql = re.sub(r"\\\\", '', sql)
         sql = re.sub(r"\\'", '', sql)
         sql = re.sub(r'\\"', '', sql)
