@@ -203,6 +203,8 @@ URL: {url}
 Env: {env}
 
 {{code}}
+@source_host = {source_host}
+
 @context = {context_formatted}
 
 @fields = {fields_formatted}
@@ -286,6 +288,7 @@ class PHPErrorsSource(PHPLogsSource):
         """ Format the report to be sent to JIRA """
         description = self.REPORT_TEMPLATE.format(
             env=self._get_env_from_entry(entry),
+            source_host=entry.get('@source_host', 'n/a'),
             context_formatted=json.dumps(entry.get('@context', {}), indent=True),
             fields_formatted=json.dumps(entry.get('@fields', {}), indent=True),
             full_message=entry.get('@message'),
@@ -361,6 +364,7 @@ Backtrace:
 
         description = self.REPORT_TEMPLATE.format(
             env=self._get_env_from_entry(entry),
+            source_host=entry.get('@source_host', 'n/a'),
             context_formatted=json.dumps(entry.get('@context', {}), indent=True),
             fields_formatted=json.dumps(entry.get('@fields', {}), indent=True),
             full_message=full_message,

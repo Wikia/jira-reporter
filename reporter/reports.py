@@ -42,3 +42,12 @@ class Report(object):
     def get_label(self):
         """ Get report label """
         return self._label
+
+    def __repr__(self):
+        """ Returns human readable representation of the object """
+        return '<Report: {summary} [{label}] ({unique_id})>\n{description}'.format(
+            summary=self.get_summary(),
+            label=self.get_label(),
+            unique_id=self.get_unique_id(),
+            description=self.get_description()
+        )
