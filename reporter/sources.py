@@ -61,7 +61,8 @@ class Source(object):
                 key = self._normalize(entry)
 
                 # extra normalization
-                key = key.lower().replace(' ', '')
+                if key is not None:
+                    key = key.lower().replace(' ', '')
             except UnicodeError:
                 # ignore UTF parsing errors
                 self._logger.error('Entry parsing error', exc_info=True)
