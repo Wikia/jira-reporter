@@ -17,6 +17,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
     def test_filter(self):
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': self._source.PREVIEW_HOST}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-s32'}) is True
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar', '@source_host': 'ap-s32'}) is False  # no context
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is False  # reston DC
         assert self._source._filter({}) is False  # empty message
 
@@ -129,6 +130,8 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         self._source = DBQueryErrorsSource()
 
     def test_generalize_sql(self):
+        assert DBQueryErrorsSource._generalize_sql(None) is None
+
         assert DBQueryErrorsSource._generalize_sql("UPDATE  `category` SET cat_pages = cat_pages + 1,cat_files = cat_files + 1 WHERE cat_title = 'foo'") ==\
             "UPDATE `category` SET cat_pages = cat_pages + N,cat_files = cat_files + N WHERE cat_title = X"
 
