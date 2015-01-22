@@ -3,7 +3,7 @@ Set of unit tests for PHPErrorsSource
 """
 import unittest
 
-from reporter.sources import DBQueryErrorsSource, PHPErrorsSource
+from ..sources import DBQueryErrorsSource, PHPErrorsSource
 
 
 class PHPErrorsSourceTestClass(unittest.TestCase):

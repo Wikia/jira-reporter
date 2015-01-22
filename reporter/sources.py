@@ -6,8 +6,8 @@ import json
 import logging
 import re
 
-from reporter.helpers import is_main_dc_host
-from reporter.reports import Report
+from .helpers import is_main_dc_host
+from .reports import Report
 from wikia.common.kibana import Kibana
 from wikia.common.perfmonitoring import PerfMonitoring
 

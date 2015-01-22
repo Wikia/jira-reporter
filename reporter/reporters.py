@@ -6,7 +6,7 @@ import logging
 
 from jira.client import JIRA
 
-from reporter.config import JIRA_CONFIG
+from .config import JIRA_CONFIG
 
 
 class Jira(object):

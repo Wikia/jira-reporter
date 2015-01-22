@@ -3,7 +3,7 @@ Set of unit tests for helper functions
 """
 import unittest
 
-from reporter.helpers import is_main_dc_host
+from ..helpers import is_main_dc_host
 
 
 class UtilsTestClass(unittest.TestCase):
