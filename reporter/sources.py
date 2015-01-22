@@ -6,7 +6,7 @@ import json
 import logging
 import re
 
-from .helpers import is_main_dc_host
+from .helpers import is_main_dc_host, generalize_sql
 from .reports import Report
 from wikia.common.kibana import Kibana
 from wikia.common.perfmonitoring import PerfMonitoring
@@ -342,7 +342,7 @@ Backtrace:
 
             if query is not None:
                 entry.get('@context', {}).update(context)
-                return '{}-{}'.format(self._generalize_sql(query), context.get('errno'))
+                return '{}-{}'.format(generalize_sql(query), context.get('errno'))
 
         return None
 
@@ -351,7 +351,7 @@ Backtrace:
         context = entry.get('@context')
 
         query = context.get('query')
-        normalized = self._generalize_sql(query)
+        normalized = generalize_sql(query)
 
         backtrace = entry.get('@exception', {}).get('trace', [])
 
@@ -412,26 +412,3 @@ Backtrace:
         }
 
         return context
-
-    @staticmethod
-    def _generalize_sql(sql):
-        """
-        Removes most variables from an SQL query and replaces them with X or N for numbers.
-
-        Based on Mediawiki's DatabaseBase::generalizeSQL
-        """
-        if sql is None:
-            return None
-        sql = re.sub(r"\\\\", '', sql)
-        sql = re.sub(r"\\'", '', sql)
-        sql = re.sub(r'\\"', '', sql)
-        sql = re.sub(r"'.*'", 'X', sql)
-        sql = re.sub(r'".*"', 'X', sql)
-
-        # All newlines, tabs, etc replaced by single space
-        sql = re.sub(r'\s+', ' ', sql)
-
-        # All numbers => N
-        sql = re.sub(r'-?[0-9]+', 'N', sql)
-
-        return sql.strip()
