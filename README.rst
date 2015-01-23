@@ -1,0 +1,1 @@
+Automated JIRA reporting of PHP fatal errors

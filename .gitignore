@@ -7,7 +7,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/
+env*/
 build/
 develop-eggs/
 dist/
@@ -52,3 +52,12 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# IDE
+.idea/
+
+# config files
+reporter/config.py
+
+# code coverage
+.coverage*

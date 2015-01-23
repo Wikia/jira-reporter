@@ -1,0 +1,11 @@
+"""
+JIRA access config
+
+@see http://jira-python.readthedocs.org/en/latest/#jira.config.get_jira
+"""
+JIRA_CONFIG = {
+    "url":      '',
+    "user":     '',
+    "password": '',
+    "project":  ''
+}
