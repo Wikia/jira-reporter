@@ -95,8 +95,8 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert entry.get('@message') in report.get_description()
 
         # URL should be extracted
-        assert 'URL: http://zh.asoiaf.wikia.com/wikia.php?controller=GameGuides&method=renderpage&page=%E5%A5%94%E6%B5%81%E5%9F%8E' in report.get_description()
-        assert 'Env: Production' in report.get_description()
+        assert '*URL*: http://zh.asoiaf.wikia.com/wikia.php?controller=GameGuides&method=renderpage&page=%E5%A5%94%E6%B5%81%E5%9F%8E' in report.get_description()
+        assert '*Env*: Production' in report.get_description()
 
         # a proper label should be set
         assert report.get_label() == 'PHPErrors'

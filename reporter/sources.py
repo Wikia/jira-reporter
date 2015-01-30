@@ -200,8 +200,8 @@ class PHPLogsSource(KibanaSource):
     REPORT_TEMPLATE = """
 {full_message}
 
-URL: {url}
-Env: {env}
+*URL*: {url}
+*Env*: {env}
 
 {{code}}
 @source_host = {source_host}
@@ -308,11 +308,11 @@ class DBQueryErrorsSource(PHPLogsSource):
     REPORT_LABEL = 'DBQueryErrors'
 
     FULL_MESSAGE_TEMPLATE = """
-Query: {query}
-Function: {function}
-Error: {error}
+*Query*: {query}
+*Function*: {function}
+*Error*: {error}
 
-Backtrace:
+*Backtrace*:
 * {backtrace}
 """
 
@@ -373,7 +373,8 @@ Backtrace:
         ).strip()
 
         return Report(
-            summary='[DB error {}] {}'.format(context.get('error'), normalized),
+            summary='[DB error {err}] {function} - {query}'.format(
+                err=context.get('error'), function=context.get('function'), query=normalized),
             description=description,
             label=self.REPORT_LABEL
         )
