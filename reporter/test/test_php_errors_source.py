@@ -128,17 +128,19 @@ class DBErrorsSourceTestClass(unittest.TestCase):
     """
     def setUp(self):
         self._source = DBQueryErrorsSource()
-
-    def test_get_context_from_entry(self):
-        context = DBQueryErrorsSource._get_context_from_entry({
+        self._entry = {
             "@exception": {
                 "message": "A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script\nQuery: SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500\nFunction: DPLMain:dynamicPageList\nError: 1317 Query execution was interrupted (10.8.38.37)\n"
             },
             "@context": {
                 "errno": 1317,
-                "err": "Query execution was interrupted (10.8.38.37)"
+                "err": "Query execution was interrupted (10.8.38.37)",
+                "server": "10.8.38.37"
             },
-        })
+        }
+
+    def test_get_context_from_entry(self):
+        context = DBQueryErrorsSource._get_context_from_entry(self._entry)
 
         assert context.get('function') == 'DPLMain:dynamicPageList'
         assert context.get('query') == "SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500"
@@ -151,3 +153,20 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         assert self._source._filter({'@source_host': 'ap-s32'}) is True
         assert self._source._filter({'@source_host': 'ap-r32'}) is False  # reston DC
         assert self._source._filter({}) is False  # empty message
+
+    def test_get_report(self):
+        self._source._normalize(self._entry)
+
+        report = self._source._get_report(self._entry)
+
+        # print out to stdout, pytest will show it in case of a failure
+        print report.get_summary()
+        print report.get_description()
+
+        assert 'DB error 1317 Query execution was interrupted' in report.get_summary()
+        assert 'DPLMain:dynamicPageList' in report.get_summary()
+        assert '10.8.38.37' not in report.get_summary()  # database IP should be removed from the ticket summary
+
+        assert '*DB server*: 10.8.38.37' in report.get_description()
+
+        assert 'DBQueryErrors' in report.get_label()
