@@ -74,7 +74,7 @@ class Jira(object):
             "project": {'key': self._project},
             "summary": report.get_summary()[:250],
             "description": description,
-            "labels": [report.get_label()]
+            "labels": report.get_labels()
         }
 
         # set default fields as defined in the config.py

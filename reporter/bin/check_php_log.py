@@ -24,7 +24,7 @@ reports += source.query("PHP Warning", threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
 source = DBQueryErrorsSource()
-reports += source.query('DBQueryError', threshold=5)
+reports += source.query('DBQueryError', threshold=20)
 
 
 logging.info('Reporting {} issues...'.format(len(reports)))

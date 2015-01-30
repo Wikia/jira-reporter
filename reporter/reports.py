@@ -10,7 +10,10 @@ class Report(object):
         """ Set up the report """
         self._summary = summary
         self._description = description
-        self._label = label
+
+        self._labels = list()
+        if label:
+            self.add_label(label)
 
         self._unique_id = False
         self._counter = False
@@ -39,15 +42,19 @@ class Report(object):
         """ Get report detailed description """
         return self._description
 
-    def get_label(self):
-        """ Get report label """
-        return self._label
+    def add_label(self, label):
+        """ Add given label to the report """
+        self._labels.append(label)
+
+    def get_labels(self):
+        """ Get report labels """
+        return self._labels
 
     def __repr__(self):
         """ Returns human readable representation of the object """
-        return '<Report: {summary} [{label}] ({unique_id})>\n{description}'.format(
+        return '<Report: {summary} [{labels}] ({unique_id})>\n{description}'.format(
             summary=self.get_summary(),
-            label=self.get_label(),
+            labels=']['.join(self.get_labels()),
             unique_id=self.get_unique_id(),
             description=self.get_description()
         )
