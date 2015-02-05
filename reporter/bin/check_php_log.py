@@ -19,8 +19,11 @@ reports = []
 
 # PHP warnings and errors
 source = PHPErrorsSource()
+
 reports += source.query("PHP Fatal Error", threshold=5)
+reports += source.query("PHP Catchable Fatal", threshold=5)
 reports += source.query("PHP Warning", threshold=50)
+reports += source.query("PHP Strict Standards", threshold=200)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
 source = DBQueryErrorsSource()
