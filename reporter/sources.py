@@ -438,7 +438,7 @@ The database query below returned far too many rows. Please use a proper LIMIT s
 *Function*: {function}
 *Rows returned*: {num_rows}
 
-*Backtrace*:
+h5. Backtrace
 * {backtrace}
 """
 
