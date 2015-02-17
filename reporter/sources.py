@@ -201,7 +201,7 @@ class KibanaSource(Source):
 class PHPLogsSource(KibanaSource):
     """ Shared between PHP logs providers """
     REPORT_TEMPLATE = """
-{{noformat}}{full_message}{{noformat}}
+{full_message}
 
 *URL*: {url}
 *Env*: {env}
