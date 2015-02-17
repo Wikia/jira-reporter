@@ -32,4 +32,8 @@ def generalize_sql(sql):
     # All numbers => N
     sql = re.sub(r'-?[0-9]+', 'N', sql)
 
+    # MW comments
+    # e.g. /* CategoryDataService::getMostVisited N.N.N.N */
+    sql = re.sub(r'\s?/\*[^\*]+\*/', '', sql)
+
     return sql.strip()
