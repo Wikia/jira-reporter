@@ -1,5 +1,8 @@
 """
 Various data providers
+
+@see https://jira.atlassian.com/secure/WikiRendererHelpAction.jspa?section=all  JIRA text formatting
+@see http://www.solrtutorial.com/solr-query-syntax.html                         Lucene query syntax
 """
 import hashlib
 import json
@@ -198,7 +201,7 @@ class KibanaSource(Source):
 class PHPLogsSource(KibanaSource):
     """ Shared between PHP logs providers """
     REPORT_TEMPLATE = """
-{full_message}
+{{noformat}}{full_message}{{noformat}}
 
 *URL*: {url}
 *Env*: {env}
@@ -308,12 +311,12 @@ class DBQueryErrorsSource(PHPLogsSource):
     REPORT_LABEL = 'DBQueryErrors'
 
     FULL_MESSAGE_TEMPLATE = """
-*Query*: {query}
+*Query*: {{noformat}}{query}{{noformat}}
 *Function*: {function}
 *DB server*: {server}
 *Error*: {error}
 
-*Backtrace*:
+h5. Backtrace
 * {backtrace}
 """
 
