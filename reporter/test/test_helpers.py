@@ -29,6 +29,9 @@ class UtilsTestClass(unittest.TestCase):
         assert generalize_sql("UPDATE  `user` SET user_touched = '20150112143631' WHERE user_id = '25239755'") ==\
             "UPDATE `user` SET user_touched = X"
 
+        assert generalize_sql("SELECT /* CategoryDataService::getMostVisited 207.46.13.56 */  page_id,cl_to  FROM `page` INNER JOIN `categorylinks` ON ((cl_from = page_id))  WHERE cl_to = 'Characters' AND (page_namespace NOT IN(500,6,14))  ORDER BY page_title") ==\
+            "SELECT page_id,cl_to FROM `page` INNER JOIN `categorylinks` ON ((cl_from = page_id)) WHERE cl_to = X AND (page_namespace NOT IN(N,N,N)) ORDER BY page_title"
+
         # multiline query
         sql = """
 SELECT page_title
