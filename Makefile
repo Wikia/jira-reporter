@@ -20,3 +20,6 @@ lint:
 
 check-php:
 	python $(project_name)/bin/check_php_log.py
+
+sandbox:
+	python $(project_name)/bin/sandbox.py 2>&1 | less

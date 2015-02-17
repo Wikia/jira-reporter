@@ -420,3 +420,83 @@ class DBQueryErrorsSource(PHPLogsSource):
         }
 
         return context
+
+
+class DBQueryNoLimitSource(PHPLogsSource):
+    """ Get DB queries that return excessive number of rows """
+    REPORT_LABEL = 'DBQueryNoLimit'
+
+    ROWS_THRESHOLD = 2000
+
+    FULL_MESSAGE_TEMPLATE = """
+The database query below returned far too many rows. Please use a proper LIMIT statement.
+
+*Query*: {{noformat}}{query}{{noformat}}
+*Function*: {function}
+*Rows returned*: {num_rows}
+
+*Backtrace*:
+* {backtrace}
+"""
+
+    def _get_entries(self, query):
+        """ Return matching exception logs """
+        # @see http://www.solrtutorial.com/solr-query-syntax.html
+        return self._kibana.query_by_string(query='@context.num_rows: [{} TO *]'.format(self.ROWS_THRESHOLD), limit=self.LIMIT)
+
+    def _filter(self, entry):
+        """ Remove log entries that are not coming from main DC """
+        if not entry.get('@message', '').startswith('SQL '):
+            return False
+
+        # filter out by host
+        # "@source_host": "ap-s10",
+        host = entry.get('@source_host', '')
+        if not is_main_dc_host(host):
+            return False
+
+        # remove those that do not return enough rows
+        context = entry.get('@context', dict())
+        if context.get('num_rows', 0) < self.ROWS_THRESHOLD:
+            return False
+
+        return True
+
+    def _normalize(self, entry):
+        """ Normalize the entry using the query and the method that made it """
+        message = entry.get('@message')
+        context = entry.get('@context', dict())
+
+        return '{}-{}-no-limit'.format(generalize_sql(message), context.get('method'))
+
+    def _get_report(self, entry):
+        """ Format the report to be sent to JIRA """
+        context = entry.get('@context')
+
+        query = entry.get('@message')
+        query = re.sub(r'^SQL', '', query).strip()  # remove "SQL" message prefix
+        backtrace = entry.get('@exception', {}).get('trace', [])
+
+        # format the report
+        full_message = self.FULL_MESSAGE_TEMPLATE.format(
+            query=query,
+            function=context.get('method'),
+            num_rows=context.get('num_rows'),
+            backtrace='\n* '.join(backtrace)
+        ).strip()
+
+        description = self.REPORT_TEMPLATE.format(
+            env=self._get_env_from_entry(entry),
+            source_host=entry.get('@source_host', 'n/a'),
+            context_formatted=json.dumps(entry.get('@context', {}), indent=True),
+            fields_formatted=json.dumps(entry.get('@fields', {}), indent=True),
+            full_message=full_message,
+            url=self._get_url_from_entry(entry) or 'n/a'
+        ).strip()
+
+        return Report(
+            summary='[{method}] The database query returns {rows}k+ rows'.format(
+                method=context.get('method'), rows=context.get('num_rows') / 1000),
+            description=description,
+            label=self.REPORT_LABEL
+        )
