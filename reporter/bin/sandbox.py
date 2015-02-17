@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 reports = list()
 
 source = DBQueryNoLimitSource()
-reports += source.query(query='', threshold=0)
+reports += source.query(query='QueryNoLimit', threshold=0)
 
 for report in reports:
     print report
