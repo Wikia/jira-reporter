@@ -6,7 +6,7 @@ and reports issues to JIRA when given thresholds are reached
 import logging
 
 from reporter.reporters import Jira
-from reporter.sources import PHPErrorsSource, DBQueryErrorsSource
+from reporter.sources import PHPErrorsSource, DBQueryErrorsSource, DBQueryNoLimitSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -29,6 +29,9 @@ reports += source.query("PHP Strict Standards", threshold=200)
 source = DBQueryErrorsSource()
 reports += source.query('DBQueryError', threshold=20)
 
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-836
+source = DBQueryNoLimitSource()
+reports += source.query(query='', threshold=0)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
