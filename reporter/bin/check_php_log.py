@@ -31,7 +31,7 @@ reports += source.query('DBQueryError', threshold=20)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-836
 source = DBQueryNoLimitSource()
-reports += source.query(query='QueryNoLimit', threshold=0)
+reports += source.query()
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
