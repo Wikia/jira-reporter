@@ -11,5 +11,5 @@ Automated JIRA reporting of PHP fatal errors
 ```
 virtualenv env
 source env/bin/activate
-pip install -e .
+PIP_INDEX_URL=http://pypi.wikia-services.com/simple/ pip install -e .
 ```
