@@ -6,7 +6,8 @@ and reports issues to JIRA when given thresholds are reached
 import logging
 
 from reporter.reporters import Jira
-from reporter.sources import PHPErrorsSource, DBQueryErrorsSource, DBQueryNoLimitSource
+from reporter.sources import PHPErrorsSource, DBQueryErrorsSource,\
+    DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -32,6 +33,10 @@ reports += source.query('DBQueryError', threshold=20)
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-836
 source = DBQueryNoLimitSource()
 reports += source.query()
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/wikia.php%20caching%20disabled
+source = NotCachedWikiaApiResponsesSource()
+reports += source.query(threshold=500)  # we serve 75k not cached responses an hour
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
