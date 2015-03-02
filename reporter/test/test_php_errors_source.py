@@ -130,7 +130,7 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         self._source = DBQueryErrorsSource()
         self._entry = {
             "@exception": {
-                "message": "A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script\nQuery: SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500\nFunction: DPLMain:dynamicPageList\nError: 1317 Query execution was interrupted (10.8.38.37)\n"
+                "message": "A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script\nQuery: SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500\nFunction: DatabaseBase::sourceFile( /usr/wikia/slot1/3690/src/maintenance/cleanupStarter.sql )\nError: 1317 Query execution was interrupted (10.8.38.37)\n"
             },
             "@context": {
                 "errno": 1317,
@@ -142,7 +142,7 @@ class DBErrorsSourceTestClass(unittest.TestCase):
     def test_get_context_from_entry(self):
         context = DBQueryErrorsSource._get_context_from_entry(self._entry)
 
-        assert context.get('function') == 'DPLMain:dynamicPageList'
+        assert context.get('function') == 'DatabaseBase::sourceFile( /maintenance/cleanupStarter.sql )'
         assert context.get('query') == "SELECT  DISTINCT `page`.page_namespace AS page_namespace,`page`.page_title AS page_title,`page`.page_id AS page_id, `page`.page_title  as sortkey FROM `page` WHERE 1=1  AND `page`.page_namespace IN ('6') AND `page`.page_is_redirect=0 AND 'Hal Homsar Solo' = (SELECT rev_user_text FROM `revision` WHERE `revision`.rev_page=page_id ORDER BY `revision`.rev_timestamp ASC LIMIT 1) ORDER BY page_title ASC LIMIT 0, 500"
         assert context.get('error') == '1317 Query execution was interrupted (10.8.38.37)'
 
@@ -161,7 +161,7 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         print report  # print out to stdout, pytest will show it in case of a failure
 
         assert 'DB error 1317 Query execution was interrupted' in report.get_summary()
-        assert 'DPLMain:dynamicPageList' in report.get_summary()
+        assert 'DatabaseBase::sourceFile' in report.get_summary()
         assert '10.8.38.37' not in report.get_summary()  # database IP should be removed from the ticket summary
 
         assert '*DB server*: 10.8.38.37' in report.get_description()
