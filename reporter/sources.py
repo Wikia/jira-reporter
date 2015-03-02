@@ -416,9 +416,13 @@ h5. Backtrace
                 [key, value] = line.split(":", 1)
                 parsed[key] = value.strip()
 
+        # normalize "DatabaseBase::sourceFile( /usr/wikia/slot1/3690/src/maintenance/cleanupStarter.sql )"
+        function = parsed.get('Function', '')
+        function = re.sub(r'/usr/wikia/slot1/\d+/src', '', function)
+
         context = {
             'query': parsed.get('Query'),
-            'function': parsed.get('Function'),
+            'function': function,
             'error': '{} {}'.format(context.get('errno'), context.get('err')),
         }
 
