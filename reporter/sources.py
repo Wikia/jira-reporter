@@ -280,6 +280,9 @@ class PHPErrorsSource(PHPLogsSource):
         # normalize /tmp paths
         message = re.sub(r'/tmp/\w+', '/tmp/X', message)
 
+        # normalize "17956864 bytes"
+        message = re.sub(r'\d+ bytes', 'N bytes', message)
+
         # update the entry
         entry['@message_normalized'] = message
 

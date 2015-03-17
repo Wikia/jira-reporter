@@ -58,6 +58,11 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@source_host': 'staging-s3'
         }) == 'PHP-PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Preview'
 
+        # OOM, remove "n bytes"
+        assert self._source._normalize({
+            '@message': 'PHP Fatal error: Allowed memory size of 536870912 bytes exhausted (tried to allocate 17956864 bytes) in /usr/wikia/slot1/3853/src/skins/oasis/modules/templates/Body_Index.php on line 127',
+        }) == 'PHP-PHP Fatal error: Allowed memory size of N bytes exhausted (tried to allocate N bytes) in /skins/oasis/modules/templates/Body_Index.php on line 127-Production'
+
     def test_get_report(self):
         entry = {
             "@timestamp": "2015-01-08T09:23:00.091+00:00",
