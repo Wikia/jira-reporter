@@ -8,6 +8,7 @@ import hashlib
 import json
 import logging
 import re
+import urllib
 
 from .helpers import is_main_dc_host, generalize_sql
 from .reports import Report
@@ -159,6 +160,8 @@ class KibanaSource(Source):
 
     PREVIEW_HOST = 'staging-s3'
 
+    KIBANA_URL = 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query={query}&from=6h&fields={fields}'
+
     def __init__(self, period=3600):
         super(KibanaSource, self).__init__()
         self._kibana = Kibana(period=period)
@@ -241,6 +244,28 @@ class PHPErrorsSource(PHPLogsSource):
 
         return True
 
+    def _get_kibana_url(self, entry):
+        """
+        Get the link to Kibana dashboard showing the provided error log entry
+        """
+        message = entry.get('@message')
+        if not message:
+            return None
+
+        # split the message
+        # PHP Warning: Invalid argument supplied for foreach() in /usr/wikia/slot1/3823/src/extensions/wikia/PhalanxII/templates/PhalanxSpecial_main.php on line 141
+        matches = re.match(r'^(.*) in /usr/wikia/slot1/\d+(.*)$', message)
+
+        if not matches:
+            return None
+
+        return self.KIBANA_URL.format(
+            query=urllib.quote('@source_host: ap-s* AND "{0}" AND "{1}"'.format(
+                matches.group(1), matches.group(2)
+            )),
+            fields=','.join(['@timestamp', '@message', '@fields.url', '@source_host'])
+        )
+
     def _normalize(self, entry):
         """
         Normalize given message by removing variables like server name
@@ -301,6 +326,10 @@ class PHPErrorsSource(PHPLogsSource):
             full_message=entry.get('@message'),
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
+
+        kibana_url = self._get_kibana_url(entry)
+        if kibana_url:
+            description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=kibana_url)
 
         return Report(
             summary=entry.get('@message_normalized'),
