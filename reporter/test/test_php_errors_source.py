@@ -63,6 +63,11 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Fatal error: Allowed memory size of 536870912 bytes exhausted (tried to allocate 17956864 bytes) in /usr/wikia/slot1/3853/src/skins/oasis/modules/templates/Body_Index.php on line 127',
         }) == 'PHP-PHP Fatal error: Allowed memory size of N bytes exhausted (tried to allocate N bytes) in /skins/oasis/modules/templates/Body_Index.php on line 127-Production'
 
+        # remove regex modifiers details
+        assert self._source._normalize({
+            '@message': 'PHP Warning: preg_match(): Unknown modifier \'d\' in /usr/wikia/slot1/3967/src/extensions/DynamicPageList/DynamicPageListInclude.php on line 629',
+        }) == 'PHP-PHP Warning: preg_match(): Unknown modifier X in /extensions/DynamicPageList/DynamicPageListInclude.php on line 629-Production'
+
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
