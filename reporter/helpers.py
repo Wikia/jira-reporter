@@ -20,20 +20,20 @@ def generalize_sql(sql):
     if sql is None:
         return None
 
+    # MW comments
+    # e.g. /* CategoryDataService::getMostVisited N.N.N.N */
+    sql = re.sub(r'\s?/\*[^\*]+\*/', '', sql)
+
     sql = re.sub(r"\\\\", '', sql)
     sql = re.sub(r"\\'", '', sql)
     sql = re.sub(r'\\"', '', sql)
-    sql = re.sub(r"'.*'", 'X', sql)
-    sql = re.sub(r'".*"', 'X', sql)
+    sql = re.sub(r"'[^\']+'", 'X', sql)
+    sql = re.sub(r'"[^\"]+"', 'X', sql)
 
     # All newlines, tabs, etc replaced by single space
     sql = re.sub(r'\s+', ' ', sql)
 
     # All numbers => N
     sql = re.sub(r'-?[0-9]+', 'N', sql)
-
-    # MW comments
-    # e.g. /* CategoryDataService::getMostVisited N.N.N.N */
-    sql = re.sub(r'\s?/\*[^\*]+\*/', '', sql)
 
     return sql.strip()
