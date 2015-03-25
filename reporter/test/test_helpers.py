@@ -30,7 +30,7 @@ class UtilsTestClass(unittest.TestCase):
             "UPDATE `user` SET user_touched = X WHERE user_id = X"
 
         assert generalize_sql("SELECT /* CategoryDataService::getMostVisited 207.46.13.56 */  page_id,cl_to  FROM `page` INNER JOIN `categorylinks` ON ((cl_from = page_id))  WHERE cl_to = 'Characters' AND (page_namespace NOT IN(500,6,14))  ORDER BY page_title") ==\
-            "SELECT page_id,cl_to FROM `page` INNER JOIN `categorylinks` ON ((cl_from = page_id)) WHERE cl_to = X AND (page_namespace NOT IN (XYZ) ORDER BY page_title"
+            "SELECT page_id,cl_to FROM `page` INNER JOIN `categorylinks` ON ((cl_from = page_id)) WHERE cl_to = X AND (page_namespace NOT IN (XYZ)) ORDER BY page_title"
 
         assert generalize_sql("SELECT /* ArticleCommentList::getCommentList Dancin'NoViolen... */  page_id,page_title  FROM `page`  WHERE (page_title LIKE 'Dreams\_Come\_True/@comment-%' ) AND page_namespace = '1'  ORDER BY page_id DESC") ==\
             "SELECT page_id,page_title FROM `page` WHERE (page_title LIKE X ) AND page_namespace = X ORDER BY page_id DESC"
