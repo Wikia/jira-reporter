@@ -36,4 +36,7 @@ def generalize_sql(sql):
     # All numbers => N
     sql = re.sub(r'-?[0-9]+', 'N', sql)
 
+    # WHERE foo IN ('880987','882618','708228','522330')
+    sql = re.sub(r' IN\s*\([^)]+\)', ' IN (XYZ)', sql)
+
     return sql.strip()
