@@ -179,6 +179,9 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         assert self._source._filter({'@source_host': 'ap-r32'}) is False  # reston DC
         assert self._source._filter({}) is False  # empty message
 
+        assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1213, "err": "Deadlock found when trying to get lock; try restarting transaction (10.8.44.31)"}}) is False  # deadlock
+        assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1317, "err": "Query execution was interrupted (10.8.62.57)"}}) is True
+
     def test_get_report(self):
         self._source._normalize(self._entry)
 

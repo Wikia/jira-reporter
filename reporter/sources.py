@@ -355,6 +355,8 @@ h5. Backtrace
 * {backtrace}
 """
 
+    ER_LOCK_DEADLOCK = 1213
+
     def _get_entries(self, query):
         """ Return matching exception logs """
         return self._kibana.get_rows(match={"@exception.class": query}, limit=self.LIMIT)
@@ -366,6 +368,11 @@ h5. Backtrace
         # filter out by host
         # "@source_host": "ap-s10",
         if not is_main_dc_host(host):
+            return False
+
+        # skip deadlock (PLATFORM-1110)
+        context = entry.get('@context', {})
+        if context.get('errno') == self.ER_LOCK_DEADLOCK:
             return False
 
         return True
