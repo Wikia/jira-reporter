@@ -68,6 +68,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Warning: preg_match(): Unknown modifier \'d\' in /usr/wikia/slot1/3967/src/extensions/DynamicPageList/DynamicPageListInclude.php on line 629',
         }) == 'PHP-PHP Warning: preg_match(): Unknown modifier X in /extensions/DynamicPageList/DynamicPageListInclude.php on line 629-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Warning: preg_match(): Compilation failed: unmatched parentheses at offset 330 in /usr/wikia/slot1/4182/src/extensions/AbuseFilter/AbuseFilter.parser.php on line 219',
+        }) == 'PHP-PHP Warning: preg_match(): Compilation failed: unmatched parentheses at offset N in /extensions/AbuseFilter/AbuseFilter.parser.php on line 219-Production'
+
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
