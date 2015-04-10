@@ -12,14 +12,18 @@ from reporter.reports import Report
 
 class KilledDatabaseQueriesSource(KibanaSource):
     """ Get database queries killed by pt-kill script """
-    REPORT_LABEL = 'KilledDBQueries'
+    REPORT_LABEL = 'pt-kill'
 
     FULL_MESSAGE_TEMPLATE = """
-The following database query was killed by {{pt-kill}} script, because it was taking too long to complete.
+The following database query was killed by {{{{pt-kill}}}} script, because it was taking too long to complete.
 
-*Database name*: {db} @ {host}
+*Database name*: {db}
+*Database host*: {host}
 *Client IP*: {client}
 *Query time*: {query_time} seconds
+*Method*: {{{{{method}}}}}
+
+This query is dead. This query is no more.
 
 {{noformat}}
 {query}
@@ -54,17 +58,18 @@ The following database query was killed by {{pt-kill}} script, because it was ta
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
+        method = get_method_from_query(entry.get('query'))
+
         # format the report
         description = self.FULL_MESSAGE_TEMPLATE.format(
             db=entry.get('db', 'n/a'),
             host=entry.get('@source_host'),
             client=entry.get('client', 'n/a'),
             query_time=entry.get('query_time', 'n/a'),
+            method=method,
             query=entry.get('query'),
             entry=json.dumps(entry, indent=True),
         ).strip()
-
-        method = get_method_from_query(entry.get('query'))
 
         return Report(
             summary='[{method}] Long running query was killed by pt-kill'.format(method=method),
