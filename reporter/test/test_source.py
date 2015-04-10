@@ -4,7 +4,7 @@ Set of unit tests for Source class
 import json
 import unittest
 
-from ..sources import Source
+from ..sources.common import Source
 from ..reports import Report
 
 
