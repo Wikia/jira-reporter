@@ -28,13 +28,6 @@ curl -svo /dev/null "{url}"
 
     LIMIT = 100000  # ~1.8mm entries daily => 75k an hour
 
-    def query(self, query='', threshold=0):
-        """ Override the default query method as we do not need arguments for this source """
-        # we do not need any specific query for additional filtering
-        # threshold not needed, report all cases
-        return super(NotCachedWikiaApiResponsesSource, self).query(
-            query=self.REPORT_LABEL, threshold=threshold)
-
     def _get_entries(self, query):
         """ Return matching not cached responses log entries """
         # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/wikia.php%20caching%20disabled
