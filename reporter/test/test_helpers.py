@@ -3,7 +3,7 @@ Set of unit tests for helper functions
 """
 import unittest
 
-from ..helpers import is_main_dc_host, generalize_sql
+from ..helpers import is_main_dc_host, generalize_sql, get_method_from_query
 
 
 class UtilsTestClass(unittest.TestCase):
@@ -51,3 +51,10 @@ SELECT page_title
 
         assert generalize_sql(sql) ==\
             "SELECT page_title FROM page WHERE page_namespace = X AND page_title COLLATE LATINN_GENERAL_CI LIKE X"
+
+    def test_get_method_from_query(self):
+        assert get_method_from_query("SELECT /*   Foo::Bar   */ column from table where foo = 1") == "Foo::Bar"
+        assert get_method_from_query("SELECT /*Foo::Bar*/ column from table where foo = 1") == "Foo::Bar"
+
+        assert get_method_from_query("SELECT /* WikiaApiQueryLastEditors::getEventsInfo  */  wiki_id,page_id,rev_id,log_id,user_id,user_is_bot,page_ns,is_content,is_redirect,ip,rev_timestamp,image_links,video_links,total_words,rev_size,wiki_lang_id,wiki_cat_id,event_type,event_date,media_type  FROM `events`  WHERE wiki_id = '5687' AND user_is_bot = 'N' AND is_content = 'Y' AND (user_id > 0)  ORDER BY rev_timestamp DESC LIMIT 25") == \
+            "WikiaApiQueryLastEditors::getEventsInfo"
