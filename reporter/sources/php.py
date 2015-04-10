@@ -63,6 +63,15 @@ class PHPErrorsSource(PHPLogsSource):
         if not message:
             return None
 
+        # match appropriate hosts
+        # ap-s42:  ap-s*
+        # task-s1: task-s*
+        host = entry.get('@source_host')
+        if host is not None:
+            host_regexp = host.split('-')[0] + '-s*'
+        else:
+            host_regexp = 'ap-s*'
+
         # split the message
         # PHP Warning: Invalid argument supplied for foreach() in /usr/wikia/slot1/3823/src/extensions/wikia/PhalanxII/templates/PhalanxSpecial_main.php on line 141
         matches = re.match(r'^(.*) in /usr/wikia/slot1/\d+(.*)$', message)
@@ -71,8 +80,8 @@ class PHPErrorsSource(PHPLogsSource):
             return None
 
         return self.KIBANA_URL.format(
-            query=urllib.quote('@source_host: ap-s* AND "{0}" AND "{1}"'.format(
-                matches.group(1), matches.group(2)
+            query=urllib.quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
+                host=host_regexp, message=matches.group(1), file=matches.group(2)
             )),
             fields=','.join(['@timestamp', '@message', '@fields.url', '@source_host'])
         )
