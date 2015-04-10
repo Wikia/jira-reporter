@@ -10,8 +10,8 @@ import logging
 import re
 import urllib
 
-from .helpers import is_main_dc_host, generalize_sql, get_method_from_query
-from .reports import Report
+from reporter.helpers import is_main_dc_host, generalize_sql, get_method_from_query
+from reporter.reports import Report
 from wikia.common.kibana import Kibana
 from wikia.common.perfmonitoring import PerfMonitoring
 
