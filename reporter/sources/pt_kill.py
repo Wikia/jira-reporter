@@ -3,6 +3,7 @@ Report slow queries killed by pt-kill script
 """
 
 import json
+import urllib
 
 from common import KibanaSource
 
@@ -34,6 +35,8 @@ This query is dead. This query is no more.
 {{code}}
 {entry}
 {{code}}
+
+*Still valid?* Check [Kibana dashboard|{kibana_url}]
 """
 
     LIMIT = 1000
@@ -60,6 +63,11 @@ This query is dead. This query is no more.
         """ Format the report to be sent to JIRA """
         method = get_method_from_query(entry.get('query'))
 
+        kibana_url = self.KIBANA_URL.format(
+            query=urllib.quote('program: "pt-kill"'),
+            fields=','.join(['@source_host', 'db', 'client', 'query'])
+        )
+
         # format the report
         description = self.FULL_MESSAGE_TEMPLATE.format(
             db=entry.get('db', 'n/a'),
@@ -69,6 +77,7 @@ This query is dead. This query is no more.
             method=method,
             query=entry.get('query'),
             entry=json.dumps(entry, indent=True),
+            kibana_url=kibana_url
         ).strip()
 
         return Report(
