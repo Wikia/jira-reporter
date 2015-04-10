@@ -14,7 +14,7 @@ class Source(object):
     def __init__(self):
         self._logger = logging.getLogger(self.__class__.__name__)
 
-    def query(self, query, threshold=50):
+    def query(self, query='', threshold=50):
         """
         The Source class entry point
 

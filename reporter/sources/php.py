@@ -172,7 +172,7 @@ h5. Backtrace
 
     def _get_entries(self, query):
         """ Return matching exception logs """
-        return self._kibana.get_rows(match={"@exception.class": query}, limit=self.LIMIT)
+        return self._kibana.get_rows(match={"@exception.class": 'DBQueryError'}, limit=self.LIMIT)
 
     def _filter(self, entry):
         """ Remove log entries that are not coming from main DC """
@@ -301,16 +301,13 @@ h5. Backtrace
 * {backtrace}
 """
 
-    def query(self, query='', threshold=50):
-        """ Override the default query method as we do not need arguments for this source """
-        # we do not need any specific query for additional filtering
-        # threshold not needed, report all cases
-        return super(DBQueryNoLimitSource, self).query(query='QueryNoLimit', threshold=0)
-
     def _get_entries(self, query):
         """ Return matching exception logs """
         # @see http://www.solrtutorial.com/solr-query-syntax.html
-        return self._kibana.query_by_string(query='@context.num_rows: [{} TO *]'.format(self.ROWS_THRESHOLD), limit=self.LIMIT)
+        return self._kibana.query_by_string(
+            query='@context.num_rows: [{} TO *]'.format(self.ROWS_THRESHOLD),
+            limit=self.LIMIT
+        )
 
     def _filter(self, entry):
         """ Remove log entries that are not coming from main DC """

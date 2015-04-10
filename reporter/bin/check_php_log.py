@@ -28,11 +28,11 @@ reports += source.query("PHP Strict Standards", threshold=200)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
 source = DBQueryErrorsSource()
-reports += source.query('DBQueryError', threshold=20)
+reports += source.query(threshold=20)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-836
 source = DBQueryNoLimitSource()
-reports += source.query()
+reports += source.query(threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/wikia.php%20caching%20disabled
 source = NotCachedWikiaApiResponsesSource()

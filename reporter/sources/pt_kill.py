@@ -34,13 +34,6 @@ The following database query was killed by {{pt-kill}} script, because it was ta
 
     LIMIT = 1000
 
-    def query(self, query='', threshold=0):
-        """ Override the default query method as we do not need arguments for this source """
-        # we do not need any specific query for additional filtering
-        # threshold not needed, report all cases
-        return super(KilledDatabaseQueriesSource, self).query(
-            query=self.REPORT_LABEL, threshold=threshold)
-
     def _get_entries(self, query):
         """ pt-kill log """
         # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/drozdo.pt-kill
