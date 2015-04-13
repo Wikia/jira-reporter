@@ -357,6 +357,9 @@ h5. Backtrace
 * {backtrace}
 """
 
+    # MySQL error codes
+    # @see https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+    ER_LOCK_WAIT_TIMEOUT = 1205
     ER_LOCK_DEADLOCK = 1213
 
     def _get_entries(self, query):
@@ -372,9 +375,9 @@ h5. Backtrace
         if not is_main_dc_host(host):
             return False
 
-        # skip deadlock (PLATFORM-1110)
+        # skip deadlocks (PLATFORM-1110)
         context = entry.get('@context', {})
-        if context.get('errno') == self.ER_LOCK_DEADLOCK:
+        if context.get('errno') in [self.ER_LOCK_DEADLOCK, self.ER_LOCK_WAIT_TIMEOUT]:
             return False
 
         return True
