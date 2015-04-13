@@ -22,7 +22,7 @@ def generalize_sql(sql):
 
     # MW comments
     # e.g. /* CategoryDataService::getMostVisited N.N.N.N */
-    sql = re.sub(r'\s?/\*[^\*]+\*/', '', sql)
+    sql = re.sub(r'\s?/\*.+\*/', '', sql)
 
     sql = re.sub(r"\\\\", '', sql)
     sql = re.sub(r"\\'", '', sql)
