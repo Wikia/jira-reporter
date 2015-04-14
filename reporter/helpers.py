@@ -22,7 +22,7 @@ def generalize_sql(sql):
 
     # MW comments
     # e.g. /* CategoryDataService::getMostVisited N.N.N.N */
-    sql = re.sub(r'\s?/\*[^\*]+\*/', '', sql)
+    sql = re.sub(r'\s?/\*.+\*/', '', sql)
 
     sql = re.sub(r"\\\\", '', sql)
     sql = re.sub(r"\\'", '', sql)
@@ -40,3 +40,17 @@ def generalize_sql(sql):
     sql = re.sub(r' IN\s*\([^)]+\)', ' IN (XYZ)', sql)
 
     return sql.strip()
+
+
+def get_method_from_query(sql):
+    """
+    Gets method name from SQL query comment
+
+    SELECT /* Foo::Bar 157.55.39.174 */ column from table where foo = 1
+
+    Return: "Foo::bar"
+    """
+    matches = re.search(r'/\*([^\*]+)\*/', sql)
+
+    # return the first part of "Foo::Bar 157.55.39.174" (i.e. without IP)
+    return matches.group(1).strip().split(' ')[0] if matches else None
