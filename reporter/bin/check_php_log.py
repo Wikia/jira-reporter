@@ -7,7 +7,7 @@ import logging
 
 from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, DBQueryErrorsSource,\
-    DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource
+    DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -37,6 +37,10 @@ reports += source.query(threshold=50)
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/wikia.php%20caching%20disabled
 source = NotCachedWikiaApiResponsesSource()
 reports += source.query(threshold=500)  # we serve 75k not cached responses an hour
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/drozdo.pt-kill
+source = KilledDatabaseQueriesSource()
+reports += source.query(threshold=0)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
