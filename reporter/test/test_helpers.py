@@ -53,6 +53,8 @@ SELECT page_title
             "SELECT page_title FROM page WHERE page_namespace = X AND page_title COLLATE LATINN_GENERAL_CI LIKE X"
 
     def test_get_method_from_query(self):
+        assert get_method_from_query("SELECT column from table where foo = 1") is None
+
         assert get_method_from_query("SELECT /*   Foo::Bar   */ column from table where foo = 1") == "Foo::Bar"
         assert get_method_from_query("SELECT /*Foo::Bar*/ column from table where foo = 1") == "Foo::Bar"
         assert get_method_from_query("SELECT /* Foo::Bar 157.55.39.174 */ column from table where foo = 1") == "Foo::Bar"
