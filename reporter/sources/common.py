@@ -76,8 +76,7 @@ class Source(object):
 
                 normalized[key]['cnt'] += 1
             else:
-                # self._logger.info('Entry not normalized: {}'.format(entry))
-                pass
+                self._logger.debug('Entry not normalized: {}'.format(entry))
 
         return normalized
 
