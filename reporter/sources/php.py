@@ -81,7 +81,7 @@ class PHPErrorsSource(PHPLogsSource):
 
         return self.KIBANA_URL.format(
             query=urllib.quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
-                host=host_regexp, message=matches.group(1), file=matches.group(2)
+                host=host_regexp, message=matches.group(1).replace(',', ''), file=matches.group(2)
             )),
             fields=','.join(['@timestamp', '@message', '@fields.url', '@source_host'])
         )
