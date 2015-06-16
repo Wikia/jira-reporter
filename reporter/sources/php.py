@@ -141,6 +141,12 @@ class PHPErrorsSource(PHPLogsSource):
 
         return 'PHP-{}-{}'.format(message, env)
 
+    @staticmethod
+    def _has_all_required_fields(entry):
+        # @fields.url is required
+        # see PLATFORM-1162
+        return entry.get('@fields', {}).get('url') is not None
+
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         description = self.REPORT_TEMPLATE.format(
