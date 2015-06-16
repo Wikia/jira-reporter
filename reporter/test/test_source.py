@@ -30,7 +30,10 @@ class DummySource(Source):
             },
             {
                 '@message': 'Foo-Bar',
-                '@context': [456, query]
+                '@context': [456, query],
+                '@fields': {
+                    'url': 'http://example.com'
+                }
             },
             {
                 'foo': 'bar'
@@ -53,12 +56,17 @@ class DummySource(Source):
 
         return msg.replace(' ', '-')
 
+    @staticmethod
+    def _has_all_required_fields(entry):
+        # @fields.url is required
+        return entry.get('@fields', {}).get('url') is not None
+
     def _get_report(self, entry):
         """ Generate Report instance for a given entry """
         self._reports_count += 1
 
         return Report(
-            summary='[Error] {msg}'.format(msg=entry.get('@message')),
+            summary='[Error] {msg} - {url}'.format(msg=entry.get('@message'), url=entry['@fields']['url']),
             description=json.dumps(entry.get('@context'))
         )
 
@@ -96,6 +104,6 @@ class SourceTestClass(unittest.TestCase):
         print report  # print the report in case the assertion below fails
 
         assert report.get_counter() == 2
-        assert report.get_summary() == '[Error] Foo Bar'
-        assert report.get_description() == '[123, "{query}"]'.format(query=self.QUERY)
+        assert report.get_summary() == '[Error] Foo-Bar - http://example.com'
+        assert report.get_description() == '[456, "{query}"]'.format(query=self.QUERY)
         assert report.get_unique_id() == 'e5f9ec048d1dbe19c70f720e002f9cb1'
