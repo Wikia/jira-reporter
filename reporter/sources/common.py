@@ -68,13 +68,22 @@ class Source(object):
             # all entries will be grouped
             # using the key return by _normalize method
             if key is not None:
+                has_all_required_fields = self._has_all_required_fields(entry)
+
                 if key not in normalized:
                     normalized[key] = {
-                        'cnt': 0,
-                        'entry': entry
+                        'cnt': 1,
+                        'entry': entry,
+                        'has_all_required_fields': has_all_required_fields
                     }
+                else:
+                    normalized[key]['cnt'] += 1
 
-                normalized[key]['cnt'] += 1
+                    # update the normalized entry if we finally got the full context
+                    # @see PLATFORM-1162
+                    if has_all_required_fields and not normalized[key]['has_all_required_fields']:
+                        normalized[key]['entry'] = entry
+
             else:
                 self._logger.debug('Entry not normalized: {}'.format(entry))
 
@@ -106,6 +115,14 @@ class Source(object):
             reports.append(report)
 
         return reports
+
+    @staticmethod
+    def _has_all_required_fields(entry):
+        """
+        This method is called to fill the normalized entries with all required fields
+        in case the first match does not have them
+        """
+        return True
 
     def _get_entries(self, query):
         """ This method will query the source and return matching entries """
