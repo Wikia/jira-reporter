@@ -83,6 +83,7 @@ class Source(object):
                     # @see PLATFORM-1162
                     if has_all_required_fields and not normalized[key]['has_all_required_fields']:
                         normalized[key]['entry'] = entry
+                        normalized[key]['has_all_required_fields'] = True
 
             else:
                 self._logger.debug('Entry not normalized: {}'.format(entry))
