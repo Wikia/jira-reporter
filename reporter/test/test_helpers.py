@@ -14,7 +14,7 @@ class UtilsTestClass(unittest.TestCase):
         assert is_production_host('cron-s5')
         assert is_production_host('staging-s3')
 
-        assert is_production_host('ap-r32') is False
+        assert is_production_host('ap-r32')
         assert is_production_host('dev-foo') is False
 
     def test_generalize_sql(self):

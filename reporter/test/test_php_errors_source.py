@@ -18,7 +18,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': self._source.PREVIEW_HOST}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-s32'}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar', '@source_host': 'ap-s32'}) is False  # no context
-        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is False  # reston DC
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is True  # we do serve production traffic from Reston
         assert self._source._filter({}) is False  # empty message
 
     def test_normalize(self):
@@ -189,7 +189,7 @@ class DBErrorsSourceTestClass(unittest.TestCase):
     def test_filter(self):
         assert self._source._filter({'@source_host': self._source.PREVIEW_HOST}) is True
         assert self._source._filter({'@source_host': 'ap-s32'}) is True
-        assert self._source._filter({'@source_host': 'ap-r32'}) is False  # reston DC
+        assert self._source._filter({'@source_host': 'ap-r32'}) is True
         assert self._source._filter({}) is False  # empty message
 
         assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1213, "err": "Deadlock found when trying to get lock; try restarting transaction (10.8.44.31)"}}) is False  # deadlock
