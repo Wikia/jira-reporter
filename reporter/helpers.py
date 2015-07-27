@@ -4,7 +4,7 @@ Set of helper functions
 import re
 
 
-def is_main_dc_host(host):
+def is_production_host(host):
     """
     Return true if given host is from our main datacenter (i.e. SJC)
     """

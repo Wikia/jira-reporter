@@ -8,7 +8,7 @@ import urllib
 
 from common import KibanaSource
 
-from reporter.helpers import is_main_dc_host, generalize_sql
+from reporter.helpers import is_production_host, generalize_sql
 from reporter.reports import Report
 
 
@@ -45,7 +45,7 @@ class PHPErrorsSource(PHPLogsSource):
 
         # filter out by host
         # "@source_host": "ap-s10",
-        if not is_main_dc_host(host):
+        if not is_production_host(host):
             return False
 
         # filter out errors without a clear context
@@ -198,7 +198,7 @@ h5. Backtrace
 
         # filter out by host
         # "@source_host": "ap-s10",
-        if not is_main_dc_host(host):
+        if not is_production_host(host):
             return False
 
         # skip deadlocks (PLATFORM-1110)
@@ -335,7 +335,7 @@ h5. Backtrace
         # filter out by host
         # "@source_host": "ap-s10",
         host = entry.get('@source_host', '')
-        if not is_main_dc_host(host):
+        if not is_production_host(host):
             return False
 
         # remove those that do not return enough rows
