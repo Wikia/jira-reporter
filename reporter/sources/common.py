@@ -4,6 +4,7 @@ Common classes allowing us to access logs from various sources
 
 import hashlib
 import logging
+import re
 
 from wikia.common.kibana import Kibana
 from wikia.common.perfmonitoring import PerfMonitoring
@@ -165,8 +166,10 @@ class KibanaSource(Source):
     """ elasticsearch-powered data provider """
     LIMIT = 100000
 
+    # TODO: move to a separate class
     ENV_PREVIEW = 'Preview'
-    ENV_PRODUCTION = 'Production'
+    ENV_MAIN_DC = 'Production'
+    ENV_BACKUP_DC = 'Reston'
 
     PREVIEW_HOST = 'staging-s3'
 
@@ -204,8 +207,19 @@ class KibanaSource(Source):
         :param entry: dict
         :return: string
         """
-        # preview -> staging-s3
-        is_preview = entry.get('@source_host', '') == self.PREVIEW_HOST
-        env = self.ENV_PREVIEW if is_preview is True else self.ENV_PRODUCTION
+        host = entry.get('@source_host', '')
+        is_preview = host == self.PREVIEW_HOST
+
+        if is_preview:
+            # staging-s3
+            env = self.ENV_PREVIEW
+        else:
+            # SJC or Reston?
+            if re.search(r'\-r\d+$', host) is not None:
+                # ap-r20
+                env = self.ENV_BACKUP_DC
+            else:
+                # ap-s32
+                env = self.ENV_MAIN_DC
 
         return env

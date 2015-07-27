@@ -18,7 +18,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': self._source.PREVIEW_HOST}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-s32'}) is True
         assert self._source._filter({'@message': 'PHP Fatal Error: bar', '@source_host': 'ap-s32'}) is False  # no context
-        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is False  # reston DC
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is True  # we do serve production traffic from Reston
         assert self._source._filter({}) is False  # empty message
 
     def test_normalize(self):
@@ -151,13 +151,17 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._get_url_from_entry({}) is False
 
     def test_get_env_from_entry(self):
-        assert self._source._get_env_from_entry({'@source_host': 'ap-s32'}) is self._source.ENV_PRODUCTION
-        assert self._source._get_env_from_entry({'@source_host': 'ap-r32'}) is self._source.ENV_PRODUCTION
-        assert self._source._get_env_from_entry({'@source_host': 'service-s32'}) is self._source.ENV_PRODUCTION
+        # main DC (SJC)
+        assert self._source._get_env_from_entry({'@source_host': 'ap-s32'}) is self._source.ENV_MAIN_DC
+        assert self._source._get_env_from_entry({'@source_host': 'service-s32'}) is self._source.ENV_MAIN_DC
+
+        # backup DC (Reston)
+        assert self._source._get_env_from_entry({'@source_host': 'ap-r32'}) is self._source.ENV_BACKUP_DC
+        assert self._source._get_env_from_entry({'@source_host': 'service-r1'}) is self._source.ENV_BACKUP_DC
 
         # preview / verify
         assert self._source._get_env_from_entry({'@source_host': 'staging-s3'}) is self._source.ENV_PREVIEW
-        assert self._source._get_env_from_entry({'@source_host': 'staging-s4'}) is self._source.ENV_PRODUCTION
+        assert self._source._get_env_from_entry({'@source_host': 'staging-s4'}) is self._source.ENV_MAIN_DC
 
 
 class DBErrorsSourceTestClass(unittest.TestCase):
@@ -189,7 +193,7 @@ class DBErrorsSourceTestClass(unittest.TestCase):
     def test_filter(self):
         assert self._source._filter({'@source_host': self._source.PREVIEW_HOST}) is True
         assert self._source._filter({'@source_host': 'ap-s32'}) is True
-        assert self._source._filter({'@source_host': 'ap-r32'}) is False  # reston DC
+        assert self._source._filter({'@source_host': 'ap-r32'}) is True
         assert self._source._filter({}) is False  # empty message
 
         assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1213, "err": "Deadlock found when trying to get lock; try restarting transaction (10.8.44.31)"}}) is False  # deadlock

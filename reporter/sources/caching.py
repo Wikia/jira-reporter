@@ -4,7 +4,7 @@ Report caching related problems
 
 from common import KibanaSource
 
-from reporter.helpers import is_main_dc_host
+from reporter.helpers import is_production_host
 from reporter.reports import Report
 
 
@@ -39,7 +39,7 @@ curl -svo /dev/null "{url}"
         # filter out by host
         # "@source_host": "ap-s10",
         host = entry.get('@source_host', '')
-        if not host.startswith('ap-') or not is_main_dc_host(host):
+        if not host.startswith('ap-') or not is_production_host(host):
             return False
 
         return True

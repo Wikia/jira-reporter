@@ -4,11 +4,11 @@ Set of helper functions
 import re
 
 
-def is_main_dc_host(host):
+def is_production_host(host):
     """
-    Return true if given host is from our main datacenter (i.e. SJC)
+    Return true if given host is from our main datacenter (SJC) or backup datacenter (Reston)
     """
-    return re.search(r'^(ap|task|cron|liftium|staging)\-s', host) is not None
+    return re.search(r'^(ap|task|cron|liftium|staging)\-(s|r)', host) is not None
 
 
 def generalize_sql(sql):
