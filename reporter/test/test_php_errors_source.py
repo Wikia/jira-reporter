@@ -151,13 +151,17 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._get_url_from_entry({}) is False
 
     def test_get_env_from_entry(self):
-        assert self._source._get_env_from_entry({'@source_host': 'ap-s32'}) is self._source.ENV_PRODUCTION
-        assert self._source._get_env_from_entry({'@source_host': 'ap-r32'}) is self._source.ENV_PRODUCTION
-        assert self._source._get_env_from_entry({'@source_host': 'service-s32'}) is self._source.ENV_PRODUCTION
+        # main DC (SJC)
+        assert self._source._get_env_from_entry({'@source_host': 'ap-s32'}) is self._source.ENV_MAIN_DC
+        assert self._source._get_env_from_entry({'@source_host': 'service-s32'}) is self._source.ENV_MAIN_DC
+
+        # backup DC (Reston)
+        assert self._source._get_env_from_entry({'@source_host': 'ap-r32'}) is self._source.ENV_BACKUP_DC
+        assert self._source._get_env_from_entry({'@source_host': 'service-r1'}) is self._source.ENV_BACKUP_DC
 
         # preview / verify
         assert self._source._get_env_from_entry({'@source_host': 'staging-s3'}) is self._source.ENV_PREVIEW
-        assert self._source._get_env_from_entry({'@source_host': 'staging-s4'}) is self._source.ENV_PRODUCTION
+        assert self._source._get_env_from_entry({'@source_host': 'staging-s4'}) is self._source.ENV_MAIN_DC
 
 
 class DBErrorsSourceTestClass(unittest.TestCase):

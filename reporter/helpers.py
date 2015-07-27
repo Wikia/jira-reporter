@@ -6,7 +6,7 @@ import re
 
 def is_production_host(host):
     """
-    Return true if given host is from our main datacenter (i.e. SJC)
+    Return true if given host is from our main datacenter (SJC) or backup datacenter (Reston)
     """
     return re.search(r'^(ap|task|cron|liftium|staging)\-(s|r)', host) is not None
 
