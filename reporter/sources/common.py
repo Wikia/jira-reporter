@@ -166,6 +166,7 @@ class KibanaSource(Source):
     """ elasticsearch-powered data provider """
     LIMIT = 100000
 
+    # TODO: move to a separate class
     ENV_PREVIEW = 'Preview'
     ENV_MAIN_DC = 'Production'
     ENV_BACKUP_DC = 'Reston'
