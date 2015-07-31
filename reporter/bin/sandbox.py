@@ -3,7 +3,7 @@
 This script is a sandbox for testing new sources
 """
 import logging
-from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, DBQueryNoLimitSource, DBQueryErrorsSource
+from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource
 
 logging.basicConfig(level=logging.INFO)
 
@@ -20,6 +20,9 @@ reports += source.query(threshold=50)
 
 source = DBQueryErrorsSource()
 reports += source.query(threshold=20)
+
+source = PHPAssertionsSource()
+reports += source.query(threshold=5)
 
 for report in reports:
     print report
