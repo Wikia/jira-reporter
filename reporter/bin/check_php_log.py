@@ -7,7 +7,8 @@ import logging
 
 from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, DBQueryErrorsSource,\
-    DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource
+    DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
+    PHPAssertionsSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -41,6 +42,10 @@ reports += source.query(threshold=500)  # we serve 75k not cached responses an h
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/drozdo.pt-kill
 source = KilledDatabaseQueriesSource()
 reports += source.query(threshold=0)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/AssertionException
+source = PHPAssertionsSource()
+reports += source.query(threshold=5)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
