@@ -19,8 +19,9 @@ class PandoraErrorsSource(PandoraLogsSource):
     def _filter(self, entry):
         level = entry.get('rawLevel')
         message = entry.get('rawMessage')
+        app_name = entry.get('appname')
 
-        if message is None:
+        if message is None or app_name is None:
             return False
 
         # filter out all messages except warnings and errors
@@ -63,9 +64,10 @@ class PandoraErrorsSource(PandoraLogsSource):
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         message = entry.get('rawMessage').encode('utf8')
+        app_name = entry.get('appname')
 
         description = self.REPORT_TEMPLATE.format(
-            app_name=entry.get('appname', 'n/a'),
+            app_name=app_name,
             logger_name=entry.get('logger_name', 'n/a'),
             thread_name=entry.get('thread_name', 'n/a'),
             stack_trace=entry.get('stack_trace', 'n/a'),
@@ -80,8 +82,13 @@ class PandoraErrorsSource(PandoraLogsSource):
         # eg. [discussion] Unable to get the user information for userId: 23912489, Returning the default.
         summary = '[{}] {}'.format(entry.get('appname'), message)
 
-        return Report(
+        report = Report(
             summary=summary,
             description=description,
             label=self.REPORT_LABEL
         )
+
+        # eg. service_discussion
+        report.add_label('service_{}'.format(app_name))
+
+        return report

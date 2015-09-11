@@ -21,4 +21,4 @@ h3. Stacktrace
 {{code}}
     """
 
-    LIMIT = 5000
+    LIMIT = 10000
