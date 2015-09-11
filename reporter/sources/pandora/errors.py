@@ -54,6 +54,10 @@ class PandoraErrorsSource(PandoraLogsSource):
         # normalize numeric values
         message = re.sub(r'\d+', 'N', message)
 
+        # normalize URLs
+        # Exception purging https://services.wikia.com/user-attribute/user/5430694
+        message = re.sub(r'https?://[^\s]+', '<URL>', message)
+
         return 'Pandora-{}-{}'.format(message, logger_name)
 
     def _get_report(self, entry):
