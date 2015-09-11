@@ -7,3 +7,4 @@ from common import Source
 from caching import NotCachedWikiaApiResponsesSource
 from php import *
 from pt_kill import KilledDatabaseQueriesSource
+from pandora import PandoraErrorsSource

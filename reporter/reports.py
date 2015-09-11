@@ -36,7 +36,8 @@ class Report(object):
 
     def get_summary(self):
         """ Get report title / summary """
-        return self._summary
+        # prevent jira.exceptions.JIRAError: HTTP 400: "The summary is invalid because it contains newline characters."
+        return self._summary.replace("\n", '')
 
     def get_description(self):
         """ Get report detailed description """

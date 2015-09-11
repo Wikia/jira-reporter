@@ -8,7 +8,7 @@ import logging
 from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
-    PHPAssertionsSource
+    PHPAssertionsSource, PandoraErrorsSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,24 +28,22 @@ reports += source.query("PHP Warning", threshold=50)
 reports += source.query("PHP Strict Standards", threshold=200)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
-source = DBQueryErrorsSource()
-reports += source.query(threshold=20)
+reports += DBQueryErrorsSource().query(threshold=20)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-836
-source = DBQueryNoLimitSource()
-reports += source.query(threshold=50)
+reports += DBQueryNoLimitSource().query(threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/wikia.php%20caching%20disabled
-source = NotCachedWikiaApiResponsesSource()
-reports += source.query(threshold=500)  # we serve 75k not cached responses an hour
+reports += NotCachedWikiaApiResponsesSource().query(threshold=500)  # we serve 75k not cached responses an hour
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/drozdo.pt-kill
-source = KilledDatabaseQueriesSource()
-reports += source.query(threshold=0)
+reports += KilledDatabaseQueriesSource().query(threshold=0)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/AssertionException
-source = PHPAssertionsSource()
-reports += source.query(threshold=5)
+reports += PHPAssertionsSource().query(threshold=5)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1420
+reports += PandoraErrorsSource().query(threshold=5)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()

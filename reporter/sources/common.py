@@ -5,6 +5,7 @@ Common classes allowing us to access logs from various sources
 import hashlib
 import logging
 import re
+import urllib
 
 from wikia.common.kibana import Kibana
 from wikia.common.perfmonitoring import PerfMonitoring
@@ -223,3 +224,14 @@ class KibanaSource(Source):
                 env = self.ENV_MAIN_DC
 
         return env
+
+    def format_kibana_url(self, query, columns=None):
+        columns = columns or ['@timestamp', '@source_host', 'message']
+
+        # do not split the query into Kibana subqueries
+        query = query.replace(',', ' ')
+
+        return self.KIBANA_URL.format(
+            query=urllib.quote(query),
+            fields=','.join(columns)
+        )
