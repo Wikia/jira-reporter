@@ -61,7 +61,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         # OOM, remove "n bytes"
         assert self._source._normalize({
             '@message': 'PHP Fatal error: Allowed memory size of 536870912 bytes exhausted (tried to allocate 17956864 bytes) in /usr/wikia/slot1/3853/src/skins/oasis/modules/templates/Body_Index.php on line 127',
-        }) == 'PHP-PHP Fatal error: Allowed memory size of N bytes exhausted (tried to allocate N bytes) in /skins/oasis/modules/templates/Body_Index.php on line 127-Production'
+        }) == 'PHP-PHP Fatal Error: Allowed memory size of N bytes exhausted (tried to allocate N bytes) in /skins/oasis/modules/templates/Body_Index.php on line 127-Production'
 
         # remove regex modifiers details
         assert self._source._normalize({
@@ -71,6 +71,19 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._normalize({
             '@message': 'PHP Warning: preg_match(): Compilation failed: unmatched parentheses at offset 330 in /usr/wikia/slot1/4182/src/extensions/AbuseFilter/AbuseFilter.parser.php on line 219',
         }) == 'PHP-PHP Warning: preg_match(): Compilation failed: unmatched parentheses at offset N in /extensions/AbuseFilter/AbuseFilter.parser.php on line 219-Production'
+
+        # fatals normalization (PLATFORM-1463)
+        assert self._source._normalize({
+            '@message': 'PHP Fatal Error: Maximum execution',
+        }) == 'PHP-PHP Fatal Error: Maximum execution-Production'
+
+        assert self._source._normalize({
+            '@message': 'PHP Fatal error:  Maximum execution',
+        }) == 'PHP-PHP Fatal Error: Maximum execution-Production'
+
+        assert self._source._normalize({
+            '@message': 'PHP Fatal error: Maximum execution',
+        }) == 'PHP-PHP Fatal Error: Maximum execution-Production'
 
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
@@ -127,7 +140,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         print report  # print out to stdout, pytest will show it in case of a failure
 
         # report should be sent with a normalized summary set
-        assert report.get_summary() == 'PHP Fatal Error:  Call to a member function getText() on a non-object in /includes/wikia/services/ArticleService.class.php on line 187'
+        assert report.get_summary() == 'PHP Fatal Error: Call to a member function getText() on a non-object in /includes/wikia/services/ArticleService.class.php on line 187'
 
         # the full message should be kept in the description
         assert entry.get('@message') in report.get_description()

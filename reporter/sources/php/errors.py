@@ -111,6 +111,9 @@ class PHPErrorsSource(PHPLogsSource):
         message = re.sub(r'Compilation failed: unmatched parentheses at offset \d+',
                          'Compilation failed: unmatched parentheses at offset N', message)
 
+        # normalize fatals (PLATFORM-1463)
+        message = re.sub(r'PHP Fatal Error:\s+', 'PHP Fatal Error: ', message, flags=re.IGNORECASE)
+
         # update the entry
         entry['@message_normalized'] = message
 
