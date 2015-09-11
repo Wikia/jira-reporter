@@ -52,12 +52,19 @@ class PandoraErrorsSource(PandoraLogsSource):
         message = entry.get('rawMessage').encode('utf8')
         logger_name = entry.get('logger_name')
 
+        # normalize hashes
+        message = re.sub(r'[a-f0-9]{4,}', 'HASH', message)
+
         # normalize numeric values
         message = re.sub(r'\d+', 'N', message)
 
         # normalize URLs
         # Exception purging https://services.wikia.com/user-attribute/user/5430694
         message = re.sub(r'https?://[^\s]+', '<URL>', message)
+
+        # remove JSON
+        # error while sending: {"args":{"prevRevision":false
+        message = re.sub(r'{.*}$', '{json here}', message)
 
         return 'Pandora-{}-{}'.format(message, logger_name)
 

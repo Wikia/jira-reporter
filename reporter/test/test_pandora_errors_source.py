@@ -33,3 +33,13 @@ class PandoraErrorsSourceTestClass(unittest.TestCase):
             'rawMessage': 'Exception purging http://example.com',
             'logger_name': 'service.foo'
         }) == 'Pandora-Exception purging <URL>-service.foo'
+
+        assert self._source._normalize({
+            'rawMessage': 'error while sending: {"args":{"prevRevision":false,"revision":66213},"is_main_page":false}',
+            'logger_name': 'service.foo'
+        }) == 'Pandora-error while sending: {json here}-service.foo'
+
+        assert self._source._normalize({
+            'rawMessage': 'too much data after closed for HttpChannelOverHttp@276b8295{r=1,c=false,a=IDLE,uri=-}',
+            'logger_name': 'service.foo'
+        }) == 'Pandora-too much data after closed for HttpChannelOverHttp@HASH{json here}-service.foo'
