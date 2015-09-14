@@ -53,8 +53,7 @@ h5. Backtrace
 
         return '{}-{}-{}'.format(env, exception_class or 'None', message)
 
-    def _get_report(self, entry):
-        """ Format the report to be sent to JIRA """
+    def _get_description(self, entry):
         exception = entry.get('@exception', {})
         exception_class = exception.get('class')
         message = entry.get('@normalized_message')
@@ -83,12 +82,20 @@ h5. Backtrace
             )
         )
 
+        return description
+
+    def _get_report(self, entry):
+        """ Format the report to be sent to JIRA """
+        exception = entry.get('@exception', {})
+        exception_class = exception.get('class')
+        message = entry.get('@normalized_message')
+
         report = Report(
             summary='[{exception}] {message}'.format(
                 exception=exception_class or 'Error',
                 message=message
             ),
-            description=description,
+            description=self._get_description(entry),
             label=self.REPORT_LABEL
         )
 
