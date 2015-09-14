@@ -28,7 +28,7 @@ reports += source.query("PHP Warning", threshold=50)
 reports += source.query("PHP Strict Standards", threshold=200)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Severity%20error
-reports += PHPExceptionsSource.query(threshold=50)
+reports += PHPExceptionsSource().query(threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
 reports += DBQueryErrorsSource().query(threshold=20)
