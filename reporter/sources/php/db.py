@@ -68,8 +68,6 @@ h5. Backtrace
         query = context.get('query')
         normalized = generalize_sql(query)
 
-        backtrace = entry.get('@exception', {}).get('trace', [])
-
         # remove server IP from error message
         error_no_ip = context.get('error').\
             replace('({})'.format(context.get('server')), '').\
@@ -81,7 +79,7 @@ h5. Backtrace
             error=error_no_ip,
             function=context.get('function'),
             server=context.get('server'),
-            backtrace='\n* '.join(backtrace)
+            backtrace=self._normalize_backtrace(entry.get('@exception', {}).get('trace'))
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(
@@ -196,14 +194,13 @@ h5. Backtrace
 
         query = entry.get('@message')
         query = re.sub(r'^SQL', '', query).strip()  # remove "SQL" message prefix
-        backtrace = entry.get('@exception', {}).get('trace', [])
 
         # format the report
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
             query=query,
             function=context.get('method'),
             num_rows=context.get('num_rows'),
-            backtrace='\n* '.join(backtrace)
+            backtrace=self._normalize_backtrace(entry.get('@exception', {}).get('trace'))
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(
