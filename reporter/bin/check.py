@@ -6,7 +6,7 @@ and reports issues to JIRA when given thresholds are reached
 import logging
 
 from reporter.reporters import Jira
-from reporter.sources import PHPErrorsSource, DBQueryErrorsSource,\
+from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
     PHPAssertionsSource, PandoraErrorsSource
 
@@ -26,6 +26,9 @@ reports += source.query("PHP Fatal Error", threshold=5)
 reports += source.query("PHP Catchable Fatal", threshold=5)
 reports += source.query("PHP Warning", threshold=50)
 reports += source.query("PHP Strict Standards", threshold=200)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Severity%20error
+reports += PHPExceptionsSource.query(threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
 reports += DBQueryErrorsSource().query(threshold=20)
