@@ -21,8 +21,6 @@ h5. Backtrace
 {backtrace}
 """
 
-    LIMIT = 50000
-
     def _get_entries(self, query):
         """ Return errors and exceptions reported via WikiaLogger with error severity """
         return self._kibana.query_by_string(
