@@ -1,4 +1,5 @@
 import json
+import re
 
 from reporter.helpers import is_production_host
 from reporter.reports import Report
@@ -44,6 +45,13 @@ h5. Backtrace
         env = self._get_env_from_entry(entry)
 
         message = entry.get('@message', '')
+
+        # Server #3 (10.8.38.41) is excessively lagged (126 seconds)
+        message = re.sub(r'#\d+', '#X', message)
+        message = re.sub(r'\d+ sec', 'X sec', message)
+
+        # Remove release-specific part of a file path
+        message = re.sub(r'/usr/wikia/slot\d/\d+/src', '', message)
 
         # use a message from the exception
         if exception_class == 'WikiaException':
