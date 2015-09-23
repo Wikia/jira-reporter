@@ -40,13 +40,13 @@ reports += DBQueryNoLimitSource().query(threshold=50)
 reports += NotCachedWikiaApiResponsesSource().query(threshold=500)  # we serve 75k not cached responses an hour
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/drozdo.pt-kill
-reports += KilledDatabaseQueriesSource().query(threshold=0)
+reports += KilledDatabaseQueriesSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/AssertionException
 reports += PHPAssertionsSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1420
-reports += PandoraErrorsSource().query(threshold=5)
+reports += PandoraErrorsSource().query(threshold=50)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
