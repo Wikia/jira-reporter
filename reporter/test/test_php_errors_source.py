@@ -21,6 +21,8 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is True  # we do serve production traffic from Reston
         assert self._source._filter({}) is False  # empty message
 
+        assert self._source._filter({'@message': 'PHP Fatal Error: Allowed memory size of 536870912 bytes exhausted on line 42', '@source_host': 'ap-s32'}) is False  # do not report OOM errors
+
     def test_normalize(self):
         # normalize file path
         assert self._source._normalize({

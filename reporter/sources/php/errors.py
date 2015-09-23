@@ -31,6 +31,10 @@ class PHPErrorsSource(PHPLogsSource):
         if re.search(r'on line \d+', message) is None:
             return False
 
+        # filter out OOM errors
+        if 'Allowed memory size of' in message:
+            return False
+
         return True
 
     def _get_kibana_url(self, entry):
