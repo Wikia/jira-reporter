@@ -61,6 +61,19 @@ h5. Backtrace
 
         return '{}-{}-{}'.format(env, exception_class or 'None', message)
 
+    def _get_kibana_url(self, entry):
+        """
+        Get Kibana dashboard URL for a given entry
+
+        It will be automatically added at the end of the report description
+        """
+        message = entry.get('@normalized_message')
+
+        return self.format_kibana_url(
+            query='"{}"'.format(message),
+            columns=['@timestamp', '@source_host', '@message', '@exception.message', '@fields.db_name', '@fields.url']
+        )
+
     def _get_description(self, entry):
         exception = entry.get('@exception', {})
         exception_class = exception.get('class')
@@ -81,14 +94,6 @@ h5. Backtrace
             full_message=full_message,
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
-
-        # format URL to the custom Kibana dashboard
-        description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(
-            url=self.format_kibana_url(
-                query='"{}"'.format(message),
-                columns=['@timestamp', '@source_host', '@message', '@exception.message', '@fields.db_name', '@fields.url']
-            )
-        )
 
         return description
 
