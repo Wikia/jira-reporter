@@ -116,6 +116,14 @@ h5. Backtrace
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
 
+        # format URL to the custom Kibana dashboard
+        description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(
+            url=self.format_kibana_url(
+                query='@exception.class: "DBQueryError" AND "{}"'.format(context.get('function')),
+                columns=['@timestamp', '@source_host', '@context.errno', '@context.err', '@fields.db_name', '@fields.url']
+            )
+        )
+
         return Report(
             summary='[DB error {err}] {function} - {query}'.format(
                 err=error_no_ip, function=context.get('function'), query=normalized),
