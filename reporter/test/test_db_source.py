@@ -22,6 +22,28 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
         assert source._filter({'@source_host': 'ap-s20', '@context': {'errno': 1205}}) is False
         assert source._filter({'@source_host': 'ap-s20', '@context': {'errno': 1213}}) is False
 
+        # filter out "Query execution was interrupted" errors coming from SMW and DPL
+        cases = (
+            ('FooClass::getBar', 1317, True),
+            ('FooClass::SMW', 1317, True),
+            ('DPLMain:dynamicPageList', 1317, False),  # ER-5948
+            ('SMWSQLStore2::getSMWPageIDandSort', 1317, False),  # ER-5360
+            ('SMW::getQueryResult', 1317, False),  # ER-7901
+            ('SMW::getQueryResult', 2013, False),  # ER-7901
+            ('SMW::getQueryResult', 42, True),
+        )
+
+        for (function, err_no, expected) in cases:
+            self._check_is_filtered_out(function, err_no, expected)
+
+    @staticmethod
+    def _check_is_filtered_out(function, err_no, expected):
+        assert DBQueryErrorsSource()._filter({
+            '@source_host': 'ap-s20',
+            '@context': {'errno': err_no},
+            '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: {}'.format(function)}
+        }) is expected
+
     def test_get_context_from_entry(self):
         entry = {
             '@exception': {

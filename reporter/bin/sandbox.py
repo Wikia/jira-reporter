@@ -27,7 +27,7 @@ reports += source.query(threshold=50)
 """
 
 source = DBQueryErrorsSource()
-reports += source.query(threshold=20)
+reports += source.query(threshold=10)
 
 """
 source = PHPAssertionsSource()
