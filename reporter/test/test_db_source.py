@@ -8,7 +8,7 @@ from ..sources.php.db import DBQueryErrorsSource
 
 class DBQueryErrorsSourceTestClass(unittest.TestCase):
     """
-    Unit tests for PHPLogsSource DBQueryErrorsSource
+    Unit tests for DBQueryErrorsSource
     """
     def test_filter(self):
         source = DBQueryErrorsSource()
