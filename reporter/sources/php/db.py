@@ -56,8 +56,9 @@ h5. Backtrace
             query = context.get('query')
 
             if query is not None:
-                entry.get('@context', {}).update(context)
-                return '{}-{}'.format(generalize_sql(query), context.get('errno'))
+                entry_context = entry.get('@context', {})
+                entry_context.update(context)
+                return '{}-{}'.format(generalize_sql(query), entry_context.get('errno'))
 
         return None
 
