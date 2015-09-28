@@ -101,6 +101,10 @@ class Source(object):
         for key, item in items.iteritems():
             try:
                 report = self._get_report(item['entry'])
+
+                # provide various sources a way to modify the report
+                self._update_report(report, item['entry'])
+
             except Exception:
                 self._logger.error('get_report raised an exception', exc_info=True)
                 continue
@@ -147,6 +151,12 @@ class Source(object):
         Return a report for a given entry
         """
         raise Exception("This method needs to be overwritten in your class!")
+
+    def _update_report(self, report, entry):
+        """
+        Allow various sources a way to modify the report
+        """
+        pass
 
     def _send_stats(self, query, entries, reports):
         """
@@ -225,13 +235,31 @@ class KibanaSource(Source):
 
         return env
 
-    def format_kibana_url(self, query, columns=None):
+    @staticmethod
+    def format_kibana_url(query, columns=None):
         columns = columns or ['@timestamp', '@source_host', 'message']
 
         # do not split the query into Kibana subqueries
         query = query.replace(',', ' ')
 
-        return self.KIBANA_URL.format(
+        return KibanaSource.KIBANA_URL.format(
             query=urllib.quote(query),
             fields=','.join(columns)
         )
+
+    def _get_kibana_url(self, entry):
+        """
+        Get Kibana dashboard URL for a given entry
+
+        It will be automatically added at the end of the report description
+        """
+        return None
+
+    def _update_report(self, report, entry):
+        """
+        Call self._get_kibana_url and update the report description if there's a link to custom dashboard
+        """
+        kibana_url = self._get_kibana_url(entry)
+
+        if kibana_url is not None:
+            report.append_to_description('\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=kibana_url))
