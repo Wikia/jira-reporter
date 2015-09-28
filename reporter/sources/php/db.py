@@ -18,11 +18,12 @@ class DBQueryErrorsSource(PHPLogsSource):
 *Error*: {error}
 
 h5. Backtrace
-* {backtrace}
+{backtrace}
 """
 
     # MySQL error codes
     # @see https://dev.mysql.com/doc/refman/5.5/en/error-messages-server.html
+    ER_PARSE_ERROR = 1064
     ER_LOCK_WAIT_TIMEOUT = 1205
     ER_LOCK_DEADLOCK = 1213
 
@@ -56,8 +57,19 @@ h5. Backtrace
             query = context.get('query')
 
             if query is not None:
-                entry.get('@context', {}).update(context)
-                return '{}-{}'.format(generalize_sql(query), context.get('errno'))
+                # merge context coming from DB error reporting with
+                # the one extracted from exception message (using self._get_context_from_entry)
+                merged_context = entry.get('@context', {})
+                merged_context.update(context)
+
+                err_no = merged_context.get('errno')
+
+                return '{}-{}'.format(
+                    # PLATFORM-1512: normalize SQL parse errors (possibly SQL injection tries)
+                    # using function name instead of a normalized query
+                    merged_context.get('function') if err_no == self.ER_PARSE_ERROR else generalize_sql(query),
+                    err_no
+                )
 
         return None
 
