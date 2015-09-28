@@ -18,7 +18,7 @@ class DBQueryErrorsSource(PHPLogsSource):
 *Error*: {error}
 
 h5. Backtrace
-* {backtrace}
+{backtrace}
 """
 
     # MySQL error codes
