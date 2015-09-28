@@ -56,9 +56,11 @@ h5. Backtrace
             query = context.get('query')
 
             if query is not None:
-                entry_context = entry.get('@context', {})
-                entry_context.update(context)
-                return '{}-{}'.format(generalize_sql(query), entry_context.get('errno'))
+                # merge context coming from DB error reporting with
+                # the one extracted from exception message (using self._get_context_from_entry)
+                merged_context = entry.get('@context', {})
+                merged_context.update(context)
+                return '{}-{}'.format(generalize_sql(query), merged_context.get('errno'))
 
         return None
 

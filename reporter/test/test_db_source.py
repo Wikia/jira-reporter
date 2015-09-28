@@ -51,4 +51,4 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
 
         assert source._normalize({}) is None
 
-        assert source._normalize({'@exception': exception, '@context': {'errno': 42, 'err': 'Err'}}) == 'SELECT foo FROM bar-42'
+        assert source._normalize({'@exception': exception, '@context': {'errno': 42}}) == 'SELECT foo FROM bar-42'
