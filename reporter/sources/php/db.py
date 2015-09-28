@@ -86,6 +86,17 @@ h5. Backtrace
 
         return None
 
+    def _get_kibana_url(self, entry):
+        """
+        Get the link to Kibana dashboard showing the provided error log entry
+        """
+        context = entry.get('@context')
+
+        return self.format_kibana_url(
+            query='@exception.class: "DBQueryError" AND "{}"'.format(context.get('function')),
+            columns=['@timestamp', '@source_host', '@context.errno', '@context.err', '@fields.db_name', '@fields.url']
+        )
+
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         context = entry.get('@context')
@@ -115,14 +126,6 @@ h5. Backtrace
             full_message=full_message,
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
-
-        # format URL to the custom Kibana dashboard
-        description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(
-            url=self.format_kibana_url(
-                query='@exception.class: "DBQueryError" AND "{}"'.format(context.get('function')),
-                columns=['@timestamp', '@source_host', '@context.errno', '@context.err', '@fields.db_name', '@fields.url']
-            )
-        )
 
         return Report(
             summary='[DB error {err}] {function} - {query}'.format(
