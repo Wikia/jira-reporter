@@ -45,10 +45,16 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
 
     def test_normalize(self):
         source = DBQueryErrorsSource()
-        exception = {
-            'message': 'Foo\nQuery: SELECT foo FROM bar'
-        }
 
         assert source._normalize({}) is None
 
-        assert source._normalize({'@exception': exception, '@context': {'errno': 42}}) == 'SELECT foo FROM bar-42'
+        assert source._normalize({
+            '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: FooClass::getBar'},
+            '@context': {'errno': 42}
+        }) == 'SELECT foo FROM bar-42'
+
+        # SQL syntax errors (error #1064) are normalized a bit differently - PLATFORM-1512
+        assert source._normalize({
+            '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: FooClass::getBar'},
+            '@context': {'errno': 1064}  # SQL syntax error code
+        }) == 'FooClass::getBar-1064'
