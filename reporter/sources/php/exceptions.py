@@ -88,7 +88,7 @@ h5. Backtrace
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
             exception=exception_class or 'Error',
             message=message,
-            backtrace=self._normalize_backtrace(exception.get('trace'))
+            backtrace=self._get_backtrace_from_exception(exception)
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(

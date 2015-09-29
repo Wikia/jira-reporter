@@ -55,12 +55,11 @@ h5. Backtrace
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         exception = entry.get('@exception', {})
-        trace = exception.get('trace', [])
 
         # format the report
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
             assertion=exception.get('message'),
-            backtrace=self._normalize_backtrace(trace)
+            backtrace=self._get_backtrace_from_exception(exception)
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(

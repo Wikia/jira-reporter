@@ -23,10 +23,22 @@ class PHPLogsSource(KibanaSource):
     """
 
     @staticmethod
-    def _normalize_backtrace(trace):
-        """ Remove release-specific path  """
+    def _get_backtrace_from_exception(exception):
+        """ Get the PHP backtrace from the exception object and remove release-specific path  """
+        if exception is None:
+            return 'n/a'
+
+        trace = exception.get('trace')
+
         if trace is None:
             return 'n/a'
+
+        # add a line from which exception was thrown
+        # e.g. /usr/wikia/slot1/7211/src/extensions/wikia/UserProfilePageV3/UserProfilePageController.class.php:334
+        file_entry = exception.get('file')
+
+        if file_entry is not None:
+            trace = [file_entry] + trace
 
         # /usr/wikia/slot1/6875/src/includes/wikia/services/UserStatsService.class.php:452
         # /includes/wikia/services/UserStatsService.class.php:452

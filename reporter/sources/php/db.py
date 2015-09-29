@@ -115,7 +115,7 @@ h5. Backtrace
             error=error_no_ip,
             function=context.get('function'),
             server=context.get('server'),
-            backtrace=self._normalize_backtrace(entry.get('@exception', {}).get('trace'))
+            backtrace=self._get_backtrace_from_exception(entry.get('@exception'))
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(
@@ -236,7 +236,7 @@ h5. Backtrace
             query=query,
             function=context.get('method'),
             num_rows=context.get('num_rows'),
-            backtrace=self._normalize_backtrace(entry.get('@exception', {}).get('trace'))
+            backtrace=self._get_backtrace_from_exception(entry.get('@exception'))
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(
