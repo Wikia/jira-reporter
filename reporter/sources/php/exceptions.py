@@ -25,7 +25,9 @@ h5. Backtrace
     def _get_entries(self, query):
         """ Return errors and exceptions reported via WikiaLogger with error severity """
         return self._kibana.query_by_string(
-            query='severity:"^error" AND program: "apache2" AND -@exception.class: "DBConnectionError"',
+            # DBConnectionError exceptions are handled by DBQueryErrorsSource
+            # and skip wfDebugLog calls from WikiFactory
+            query='severity: "error" AND @exception.class: * AND -@exception.class: "DBConnectionError" AND -@context.logGroup: "createwiki"',
             limit=self.LIMIT
         )
 
@@ -53,6 +55,9 @@ h5. Backtrace
         # Remove release-specific part of a file path
         message = re.sub(r'/usr/wikia/slot\d/\d+/src', '', message)
 
+        # master fallback on blobs20141/106563095
+        message = re.sub(r'blobs\d+/\d+', 'blobsX', message)
+
         # use a message from the exception
         if exception_class == 'WikiaException':
             message = exception.get('message')
@@ -60,6 +65,19 @@ h5. Backtrace
         entry['@normalized_message'] = message
 
         return '{}-{}-{}'.format(env, exception_class or 'None', message)
+
+    def _get_kibana_url(self, entry):
+        """
+        Get Kibana dashboard URL for a given entry
+
+        It will be automatically added at the end of the report description
+        """
+        message = entry.get('@normalized_message')
+
+        return self.format_kibana_url(
+            query='"{}"'.format(message),
+            columns=['@timestamp', '@source_host', '@message', '@exception.message', '@fields.db_name', '@fields.url']
+        )
 
     def _get_description(self, entry):
         exception = entry.get('@exception', {})
@@ -81,14 +99,6 @@ h5. Backtrace
             full_message=full_message,
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
-
-        # format URL to the custom Kibana dashboard
-        description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(
-            url=self.format_kibana_url(
-                query='"{}"'.format(message),
-                columns=['@timestamp', '@source_host', '@message', '@exception.message', '@fields.db_name', '@fields.url']
-            )
-        )
 
         return description
 

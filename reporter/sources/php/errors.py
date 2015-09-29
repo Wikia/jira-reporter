@@ -143,10 +143,6 @@ class PHPErrorsSource(PHPLogsSource):
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
 
-        kibana_url = self._get_kibana_url(entry)
-        if kibana_url:
-            description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=kibana_url)
-
         return Report(
             summary=entry.get('@message_normalized'),
             description=description,

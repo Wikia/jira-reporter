@@ -43,6 +43,10 @@ class Report(object):
         """ Get report detailed description """
         return self._description
 
+    def append_to_description(self, desc):
+        """ Append a text to the report description """
+        self._description += desc
+
     def add_label(self, label):
         """ Add given label to the report """
         self._labels.append(label)

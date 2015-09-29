@@ -16,10 +16,8 @@ class PHPAssertionsSource(PHPLogsSource):
 h1. {assertion}
 
 h5. Backtrace
-* {backtrace}
+{backtrace}
 """
-
-    KIBANA_URL = 'https://kibana.wikia-inc.com/#/dashboard/elasticsearch/AssertionException'
 
     def _get_entries(self, query):
         """ Return failed assertions logs """
@@ -41,15 +39,28 @@ h5. Backtrace
 
         return '{}-{}'.format(exception.get('class'), exception.get('message'))
 
+    def _get_kibana_url(self, entry):
+        """
+        Get Kibana dashboard URL for a given entry
+
+        It will be automatically added at the end of the report description
+        """
+        exception = entry.get('@exception', {})
+
+        return self.format_kibana_url(
+            query='@exception.class: "Wikia\\Util\\AssertionException" AND @exception.message:"{}"'.format(exception.get('message')),
+            columns=['@timestamp', '@source_host', '@fields.url']
+        )
+
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         exception = entry.get('@exception', {})
-        backtrace = exception.get('trace', [])
+        trace = exception.get('trace', [])
 
         # format the report
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
             assertion=exception.get('message'),
-            backtrace='\n* '.join(backtrace)
+            backtrace=self._normalize_backtrace(trace)
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(
@@ -60,8 +71,6 @@ h5. Backtrace
             full_message=full_message,
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
-
-        description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=self.KIBANA_URL)
 
         return Report(
             summary='[Assertion failed] {assertion}'.format(assertion=exception.get('message')),

@@ -82,10 +82,6 @@ class PandoraErrorsSource(PandoraLogsSource):
             url=self._get_url_from_entry(entry) or 'n/a'
         ).strip()
 
-        kibana_url = self._get_kibana_url(entry)
-        if kibana_url:
-            description += '\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=kibana_url)
-
         # eg. [discussion] Unable to get the user information for userId: 23912489, Returning the default.
         summary = '[{}] {}'.format(entry.get('appname'), message)
 

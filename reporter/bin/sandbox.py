@@ -9,32 +9,28 @@ from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(name)-25s %(levelname)-8s %(message)s',
+    format='%(asctime)s %(name)-35s %(levelname)-8s %(message)s',
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 
 reports = list()
 
-"""
-source = KilledDatabaseQueriesSource()
-reports += source.query(threshold=0)
-
 source = PHPErrorsSource()
 reports += source.query("PHP Fatal Error", threshold=5)
 
-source = DBQueryNoLimitSource()
-reports += source.query(threshold=50)
-"""
+source = KilledDatabaseQueriesSource()
+reports += source.query(threshold=0)
+
+#source = DBQueryNoLimitSource()
+#reports += source.query(threshold=50)
 
 source = DBQueryErrorsSource()
-reports += source.query(threshold=5)
+reports += source.query(threshold=2)
 
-"""
-source = PHPAssertionsSource()
-reports += source.query(threshold=5)
+#source = PHPAssertionsSource()
+#reports += source.query(threshold=5)
 
-reports += PandoraErrorsSource().query(threshold=5)
-"""
+#reports += PandoraErrorsSource().query(threshold=5)
 
 #reports += PHPExceptionsSource().query(threshold=50)
 
