@@ -26,7 +26,8 @@ h5. Backtrace
         """ Return errors and exceptions reported via WikiaLogger with error severity """
         return self._kibana.query_by_string(
             # DBConnectionError exceptions are handled by DBQueryErrorsSource
-            query='severity: "error" AND @exception.class: * AND -@exception.class: "DBConnectionError"',
+            # and skip wfDebugLog calls from WikiFactory
+            query='severity: "error" AND @exception.class: * AND -@exception.class: "DBConnectionError" AND -@context.logGroup: "createwiki"',
             limit=self.LIMIT
         )
 
@@ -53,6 +54,9 @@ h5. Backtrace
 
         # Remove release-specific part of a file path
         message = re.sub(r'/usr/wikia/slot\d/\d+/src', '', message)
+
+        # master fallback on blobs20141/106563095
+        message = re.sub(r'blobs\d+/\d+', 'blobsX', message)
 
         # use a message from the exception
         if exception_class == 'WikiaException':
