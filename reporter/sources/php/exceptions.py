@@ -48,6 +48,10 @@ h5. Backtrace
 
         message = entry.get('@message', '')
 
+        # use a message from the exception
+        if exception_class == 'WikiaException':
+            message = exception.get('message')
+
         # Server #3 (10.8.38.41) is excessively lagged (126 seconds)
         message = re.sub(r'#\d+', '#X', message)
         message = re.sub(r'\d+ sec', 'X sec', message)
@@ -57,10 +61,6 @@ h5. Backtrace
 
         # master fallback on blobs20141/106563095
         message = re.sub(r'blobs\d+/\d+', 'blobsX', message)
-
-        # use a message from the exception
-        if exception_class == 'WikiaException':
-            message = exception.get('message')
 
         entry['@normalized_message'] = message
 
