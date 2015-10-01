@@ -1,4 +1,5 @@
 import json
+import re
 
 from reporter.helpers import is_production_host
 from reporter.reports import Report
@@ -36,8 +37,18 @@ h5. Backtrace
     def _normalize(self, entry):
         """ Normalize using the assertion class and message """
         exception = entry.get('@exception', {})
+        message = exception.get('message')
 
-        return '{}-{}'.format(exception.get('class'), exception.get('message'))
+        # remove PHP-encoded data
+        # a:26:{s:3:"url";...s:10:"local_port";i:0;}
+        message = re.sub(r'a:\d+:{.*;}', '', message)
+
+        # normalize services timeout errors
+        message = re.sub(r'API call to /[^ ]+ timed out', 'API call to /X timed out', message)
+
+        message = message.strip(': ')
+
+        return '{}-{}'.format(exception.get('class'), message)
 
     def _get_kibana_url(self, entry):
         """
@@ -65,7 +76,7 @@ h5. Backtrace
         description = self.REPORT_TEMPLATE.format(
             env=self._get_env_from_entry(entry),
             source_host=entry.get('@source_host', 'n/a'),
-            context_formatted=None,
+            context_formatted=json.dumps(entry.get('@context', {}), indent=True),
             fields_formatted=json.dumps(entry.get('@fields', {}), indent=True),
             full_message=full_message,
             url=self._get_url_from_entry(entry) or 'n/a'
