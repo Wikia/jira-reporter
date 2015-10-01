@@ -25,9 +25,9 @@ h5. Backtrace
     def _get_entries(self, query):
         """ Return errors and exceptions reported via WikiaLogger with error severity """
         return self._kibana.query_by_string(
-            # DBConnectionError exceptions are handled by DBQueryErrorsSource
+            # DBQueryError exceptions are handled by DBQueryErrorsSource
             # and skip wfDebugLog calls from WikiFactory
-            query='severity: "error" AND @exception.class: * AND -@exception.class: "DBConnectionError" AND -@context.logGroup: "createwiki"',
+            query='severity: "error" AND @exception.class: * AND -@exception.class: "DBQueryError" AND -@context.logGroup: "createwiki"',
             limit=self.LIMIT
         )
 
