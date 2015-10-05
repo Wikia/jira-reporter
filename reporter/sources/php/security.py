@@ -24,7 +24,7 @@ h5. Backtrace
 {backtrace}
 """
 
-    LIMIT = 500
+    LIMIT = 1500
 
     def _get_entries(self, query):
         """ Return failed security assertions logs """
@@ -107,7 +107,7 @@ Please refer to [documentation on Wikia One|https://one.wikia-inc.com/wiki/User_
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
             message=message,
             details=details.strip(),
-            backtrace=self._get_backtrace_from_exception(exception)
+            backtrace=self._get_backtrace_from_exception(exception, offset=5)  # skip backtrace to CSRFDetector
         ).strip()
 
         description = self.REPORT_TEMPLATE.format(
