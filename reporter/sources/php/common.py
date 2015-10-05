@@ -33,7 +33,7 @@ class PHPLogsSource(KibanaSource):
         return [re.sub(r'/usr/wikia/slot1/\d+/src', '', entry) for entry in trace]
 
     @staticmethod
-    def _get_backtrace_from_exception(exception):
+    def _get_backtrace_from_exception(exception, offset=0):
         """ Get the PHP backtrace from the exception object and remove release-specific path  """
         if exception is None:
             return 'n/a'
@@ -51,6 +51,7 @@ class PHPLogsSource(KibanaSource):
             trace = [file_entry] + trace
 
         trace = PHPLogsSource._normalize_trace(trace)
+        trace = trace[offset:]
 
         return '* ' + '\n* '.join(trace)
 

@@ -17,6 +17,10 @@ class PHPLogsSourceTestClass(unittest.TestCase):
         assert PHPLogsSource._get_backtrace_from_exception({'file': '/test', 'trace': ['/foo', '/bar']}) == '* /test\n* /foo\n* /bar'
         assert PHPLogsSource._get_backtrace_from_exception({'trace': ['/usr/wikia/slot1/6875/src/includes/Hooks.php:216']}) == '* /includes/Hooks.php:216'
 
+        assert PHPLogsSource._get_backtrace_from_exception({'file': '/test', 'trace': ['/foo', '/bar']}, offset=0) == '* /test\n* /foo\n* /bar'
+        assert PHPLogsSource._get_backtrace_from_exception({'file': '/test', 'trace': ['/foo', '/bar']}, offset=1) == '* /foo\n* /bar'
+        assert PHPLogsSource._get_backtrace_from_exception({'file': '/test', 'trace': ['/foo', '/bar']}, offset=2) == '* /bar'
+
         assert PHPLogsSource._get_backtrace_from_exception({
             'file': '/usr/wikia/slot1/7211/src/extensions/wikia/UserProfilePageV3/UserProfilePageController.class.php:334',
             'trace': ['/usr/wikia/slot1/6875/src/includes/Hooks.php:216']
