@@ -5,7 +5,7 @@ This script is a sandbox for testing new sources
 import logging
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
-    PandoraErrorsSource
+    PandoraErrorsSource, PHPSecuritySource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -15,17 +15,17 @@ logging.basicConfig(
 
 reports = list()
 
-source = PHPErrorsSource()
-reports += source.query("PHP Fatal Error", threshold=5)
+#source = PHPErrorsSource()
+#reports += source.query("PHP Fatal Error", threshold=5)
 
-source = KilledDatabaseQueriesSource()
-reports += source.query(threshold=0)
+#source = KilledDatabaseQueriesSource()
+#reports += source.query(threshold=0)
 
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
 
-source = DBQueryErrorsSource()
-reports += source.query(threshold=2)
+#source = DBQueryErrorsSource()
+#reports += source.query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)
@@ -33,6 +33,8 @@ reports += source.query(threshold=2)
 #reports += PandoraErrorsSource().query(threshold=5)
 
 #reports += PHPExceptionsSource().query(threshold=50)
+
+reports += PHPSecuritySource().query(threshold=0)
 
 for report in reports:
     print report
