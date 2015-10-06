@@ -24,7 +24,7 @@ h5. Backtrace
 {backtrace}
 """
 
-    LIMIT = 1500
+    LIMIT = 5000
 
     def _get_entries(self, query):
         """ Return failed security assertions logs """
@@ -98,7 +98,8 @@ Please refer to [documentation on Wikia One|https://one.wikia-inc.com/wiki/User_
 *Token checked*: {token_checked}
 *HTTP method checked*: {method_checked}
 """.format(
-                action_performed=context.get('caller'),
+                # Wikia\Security\CSRFDetector::onRevisionInsertComplete -> onRevisionInsertComplete
+                action_performed=context.get('hookName') if 'hookName' in context else context.get('caller', '').split('::').pop(),
                 token_checked='checked' if context.get('editTokenChecked') is True else '*not checked*',
                 method_checked='checked' if context.get('httpMethodChecked') is True else '*not checked*',
             )

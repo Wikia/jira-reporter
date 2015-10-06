@@ -27,7 +27,8 @@ class Source(object):
         - each report is than formatted
         """
 
-        self._logger.info("Query: '{}'".format(query))
+        if query != '':
+            self._logger.info("Query: '{}'".format(query))
 
         # filter the entries
         entries = [entry for entry in self._get_entries(query) if self._filter(entry)]
