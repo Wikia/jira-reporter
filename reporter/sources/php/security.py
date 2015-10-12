@@ -24,7 +24,7 @@ h5. Backtrace
 {backtrace}
 """
 
-    LIMIT = 5000
+    LIMIT = 25000
 
     def _get_entries(self, query):
         """ Return failed security assertions logs """
