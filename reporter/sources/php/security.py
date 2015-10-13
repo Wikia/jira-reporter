@@ -83,9 +83,11 @@ h5. Backtrace
         # labels to add a report
         labels = ['security']
 
-        assert message is not None
+        assert message is not None, '@message should not be empty'
 
         if issue_type == 'CSRF':
+            assert context.get('hookName') is not None, '@context.hookName should be defined'
+
             # @see https://cwe.mitre.org/data/definitions/352.html
             labels.append('CWE-352')
             details = """
@@ -94,12 +96,13 @@ An attacker can make a request on behalf of a current Wikia user.
 
 Please refer to [documentation on Wikia One|https://one.wikia-inc.com/wiki/User_blog:Daniel_Grunwell/Cross-Site_Request_Forgery_and_Nirvana_controllers] on how to protect your code.
 
+*Transaction*: {{{{{transaction}}}}}
 *Action performed*: {{{{{action_performed}}}}}
 *Token checked*: {token_checked}
 *HTTP method checked*: {method_checked}
 """.format(
-                # Wikia\Security\CSRFDetector::onRevisionInsertComplete -> onRevisionInsertComplete
-                action_performed=context.get('hookName') if 'hookName' in context else context.get('caller', '').split('::').pop(),
+                transaction=context.get('transaction'),  # e.g. api/nirvana/CreateNewWiki
+                action_performed=context.get('hookName'),  # e.g. WikiFactoryChanged
                 token_checked='checked' if context.get('editTokenChecked') is True else '*not checked*',
                 method_checked='checked' if context.get('httpMethodChecked') is True else '*not checked*',
             )
