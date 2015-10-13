@@ -8,7 +8,7 @@ import logging
 from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
-    PHPAssertionsSource, PandoraErrorsSource
+    PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,6 +47,9 @@ reports += PHPAssertionsSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1420
 reports += PandoraErrorsSource().query(threshold=50)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1540
+reports += PHPSecuritySource().query(threshold=0)  # security problems is always important
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
