@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Contains handling of different services that reports can be sent to
 """
@@ -41,10 +42,18 @@ class Jira(object):
         )
 
         if len(tickets) > 0:
-            self._logger.info('Found {count} tickets: <{tickets}>'.format(
-                count=len(tickets),
-                tickets='>, <'.join([self._get_issue_url(ticket.key) for ticket in tickets])
-            ))
+            self._logger.info('Found {} ticket(s)'.format(len(tickets)))
+
+            for ticket in tickets:
+                fields = ticket.fields
+
+                self._logger.info('<{url}> {assignee} ({status})'.format(
+                    id=ticket.key,
+                    url=ticket.permalink(),
+                    assignee=fields.assignee.displayName.encode('utf8') if fields.assignee else None,  # e.g. Jan Ęąwski
+                    status=fields.resolution or fields.status  # Done / In Progress / Won't Fix / ...
+                ))
+
             return True
         else:
             return False
