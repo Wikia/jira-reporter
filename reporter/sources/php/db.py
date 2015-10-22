@@ -144,7 +144,7 @@ h5. Backtrace
         if message is None:
             return None
 
-        message = message.strip()
+        message = message.strip().encode('utf8')
 
         """
         A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script

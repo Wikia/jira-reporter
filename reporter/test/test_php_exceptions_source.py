@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Set of unit tests for PHPExceptionsSource
 """
@@ -26,3 +27,6 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
             '@message': 'Foo',
             '@exception': {'class': 'WikiaException', 'message': 'Template file not found: /usr/wikia/slot1/6969/src/extensions/wikia/Rail/templates/RailController_LazyForAnons.php'}
         }) == 'Production-WikiaException-Template file not found: /extensions/wikia/Rail/templates/RailController_LazyForAnons.php'
+
+        # UTF handling
+        assert self._source._normalize({'@message': u'ąźć', '@exception': {'class': 'Exception'}}) == 'Production-Exception-ąźć'

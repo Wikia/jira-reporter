@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Set of unit tests for DBQueryErrorsSource
 """
@@ -74,6 +75,11 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
             '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: FooClass::getBar'},
             '@context': {'errno': 42}
         }) == 'SELECT foo FROM bar-42'
+
+        assert source._normalize({
+            '@exception': {'message': u'Foo\nQuery: SELECT foo FROM bar WHERE ąść\nFunction: FooClass::getBar'},
+            '@context': {'errno': 42}
+        }) == 'SELECT foo FROM bar WHERE ąść-42'
 
         # SQL syntax errors (error #1064) are normalized a bit differently - PLATFORM-1512
         assert source._normalize({

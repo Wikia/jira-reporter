@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Set of unit tests for PHPErrorsSource
 """
@@ -155,14 +156,20 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert report.get_labels() == ['PHPErrors']
 
     def test_get_url_from_entry(self):
-        entry = {
+        assert self._source._get_url_from_entry({
             "@fields": {
                 "server": "zh.asoiaf.wikia.com",
                 "url": "/wikia.php?controller=Foo&method=bar",
             }
-        }
+        }) == 'http://zh.asoiaf.wikia.com/wikia.php?controller=Foo&method=bar'
 
-        assert self._source._get_url_from_entry(entry) == 'http://zh.asoiaf.wikia.com/wikia.php?controller=Foo&method=bar'
+        assert self._source._get_url_from_entry({
+            "@fields": {
+                "server": "zh.asoiaf.wikia.com",
+                "url": u"/wiki/Ąźć",
+            }
+        }) == 'http://zh.asoiaf.wikia.com/wiki/Ąźć'
+
         assert self._source._get_url_from_entry({}) is False
 
     def test_get_env_from_entry(self):
