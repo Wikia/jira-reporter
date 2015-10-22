@@ -30,3 +30,4 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
 
         # UTF handling
         assert self._source._normalize({'@message': u'ąźć', '@exception': {'class': 'Exception'}}) == 'Production-Exception-ąźć'
+        assert self._source._normalize({'@message': 'Foo', '@exception': {'class': 'WikiaException', 'message': u'ąźć'}}) == 'Production-WikiaException-ąźć'

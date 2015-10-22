@@ -46,11 +46,13 @@ h5. Backtrace
         exception_class = exception.get('class')
         env = self._get_env_from_entry(entry)
 
-        message = entry.get('@message', '').encode('utf8')
+        message = entry.get('@message', '')
 
         # use a message from the exception
         if exception_class == 'WikiaException':
             message = exception.get('message')
+
+        message = message.encode('utf8')
 
         # Server #3 (10.8.38.41) is excessively lagged (126 seconds)
         message = re.sub(r'#\d+', '#X', message)
