@@ -1,7 +1,7 @@
 jira-reporter
 -------------
 
-Automated JIRA reporting of PHP fatal errors, also known as **Norsk skogkatt**.
+Automated JIRA reporting of issue from various sources (PHP fatal errors, exceptions, SQL queries errors, CSRF issues, ...) also known as **Norsk skogkatt**.
 
 ![](http://fashionablygeek.com/wp-content/uploads/2014/11/kitty-cat-viking-hat-04.jpg)
 
