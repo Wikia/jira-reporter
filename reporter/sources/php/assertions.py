@@ -59,7 +59,7 @@ h5. Backtrace
         exception = entry.get('@exception', {})
 
         return self.format_kibana_url(
-            query='@exception.class: "Wikia\\Util\\AssertionException" AND @exception.message:"{}"'.format(exception.get('message')),
+            query='@exception.class: "Wikia\Util\AssertionException" AND @exception.message:"{}"'.format(exception.get('message')),
             columns=['@timestamp', '@source_host', '@fields.url']
         )
 
