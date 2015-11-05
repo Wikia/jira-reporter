@@ -24,11 +24,12 @@ h5. Backtrace
 {backtrace}
 """
 
+    EXCEPTION_CLASS = 'Wikia\Security\Exception'
     LIMIT = 25000
 
     def _get_entries(self, query):
         """ Return failed security assertions logs """
-        return self._kibana.get_rows(match={"@exception.class": "Wikia\\Security\\Exception"}, limit=self.LIMIT)
+        return self._kibana.get_rows(match={"@exception.class": self.EXCEPTION_CLASS}, limit=self.LIMIT)
 
     def _filter(self, entry):
         # filter out by host
@@ -64,10 +65,14 @@ h5. Backtrace
 
         It will be automatically added at the end of the report description
         """
-        # exception = entry.get('@exception', {})
+        context = entry.get('@context', {})
+
+        transaction = context.get('transaction')
+        hook_name = context.get('hookName')
 
         return self.format_kibana_url(
-            query='@exception.class: "Wikia\\Security\\Exception"',
+            query='@exception.class: "{}" AND @context.transaction: "{}" AND @context.hookName: "{}"'.
+                  format(self.EXCEPTION_CLASS, transaction, hook_name),
             columns=['@timestamp', '@source_host', '@fields.url']
         )
 
