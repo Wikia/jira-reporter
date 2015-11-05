@@ -243,6 +243,9 @@ class KibanaSource(Source):
         # do not split the query into Kibana subqueries
         query = query.replace(',', ' ')
 
+        # encode backslashes
+        query = query.replace('\\', '\\\\')
+
         return KibanaSource.KIBANA_URL.format(
             query=urllib.quote(query),
             fields=','.join(columns)
