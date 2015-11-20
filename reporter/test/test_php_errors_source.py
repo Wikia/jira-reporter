@@ -30,6 +30,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
         }) == 'PHP-PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Warning: strlen() expects parameter 1 to be string, array given in /usr/wikia/slot1/8325/foo/Bar.class.php on line 32'
+        }) == 'PHP-PHP Warning: strlen() expects parameter 1 to be string, array given in /foo/Bar.class.php on line 32-Production'
+
         # remove URLs
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Missing or invalid pubid from http://dragonball.wikia.com/__varnish_liftium/config in /var/www/liftium/delivery/config.php on line 17'
