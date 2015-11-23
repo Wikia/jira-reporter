@@ -80,6 +80,7 @@ class PHPErrorsSource(PHPLogsSource):
         Call to a member function getText() on a non-object in /includes/api/ApiParse.php on line 20
         """
         message = entry.get('@message')
+        message = message.replace('\n', '')
 
         # remove exception prefix
         # Exception from line 141 of /includes/wikia/nirvana/WikiaView.class.php:
@@ -117,6 +118,9 @@ class PHPErrorsSource(PHPLogsSource):
 
         # normalize fatals (PLATFORM-1463)
         message = re.sub(r'PHP Fatal Error:\s+', 'PHP Fatal Error: ', message, flags=re.IGNORECASE)
+
+        # remove long backtraces from error message
+        message = re.sub(r'\s?Stack trace:(.*)\{main\}\s?', '', message, flags=re.MULTILINE)
 
         # update the entry
         entry['@message_normalized'] = message
