@@ -34,6 +34,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Warning: strlen() expects parameter 1 to be string, array given in /usr/wikia/slot1/8325/foo/Bar.class.php on line 32'
         }) == 'PHP-PHP Warning: strlen() expects parameter 1 to be string, array given in /foo/Bar.class.php on line 32-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Warning: include(/data/deploytools/build/wikia.foo/src/extensions/wikia/ArticleNavigation/ArticleNavigation.i18n.php): failed to open stream: No such file or directory in /data/deploytools/build/wikia.foo/src/includes/LocalisationCache.php on line 461'
+        }) == 'PHP-PHP Warning: include(/extensions/wikia/ArticleNavigation/ArticleNavigation.i18n.php): failed to open stream: No such file or directory in /includes/LocalisationCache.php on line 461-Production'
+
         # remove URLs
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Missing or invalid pubid from http://dragonball.wikia.com/__varnish_liftium/config in /var/www/liftium/delivery/config.php on line 17'

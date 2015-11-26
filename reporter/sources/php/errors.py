@@ -93,6 +93,8 @@ class PHPErrorsSource(PHPLogsSource):
         # remove release-specific part
         # /usr/wikia/slot1/3006/src
         message = re.sub(r'/usr/wikia/slot1/\d+(/src)?', '', message)
+        # /data/deploytools/build/wikia.foo/src
+        message = re.sub(r'/data/deploytools/build/wikia.[^/]+/src', '', message)
 
         # remove XML parsing errors details
         # Tag figure invalid in Entity, line: 286
