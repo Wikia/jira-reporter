@@ -83,6 +83,15 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Warning: preg_match(): Compilation failed: unmatched parentheses at offset 330 in /usr/wikia/slot1/4182/src/extensions/AbuseFilter/AbuseFilter.parser.php on line 219',
         }) == 'PHP-PHP Warning: preg_match(): Compilation failed: unmatched parentheses at offset N in /extensions/AbuseFilter/AbuseFilter.parser.php on line 219-Production'
 
+        # DFS warnings (PLATFORM-1735)
+        assert self._source._normalize({
+            '@message': 'PHP Warning: fopen(/images/f/fallout/ru/images/lockdir/glhnpfrdy6whq8huspvtijr1bruag2p.lock): failed to open stream: No such file or directory in /includes/filerepo/backend/lockmanager/FSLockManager.php on line 89',
+        }) == 'PHP-PHP Warning: fopen(/images/X): failed to open stream: No such file or directory in /includes/filerepo/backend/lockmanager/FSLockManager.php on line 89-Production'
+
+        assert self._source._normalize({
+            '@message': 'PHP Warning: mwstore://swift-backend/sonicstory/de/images/3/32/Temp_565db37342e7c0.04269745 was not stored with SHA-1 metadata. in /includes/filerepo/backend/SwiftFileBackend.php on line 574',
+        }) == 'PHP-PHP Warning: mwstore://swift-backend/X was not stored with SHA-1 metadata. in /includes/filerepo/backend/SwiftFileBackend.php on line 574-Production'
+
         # fatals normalization (PLATFORM-1463)
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Maximum execution',

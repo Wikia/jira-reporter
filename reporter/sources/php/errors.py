@@ -107,8 +107,12 @@ class PHPErrorsSource(PHPLogsSource):
         # remove exec arguments
         message = re.sub(r'Unable to fork \[[^\]]+\]', 'Unable to fork [X]', message)
 
-        # normalize /tmp paths
+        # normalize /tmp and /images paths
         message = re.sub(r'/tmp/\w+', '/tmp/X', message)
+        message = re.sub(r'\(/images/[^)]+\)', '(/images/X)', message)
+
+        # normalize swift paths
+        message = re.sub(r'mwstore://swift-backend/[^ ]+', 'mwstore://swift-backend/X', message)
 
         # normalize "17956864 bytes"
         message = re.sub(r'\d+ bytes', 'N bytes', message)
