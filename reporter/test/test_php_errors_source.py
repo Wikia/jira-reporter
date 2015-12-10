@@ -48,6 +48,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Warning: DOMDocument::loadHTML(): Tag figure invalid in Entity, line: 286 in /includes/wikia/InfoboxExtractor.class.php on line 53'
         }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): Tag X invalid in Entity, line: N in /includes/wikia/InfoboxExtractor.class.php on line 53-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Warning: DOMDocument::loadHTML(): Unexpected end tag : p in Entity, line: 82 in /usr/wikia/slot1/8696/src/includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81'
+        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): Unexpected end tag : X in Entity, line: N in /includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81-Production'
+
         # normalize popen() logs
         assert self._source._normalize({
             '@message': "PHP Warning: popen(/usr/bin/diff -u '/tmp/merge-old-8JOqT1' '/tmp/merge-your-BGuKlc',r): Cannot allocate memory in /includes/GlobalFunctions.php on line 3134"

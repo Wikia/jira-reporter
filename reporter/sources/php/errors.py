@@ -98,8 +98,9 @@ class PHPErrorsSource(PHPLogsSource):
 
         # remove XML parsing errors details
         # Tag figure invalid in Entity, line: 286
-        # Tag X invalid in Entity, line: N
+        # Unexpected end tag : p in Entity, line: 82
         message = re.sub(r'Tag \w+ invalid in Entity, line: \d+', 'Tag X invalid in Entity, line: N', message)
+        message = re.sub(r'Unexpected end tag : \w+ in Entity, line: \d+', 'Unexpected end tag : X in Entity, line: N', message)
 
         # remove popen() arguments
         message = re.sub(r'popen\([^\)]+\)', 'popen(X)', message)
