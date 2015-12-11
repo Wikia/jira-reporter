@@ -46,11 +46,15 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         # normalize "Tag figure invalid in Entity, line: 286" part
         assert self._source._normalize({
             '@message': 'PHP Warning: DOMDocument::loadHTML(): Tag figure invalid in Entity, line: 286 in /includes/wikia/InfoboxExtractor.class.php on line 53'
-        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): Tag X invalid in Entity, line: N in /includes/wikia/InfoboxExtractor.class.php on line 53-Production'
+        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): X, line: N in /includes/wikia/InfoboxExtractor.class.php on line 53-Production'
 
         assert self._source._normalize({
             '@message': 'PHP Warning: DOMDocument::loadHTML(): Unexpected end tag : p in Entity, line: 82 in /usr/wikia/slot1/8696/src/includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81'
-        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): Unexpected end tag : X in Entity, line: N in /includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81-Production'
+        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): X, line: N in /includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81-Production'
+
+        assert self._source._normalize({
+            '@message': 'PHP Warning: DOMDocument::loadHTML(): Opening and ending tag mismatch: td and tr in Entity, line: 46 in /includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81'
+        }) == 'PHP-PHP Warning: DOMDocument::loadHTML(): X, line: N in /includes/wikia/parser/templatetypes/handlers/DataTables.class.php on line 81-Production'
 
         # normalize popen() logs
         assert self._source._normalize({
