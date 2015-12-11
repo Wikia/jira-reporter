@@ -238,7 +238,7 @@ class KibanaSource(Source):
 
     @staticmethod
     def format_kibana_url(query, columns=None):
-        columns = columns or ['@timestamp', '@source_host', 'message']
+        columns = columns or ['@timestamp', '@source_host', '@message']
 
         # do not split the query into Kibana subqueries
         query = query.replace(',', ' ')
@@ -261,9 +261,21 @@ class KibanaSource(Source):
 
     def _update_report(self, report, entry):
         """
-        Call self._get_kibana_url and update the report description if there's a link to custom dashboard
+        Add generic links to error specific Kibana dashboard and request trace (by request_id)
         """
+        # call self._get_kibana_url and update the report description if there's a link to custom dashboard
         kibana_url = self._get_kibana_url(entry)
 
         if kibana_url is not None:
             report.append_to_description('\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=kibana_url))
+
+        # add a link to request trace using @fields.request_id
+        request_id = entry.get('@fields', {}).get('request_id')
+
+        if request_id:
+            report.append_to_description('\n\n*[Request trace for {request_id}|{url}]*'.format(
+                request_id=request_id,
+                url=self.format_kibana_url(
+                    query='@fields.request_id: "{}"'.format(request_id)
+                )
+            ))
