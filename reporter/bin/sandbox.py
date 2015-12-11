@@ -15,8 +15,8 @@ logging.basicConfig(
 
 reports = list()
 
-#source = PHPErrorsSource()
-#reports += source.query("PHP Fatal Error", threshold=5)
+source = PHPErrorsSource()
+reports += source.query("PHP Fatal Error", threshold=5)
 
 #source = KilledDatabaseQueriesSource()
 #reports += source.query(threshold=0)
@@ -34,7 +34,7 @@ reports = list()
 
 #reports += PHPExceptionsSource().query(threshold=50)
 
-reports += PHPSecuritySource().query(threshold=0)
+#reports += PHPSecuritySource().query(threshold=0)
 
 for report in reports:
     print report
