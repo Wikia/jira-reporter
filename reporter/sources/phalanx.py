@@ -45,7 +45,7 @@ h3. Stacktrace
         Get the link to Kibana dashboard showing the provided error log entry
         """
         return self.format_kibana_url(
-            query='appname: "phalanx" ND -lvl: "INFO" AND logger_name: "{logger_name}"'.format(
+            query='appname: "phalanx" AND -lvl: "INFO" AND logger_name: "{logger_name}"'.format(
                 logger_name=entry.get('logger_name')
             ),
             columns=['@timestamp', '@source_host', 'logger_name', 'lvl', '@message', 'stack_trace']
