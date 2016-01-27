@@ -36,7 +36,7 @@ source = PHPErrorsSource()
 
 #reports += PHPSecuritySource().query(threshold=0)
 
-reports += PhalanxSource().query(threshold=0)
+reports += PhalanxSource().query(threshold=5)
 
 for report in reports:
     print report
