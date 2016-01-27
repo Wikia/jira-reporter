@@ -37,6 +37,7 @@ h3. Stacktrace
     def _normalize(self, entry):
         message = entry.get('@message')
         message = re.sub(r'phalanx-\w\d', 'phalanx-*', message)
+        message = re.sub(r'\d+.\d+.\d+.\d+:\d+', 'x.x.x.x:x', message)
 
         return '{}-{}-{}'.format(self.REPORT_LABEL, entry.get('logger_name'), message)
 

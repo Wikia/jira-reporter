@@ -23,3 +23,8 @@ class PhalanxSourceTestClass(unittest.TestCase):
             '@message': 'Could not notify node phalanx-r4: com.twitter.util.TimeoutException: 10.seconds',
             'logger_name': 'sendNotify'
         }) == 'Phalanx-sendNotify-Could not notify node phalanx-*: com.twitter.util.TimeoutException: 10.seconds'
+
+        assert self._source._normalize({
+            '@message': 'Request("GET /foo", from /10.14.30.130:48933)',
+            'logger_name': 'UnknownRequestPath'
+        }) == 'Phalanx-UnknownRequestPath-Request("GET /foo", from /x.x.x.x:x)'
