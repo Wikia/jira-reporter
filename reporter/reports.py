@@ -15,8 +15,9 @@ class Report(object):
         if label:
             self.add_label(label)
 
-        self._unique_id = False
         self._counter = False
+        self._unique_id = False
+        self._url = False
 
     def set_unique_id(self, unique_id):
         """ Set the hash used to avoid duplicates reported to JIRA """
@@ -33,6 +34,14 @@ class Report(object):
     def get_counter(self):
         """ Get occurrences counter """
         return self._counter
+
+    def set_url(self, url):
+        """ Set URL for this report """
+        self._url = url
+
+    def get_url(self):
+        """ Get URL for this report """
+        return self._url
 
     def get_summary(self):
         """ Get report title / summary """

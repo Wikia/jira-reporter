@@ -279,3 +279,6 @@ class KibanaSource(Source):
                     query='@fields.request_id: "{}"'.format(request_id)
                 )
             ))
+
+        # set JIRA URL field
+        report.set_url(self._get_url_from_entry(entry))
