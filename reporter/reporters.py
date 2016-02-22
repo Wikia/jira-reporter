@@ -63,6 +63,8 @@ class Jira(object):
         Send given report to JIRA
 
         It checks if it hasn't been reported already
+
+        :type report reporter.reports.Report
         """
         self._logger.info('Reporting "{}"'.format(report.get_summary()))
 
@@ -89,8 +91,11 @@ class Jira(object):
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])
 
-        # set report_hash field
+        # set custom field
         ticket_dict[self._fields['custom']['unique_id']] = report.get_unique_id()
+
+        if report.get_url() is not False:
+            ticket_dict[self._fields['custom']['url']] = report.get_url()
 
         # report the ticket
         self._logger.info('Reporting {}'.format(json.dumps(ticket_dict)))
