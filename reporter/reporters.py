@@ -91,9 +91,7 @@ class Jira(object):
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])
 
-        # set custom field
-        ticket_dict[self._fields['custom']['unique_id']] = report.get_unique_id()
-
+        # set custom fields
         if report.get_url() is not False:
             ticket_dict[self._fields['custom']['url']] = report.get_url()
 
