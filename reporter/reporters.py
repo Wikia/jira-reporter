@@ -17,7 +17,7 @@ class Jira(object):
     @see http://jira-python.readthedocs.org/en/latest/
     """
 
-    JQL = "{hash_field} ~ '{hash_value}' or summary ~ 'Hash: {hash_value}'"
+    JQL = "{hash_field} ~ '{hash_value}' OR description ~ 'Hash: {hash_value}'"
 
     def __init__(self):
         self._logger = logging.getLogger('Jira')
