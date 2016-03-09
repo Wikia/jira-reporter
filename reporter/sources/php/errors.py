@@ -128,6 +128,9 @@ class PHPErrorsSource(PHPLogsSource):
         # remove long backtraces from error message
         message = re.sub(r'\s?Stack trace:(.*)\{main\}\s?', '', message, flags=re.MULTILINE)
 
+        # remove line number from simple_html_dom.php fatal errors
+        message = re.sub(r'simplehtmldom/simple_html_dom.php on line \d+', 'simplehtmldom/simple_html_dom.php', message)
+
         # update the entry
         entry['@message_normalized'] = message
 
