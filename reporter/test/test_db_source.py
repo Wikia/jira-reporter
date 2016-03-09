@@ -86,3 +86,9 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
             '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: FooClass::getBar'},
             '@context': {'errno': 1064}  # SQL syntax error code
         }) == 'FooClass::getBar-1064'
+
+        # properly encode UTF characters and prevent UnicodeEncodeError
+        assert source._normalize({
+            '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: FooClass::getBar'},
+            '@context': {'errno': 1064, 'err': u'ąęź'}  # SQL syntax error code
+        }) == 'FooClass::getBar-1064'
