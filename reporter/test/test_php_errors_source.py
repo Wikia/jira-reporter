@@ -113,6 +113,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Fatal error: Maximum execution',
         }) == 'PHP-PHP Fatal Error: Maximum execution-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/9508/src/lib/vendor/simplehtmldom/simple_html_dom.php on line 332',
+        }) == 'PHP-PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /lib/vendor/simplehtmldom/simple_html_dom.php-Production'
+
         # normalize PHP fatal errors with a full backtrace
         assert self._source._normalize({
             '@message': "PHP Fatal Error: Uncaught exception 'DBConnectionError' with message 'DB connection error: Unknown MySQL server host 'slave.db-sharedb.service.consul' (2) (slave.db-sharedb.service.consul)' in /usr/wikia/slot1/8369/src/includes/db/Database.php:825\nStack trace:\n#0 /usr/wikia/slot1/8369/src/includes/db/LoadBalancer.php(774): DatabaseBase->reportConnectionError('Unknown error (...')\n#1 /usr/wikia/slot1/8369/src/includes/db/LoadBalancer.php(530): LoadBalancer->reportConnectionError(Object(DatabaseMysqli))\n#2 /usr/wikia/slot1/8369/src/includes/GlobalFunctions.php(3640): LoadBalancer->getConnection(-1, Array, 'wikicities')\n#3 /usr/wikia/slot1/8369/src/extensions/wikia/WikiFactory/WikiFactory.php(169): wfGetDB(-1, Array, 'wikicities')\n#4 /usr/wikia/slot1/8369/src/extensions/wikia/WikiFactory/WikiFactory.php(2722): WikiFactory::db(-1)\n#5 /usr/wikia/slot1/8369/src/extensions/wikia/WikiFactory/WikiFactory.php(2676): WikiFactory::getCategories('530', true)\n#6 /usr/wikia/slot1/8369/config/CommonExtensions.php(94): WikiFactory::getCategory('530')\n#7 /usr/wikia/slot1/8369/config/LocalSettings.php(119): require_once('/usr/wikia/slot...')\n#8 /usr/wikia/slot1/8369/src/LocalSettings.php(4): require('/usr/wikia/slot...')\n#9 /usr/wikia/slot1/8369/src/includes/WebStart.php(141): require_once('/usr/wikia/slot...')\n#10 /usr/wikia/slot1/8369/src/wikia.php(13): require('/usr/wikia/slot...')\n#11 {main}\n  thrown in /usr/wikia/slot1/8369/src/includes/db/Database.php on line 825",
