@@ -31,3 +31,9 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
         # UTF handling
         assert self._source._normalize({'@message': u'ąźć', '@exception': {'class': 'Exception'}}) == 'Production-Exception-ąźć'
         assert self._source._normalize({'@message': 'Foo', '@exception': {'class': 'WikiaException', 'message': u'ąźć'}}) == 'Production-WikiaException-ąźć'
+
+    def test_filter(self):
+        assert self._source._filter({'@message': 'Foo', '@source_host': 'ap-s10'}) is True
+
+        # PHP Fatal errors with the exception backtrace should be ignored
+        assert self._source._filter({'@message': 'PHP Fatal error: Maximum execution', "@exception": {"class": "Exception"}, '@source_host': 'ap-s10'}) is False

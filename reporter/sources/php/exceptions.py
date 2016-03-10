@@ -38,6 +38,11 @@ h5. Backtrace
         if not is_production_host(host):
             return False
 
+        # ignore PHP Fatal errors with backtrace here - they're handled by PHPErrorsSource
+        message = entry.get('@message', '')
+        if message.startswith('PHP Fatal '):
+            return False
+
         return True
 
     def _normalize(self, entry):
