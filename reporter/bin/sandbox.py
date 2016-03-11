@@ -17,6 +17,7 @@ reports = list()
 
 source = PHPErrorsSource()
 #reports += source.query("PHP Fatal Error", threshold=5)
+reports += source.query("PHP Notice", threshold=2000)
 
 #source = KilledDatabaseQueriesSource()
 #reports += source.query(threshold=0)
@@ -36,7 +37,7 @@ source = PHPErrorsSource()
 
 #reports += PHPSecuritySource().query(threshold=0)
 
-reports += PhalanxSource().query(threshold=5)
+#reports += PhalanxSource().query(threshold=5)
 
 for report in reports:
     print report
