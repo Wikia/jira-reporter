@@ -124,12 +124,17 @@ class PHPErrorsSource(PHPLogsSource):
 
         # normalize fatals (PLATFORM-1463)
         message = re.sub(r'PHP Fatal Error:\s+', 'PHP Fatal Error: ', message, flags=re.IGNORECASE)
+        message = re.sub(r'PHP Notice:\s+', 'PHP Notice: ', message)
 
         # remove long backtraces from error message
         message = re.sub(r'\s?Stack trace:(.*)\{main\}\s?', '', message, flags=re.MULTILINE)
 
         # remove line number from simple_html_dom.php fatal errors
         message = re.sub(r'simplehtmldom/simple_html_dom.php on line \d+', 'simplehtmldom/simple_html_dom.php', message)
+
+        # remove index name / offset from notices
+        message = re.sub(r'Undefined index: [^\s]+ in', 'Undefined index: X in', message)
+        message = re.sub(r'Undefined offset: \d+ in', 'Undefined offset: N in', message)
 
         # update the entry
         entry['@message_normalized'] = message
