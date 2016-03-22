@@ -269,18 +269,6 @@ class KibanaSource(Source):
         if kibana_url is not None:
             report.append_to_description('\n\n*Still valid?* Check [Kibana dashboard|{url}]'.format(url=kibana_url))
 
-        # add a link to request trace using @fields.request_id
-        # TODO: remove after PLATFORM-1949 is deployed (Mar 22nd)
-        request_id = entry.get('@fields', {}).get('request_id')
-
-        if request_id:
-            report.append_to_description('\n\n*[Request trace for {request_id}|{url}]*'.format(
-                request_id=request_id,
-                url=self.format_kibana_url(
-                    query='@fields.request_id: "{}"'.format(request_id)
-                )
-            ))
-
         # add a link to request trace using @fields.trace_id (introduced by PLATFORM-1949)
         trace_id = entry.get('@fields', {}).get('trace_id')
 
