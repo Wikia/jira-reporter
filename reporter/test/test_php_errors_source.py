@@ -172,8 +172,8 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             "@fields": {
                 "city_id": "475988",
                 "ip": "10.8.66.62",
-                "server": "zh.asoiaf.wikia.com",
-                "url": "/wikia.php?controller=GameGuides&method=renderpage&page=%E5%A5%94%E6%B5%81%E5%9F%8E",
+                "http_url_domain": "zh.asoiaf.wikia.com",
+                "http_url": "http://zh.asoiaf.wikia.com/wikia.php?controller=GameGuides&method=renderpage&page=%E5%A5%94%E6%B5%81%E5%9F%8E",
                 "db_name": "zhasoiaf",
                 "http_method": "GET",
                 "request_id": "mw54af96dd0b63e1.13192431"
@@ -201,15 +201,13 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
     def test_get_url_from_entry(self):
         assert self._source._get_url_from_entry({
             "@fields": {
-                "server": "zh.asoiaf.wikia.com",
-                "url": "/wikia.php?controller=Foo&method=bar",
+                "http_url": "http://zh.asoiaf.wikia.com/wikia.php?controller=Foo&method=bar",
             }
         }) == 'http://zh.asoiaf.wikia.com/wikia.php?controller=Foo&method=bar'
 
         assert self._source._get_url_from_entry({
             "@fields": {
-                "server": "zh.asoiaf.wikia.com",
-                "url": u"/wiki/Ąźć",
+                "http_url": u"http://zh.asoiaf.wikia.com/wiki/Ąźć",
             }
         }) == 'http://zh.asoiaf.wikia.com/wiki/Ąźć'
 
