@@ -204,14 +204,13 @@ class KibanaSource(Source):
         """
         fields = entry.get('@fields', {})
 
-        url = False
         try:
-            if fields.get('server') and fields.get('url'):
-                url = 'http://{}{}'.format(fields.get('server').encode('utf8'), fields.get('url').encode('utf8'))
+            if fields.get('http_url'):
+                return fields.get('http_url').encode('utf8')
         except UnicodeEncodeError:
             self._logger.error('URL parsing failed', exc_info=True)
 
-        return url
+        return False
 
     def _get_env_from_entry(self, entry):
         """
