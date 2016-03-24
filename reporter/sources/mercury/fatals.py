@@ -38,7 +38,7 @@ class MercuryFatalsSource(MercuryLogsSource):
         """
         Normalize given entry
         """
-        return 'Mercury-{}={}'.format(
+        return 'Mercury-{}-{}'.format(
             entry.get('namespace'),
             entry.get('msg').encode('utf8')
         )
