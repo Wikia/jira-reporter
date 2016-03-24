@@ -56,7 +56,7 @@ reports += PHPSecuritySource().query(threshold=0)  # security problems is always
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Phalanx%20service%20logs
 reports += PhalanxSource().query(threshold=5)
 
-# @see https://kibana.wikia-inc.com/#dashboard/temp/AVOjc8W-tlVOnUfDvyCL
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 reports += MercuryFatalsSource().query(threshold=0)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
