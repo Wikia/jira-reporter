@@ -8,7 +8,8 @@ import logging
 from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
-    PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, PhalanxSource
+    PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, PhalanxSource, \
+    MercuryFatalsSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -54,6 +55,9 @@ reports += PHPSecuritySource().query(threshold=0)  # security problems is always
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Phalanx%20service%20logs
 reports += PhalanxSource().query(threshold=5)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
+reports += MercuryFatalsSource().query(threshold=0)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
