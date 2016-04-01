@@ -46,6 +46,9 @@ h5. Backtrace
         # normalize services timeout errors
         message = re.sub(r'API call to /[^ ]+ timed out', 'API call to /X timed out', message)
 
+        # {"title":"Attribute UserProfilePagesV3_birthday not found for user 26816594","status":404}
+        message = re.sub(r'Attribute [^\s]+ not found for user \d+', 'Attribute X not found for user N', message)
+
         message = message.strip(': ')
 
         return '{}-{}'.format(exception.get('class'), message)
