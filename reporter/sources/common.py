@@ -183,7 +183,7 @@ class KibanaSource(Source):
     ENV_MAIN_DC = 'Production'
     ENV_BACKUP_DC = 'Reston'
 
-    PREVIEW_HOST = 'staging-s3'
+    PREVIEW_HOST = 'staging-s1'
 
     KIBANA_URL = 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query={query}&from=6h&fields={fields}'
 
@@ -222,7 +222,7 @@ class KibanaSource(Source):
         is_preview = host == self.PREVIEW_HOST
 
         if is_preview:
-            # staging-s3
+            # staging-s1
             env = self.ENV_PREVIEW
         else:
             # SJC or Reston?
