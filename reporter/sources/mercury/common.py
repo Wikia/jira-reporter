@@ -5,14 +5,15 @@ class MercuryLogsSource(KibanaSource):
     """
     Base class for Kibana-powered Mercury logs
 
-    @see https://kibana.wikia-inc.com/#/dashboard/temp/AVOjc8W-tlVOnUfDvyCL
+    @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
     """
     REPORT_TEMPLATE = """
 h3. {full_message}
+{error}
 
 {{code}}
 {details}
 {{code}}
     """
 
-    LIMIT = 10000
+    LIMIT = 150000

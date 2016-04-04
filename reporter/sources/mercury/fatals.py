@@ -5,14 +5,14 @@ from reporter.reports import Report
 from common import MercuryLogsSource
 
 
-class MercuryFatalsSource(MercuryLogsSource):
-    """ Get Mercury fatals from elasticsearch """
-    REPORT_LABEL = 'MercuryFatals'
+class MercurySource(MercuryLogsSource):
+    """ Get Mercury errors (of the specified severity) from elasticsearch """
+    REPORT_LABEL = 'MercuryErrors'
 
     def _get_entries(self, query):
-        """ Return matching entries by given prefix """
+        """ Return entries matching given severity """
         return self._kibana.query_by_string(
-            query='severity: "fatal" AND name: "mercury" AND @source_host: /mercury-(s|r).*/',
+            query='severity: "{}" AND name: "mercury" AND @source_host: /(mercury|staging)-(s|r).*/'.format(query),
             limit=self.LIMIT
         )
 
@@ -38,18 +38,20 @@ class MercuryFatalsSource(MercuryLogsSource):
         """
         Normalize given entry
         """
-        return 'Mercury-{}-{}'.format(
+        return 'Mercury-{}-{}-{}'.format(
             entry.get('namespace'),
-            entry.get('msg').encode('utf8')
+            entry.get('msg').encode('utf8'),
+            self._get_env_from_entry(entry)
         )
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         message = entry.get('msg').encode('utf8')
-        namespace = entry.get('namespace')
+        namespace = entry.get('namespace', 'main')
 
         description = self.REPORT_TEMPLATE.format(
             full_message=message,
+            error=entry.get('error', 'n/a'),
             details=json.dumps(entry, indent=True)
         ).strip()
 
