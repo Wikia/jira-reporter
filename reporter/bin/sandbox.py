@@ -5,7 +5,7 @@ This script is a sandbox for testing new sources
 import logging
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
-    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercuryFatalsSource
+    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -39,7 +39,9 @@ reports = list()
 
 #reports += PhalanxSource().query(threshold=5)
 
-reports += MercuryFatalsSource().query(threshold=0)
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
+reports += MercurySource().query('fatal', threshold=0)
+reports += MercurySource().query('error', threshold=50)
 
 for report in reports:
     print report
