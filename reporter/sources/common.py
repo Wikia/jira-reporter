@@ -183,7 +183,7 @@ class KibanaSource(Source):
     ENV_MAIN_DC = 'Production'
     ENV_BACKUP_DC = 'Reston'
 
-    PREVIEW_HOST = 'staging-s3'
+    PREVIEW_HOST = 'staging-s1'
 
     KIBANA_URL = 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query={query}&from=6h&fields={fields}'
 
