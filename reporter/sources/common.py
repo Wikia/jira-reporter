@@ -222,7 +222,7 @@ class KibanaSource(Source):
         is_preview = host == self.PREVIEW_HOST
 
         if is_preview:
-            # staging-s3
+            # staging-s1
             env = self.ENV_PREVIEW
         else:
             # SJC or Reston?
