@@ -74,7 +74,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         # error from preview
         assert self._source._normalize({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184',
-            '@source_host': 'staging-s3'
+            '@source_host': 'staging-s1'
         }) == 'PHP-PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /includes/Linker.php on line 184-Preview'
 
         # OOM, remove "n bytes"
@@ -223,8 +223,8 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         assert self._source._get_env_from_entry({'@source_host': 'service-r1'}) is self._source.ENV_BACKUP_DC
 
         # preview / verify
-        assert self._source._get_env_from_entry({'@source_host': 'staging-s3'}) is self._source.ENV_PREVIEW
-        assert self._source._get_env_from_entry({'@source_host': 'staging-s4'}) is self._source.ENV_MAIN_DC
+        assert self._source._get_env_from_entry({'@source_host': 'staging-s1'}) is self._source.ENV_PREVIEW
+        assert self._source._get_env_from_entry({'@source_host': 'staging-s2'}) is self._source.ENV_MAIN_DC
 
 
 class DBErrorsSourceTestClass(unittest.TestCase):
