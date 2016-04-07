@@ -73,7 +73,7 @@ h5. Backtrace
         return self.format_kibana_url(
             query='@exception.class: "{}" AND @context.transaction: "{}" AND @context.hookName: "{}"'.
                   format(self.EXCEPTION_CLASS, transaction, hook_name),
-            columns=['@timestamp', '@source_host', '@fields.url']
+            columns=['@timestamp', '@source_host', '@fields.http_url']
         )
 
     def _get_report(self, entry):

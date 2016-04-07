@@ -134,20 +134,20 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
-        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20ap-s%2A%20AND%20%22PHP%20Fatal%20Error%3A%20Maximum%20execution%20time%20of%20180%20seconds%20exceeded%22%20AND%20%22/src/includes/Linker.php%20on%20line%20184%22&from=6h&fields=@timestamp,@message,@fields.url,@source_host'
+        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20ap-s%2A%20AND%20%22PHP%20Fatal%20Error%3A%20Maximum%20execution%20time%20of%20180%20seconds%20exceeded%22%20AND%20%22/src/includes/Linker.php%20on%20line%20184%22&from=6h&fields=@timestamp,@message,@fields.http_url,@source_host'
 
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184',
             '@source_host': 'task-s2'
-        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20task-s%2A%20AND%20%22PHP%20Fatal%20Error%3A%20Maximum%20execution%20time%20of%20180%20seconds%20exceeded%22%20AND%20%22/src/includes/Linker.php%20on%20line%20184%22&from=6h&fields=@timestamp,@message,@fields.url,@source_host'
+        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20task-s%2A%20AND%20%22PHP%20Fatal%20Error%3A%20Maximum%20execution%20time%20of%20180%20seconds%20exceeded%22%20AND%20%22/src/includes/Linker.php%20on%20line%20184%22&from=6h&fields=@timestamp,@message,@fields.http_url,@source_host'
 
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal error: Call to undefined method Block::getPermissionsError() in /usr/wikia/slot1/3866/src/extensions/VisualEditor/ApiVisualEditor.php on line 449'
-        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20ap-s%2A%20AND%20%22PHP%20Fatal%20error%3A%20Call%20to%20undefined%20method%20Block%3A%3AgetPermissionsError%28%29%22%20AND%20%22/src/extensions/VisualEditor/ApiVisualEditor.php%20on%20line%20449%22&from=6h&fields=@timestamp,@message,@fields.url,@source_host'
+        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20ap-s%2A%20AND%20%22PHP%20Fatal%20error%3A%20Call%20to%20undefined%20method%20Block%3A%3AgetPermissionsError%28%29%22%20AND%20%22/src/extensions/VisualEditor/ApiVisualEditor.php%20on%20line%20449%22&from=6h&fields=@timestamp,@message,@fields.http_url,@source_host'
 
         assert self._source._get_kibana_url({
             '@message': 'PHP Catchable fatal error: Argument 1 passed to ArticleService::getContentFromParser() must be an instance of ParserOutput, boolean given, called in /usr/wikia/slot1/4610/src/includes/wikia/services/ArticleService.class.php on line 192'
-        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20ap-s%2A%20AND%20%22PHP%20Catchable%20fatal%20error%3A%20Argument%201%20passed%20to%20ArticleService%3A%3AgetContentFromParser%28%29%20must%20be%20an%20instance%20of%20ParserOutput%20boolean%20given%20called%22%20AND%20%22/src/includes/wikia/services/ArticleService.class.php%20on%20line%20192%22&from=6h&fields=@timestamp,@message,@fields.url,@source_host'
+        }) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40source_host%3A%20ap-s%2A%20AND%20%22PHP%20Catchable%20fatal%20error%3A%20Argument%201%20passed%20to%20ArticleService%3A%3AgetContentFromParser%28%29%20must%20be%20an%20instance%20of%20ParserOutput%20boolean%20given%20called%22%20AND%20%22/src/includes/wikia/services/ArticleService.class.php%20on%20line%20192%22&from=6h&fields=@timestamp,@message,@fields.http_url,@source_host'
 
         assert self._source._get_kibana_url({}) is None
 
