@@ -83,7 +83,7 @@ h5. Backtrace
 
         return self.format_kibana_url(
             query='"{}"'.format(message),
-            columns=['@timestamp', '@source_host', '@message', '@exception.message', '@fields.db_name', '@fields.url']
+            columns=['@timestamp', '@source_host', '@message', '@exception.message', '@fields.db_name', '@fields.http_url']
         )
 
     def _get_description(self, entry):

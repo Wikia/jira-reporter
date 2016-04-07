@@ -94,7 +94,7 @@ h5. Backtrace
 
         return self.format_kibana_url(
             query='@exception.class: "DBQueryError" AND "{}"'.format(context.get('function')),
-            columns=['@timestamp', '@source_host', '@context.errno', '@context.err', '@fields.db_name', '@fields.url']
+            columns=['@timestamp', '@source_host', '@context.errno', '@context.err', '@fields.db_name', '@fields.http_url']
         )
 
     def _get_report(self, entry):

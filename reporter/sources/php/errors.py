@@ -65,7 +65,7 @@ class PHPErrorsSource(PHPLogsSource):
             query=urllib.quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
                 host=host_regexp, message=matches.group(1).replace(',', ''), file=matches.group(2)
             )),
-            fields=','.join(['@timestamp', '@message', '@fields.url', '@source_host'])
+            fields=','.join(['@timestamp', '@message', '@fields.http_url', '@source_host'])
         )
 
     def _normalize(self, entry):
@@ -146,9 +146,9 @@ class PHPErrorsSource(PHPLogsSource):
 
     @staticmethod
     def _has_all_required_fields(entry):
-        # @fields.url is required
+        # @fields.http_url is required
         # see PLATFORM-1162
-        return entry.get('@fields', {}).get('url') is not None
+        return entry.get('@fields', {}).get('http_url') is not None
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
