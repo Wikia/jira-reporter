@@ -32,7 +32,7 @@ class DummySource(Source):
                 '@message': 'Foo-Bar',
                 '@context': [456, query],
                 '@fields': {
-                    'url': 'http://example.com'
+                    'http_url': 'http://example.com'
                 }
             },
             {
@@ -58,15 +58,15 @@ class DummySource(Source):
 
     @staticmethod
     def _has_all_required_fields(entry):
-        # @fields.url is required
-        return entry.get('@fields', {}).get('url') is not None
+        # @fields.http_url is required
+        return entry.get('@fields', {}).get('http_url') is not None
 
     def _get_report(self, entry):
         """ Generate Report instance for a given entry """
         self._reports_count += 1
 
         return Report(
-            summary='[Error] {msg} - {url}'.format(msg=entry.get('@message'), url=entry['@fields']['url']),
+            summary='[Error] {msg} - {url}'.format(msg=entry.get('@message'), url=entry['@fields']['http_url']),
             description=json.dumps(entry.get('@context'))
         )
 
