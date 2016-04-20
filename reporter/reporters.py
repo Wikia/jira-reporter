@@ -98,8 +98,13 @@ class Jira(object):
         # report the ticket
         self._logger.info('Reporting {}'.format(json.dumps(ticket_dict)))
 
-        new_issue = self._jira.create_issue(fields=ticket_dict)
-        issue_id = new_issue.key
+        try:
+            new_issue = self._jira.create_issue(fields=ticket_dict)
+            issue_id = new_issue.key
 
-        self._logger.info('Reported <{}>'.format(self._get_issue_url(issue_id)))
+            self._logger.info('Reported <{}>'.format(self._get_issue_url(issue_id)))
+        except Exception:
+            self._logger.error('Failed to report a ticket', exc_info=True)
+            return False
+
         return True
