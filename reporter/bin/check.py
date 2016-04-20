@@ -9,7 +9,7 @@ from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, PhalanxSource, \
-    MercurySource, HeliosSource
+    MercurySource, HeliosSource, VignetteThumbVerificationSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -62,6 +62,9 @@ reports += MercurySource().query('error', threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
 reports += HeliosSource().query(threshold=0)
+
+# @see https://kibana.wikia-inc.com/index.html#/dashboard/elasticsearch/Vigniette%20Thumb%20Verifier
+reports += VignetteThumbVerificationSource().query(threshold=5)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
