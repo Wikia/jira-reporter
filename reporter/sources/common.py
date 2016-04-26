@@ -21,7 +21,7 @@ class Source(object):
         The Source class entry point
 
         - the provided query is passed to _get_entries method.
-        - returned entries are than filtered using _filter method.
+        - returned entries are then filtered using _filter method.
         - filtered entries are normalized using _normalize_entries method
         - reports are grouped (using the key returned by _normalize_entries)
         - each report is than formatted
@@ -31,7 +31,12 @@ class Source(object):
             self._logger.info("Query: '{}'".format(query))
 
         # filter the entries
-        entries = [entry for entry in self._get_entries(query) if self._filter(entry)]
+        try:
+            entries = [entry for entry in self._get_entries(query) if self._filter(entry)]
+        except:
+            self._logger.error('self._get_entries raised an exception', exc_info=True)
+            return []
+
         self._logger.info("Got {} entries after filtering".format(len(entries)))
 
         # group them
