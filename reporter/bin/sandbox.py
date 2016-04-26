@@ -25,8 +25,8 @@ reports = list()
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
 
-#source = DBQueryErrorsSource()
-#reports += source.query(threshold=2)
+source = DBQueryErrorsSource()
+reports += source.query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)
@@ -44,7 +44,7 @@ reports = list()
 #reports += MercurySource().query('error', threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
-reports += HeliosSource().query(threshold=0)
+#reports += HeliosSource().query(threshold=0)
 
 for report in reports:
     print report
