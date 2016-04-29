@@ -61,7 +61,7 @@ reports += MercurySource().query('fatal', threshold=0)
 reports += MercurySource().query('error', threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
-reports += HeliosSource().query(threshold=0)
+reports += HeliosSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/index.html#/dashboard/elasticsearch/Vigniette%20Thumb%20Verifier
 reports += VignetteThumbVerificationSource().query(threshold=5)
