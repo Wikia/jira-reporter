@@ -22,6 +22,7 @@ class AnemometerSource(Source):
 {{noformat}}{query}{{noformat}}
 
 *Median query time*: {median} sec
+*Median rows examined*: {examined}
 *Rows sent average*: {rows}
 *DB server*: {server}
 *Database*: {database}
@@ -66,6 +67,7 @@ h5. Raw stats
                 database=entry.get('db_max'),
                 median=float(entry.get('Query_time_median')),
                 rows=int(entry.get('rows_sent_avg')),
+                examined=float(entry.get('Rows_examined_median')),
                 example=entry.get('sample').encode('utf8'),
                 url=url,
                 stats=json.dumps(stats, indent=True),

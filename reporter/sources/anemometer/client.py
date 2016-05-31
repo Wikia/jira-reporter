@@ -23,6 +23,7 @@ class AnemometerClient(object):
         'Lock_time_sum',
         'Rows_sent_sum',
         'Rows_examined_sum',
+        'Rows_examined_median',
         'Query_time_median',
         'Query_time_median',
         'dimension.sample',
