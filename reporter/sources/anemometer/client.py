@@ -53,7 +53,7 @@ class AnemometerClient(object):
         # apply default values
         fields = fields or self.FIELDS
         order = order or 'Query_time_sum DESC'
-        limit = limit or 50
+        limit = limit or 150
         group = group or 'checksum'
 
         # format the URL

@@ -11,7 +11,7 @@ class AnemometerSource(Source):
     Query Anenometer data and report queries with the worst performance
     """
     ANEMOMETER_URL = 'http://dev-drozdo/anemometer'
-    QUERY_TIME_SUM_THRESHOLD = 300  # do not report queries that take less than 250 sec (time sum) [sec]
+    QUERY_TIME_SUM_THRESHOLD = 300  # do not report queries that take less than 250 sec (time sum over a day) [sec]
     QUERY_TIME_MEDIAN_THRESHOLD = 0.5  # do not report queries that take less than 0.25 sec (median time) [sec]
 
     REPORT_LABEL = 'Anemometer'
@@ -43,6 +43,10 @@ h5. Raw stats
 
     def _filter(self, entry):
         if entry.get('Fingerprint') == 'mysqldump':
+            return False
+
+        # we do know that DPL is broken by design
+        if 'DPLMain:dynamicPageList' in entry.get('snippet'):
             return False
 
         if float(entry.get('Query_time_sum')) > self.QUERY_TIME_SUM_THRESHOLD or \
