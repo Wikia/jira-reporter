@@ -5,7 +5,7 @@ This script is a sandbox for testing new sources
 import logging
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
-    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource
+    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource,AnemometerSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,8 +25,8 @@ reports = list()
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
 
-source = DBQueryErrorsSource()
-reports += source.query(threshold=2)
+#source = DBQueryErrorsSource()
+#reports += source.query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)
@@ -45,6 +45,9 @@ reports += source.query(threshold=2)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
 #reports += HeliosSource().query(threshold=0)
+
+# @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
+reports += AnemometerSource().query(threshold=0)
 
 for report in reports:
     print report
