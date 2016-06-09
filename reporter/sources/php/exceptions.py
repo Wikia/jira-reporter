@@ -69,6 +69,9 @@ h5. Backtrace
         # master fallback on blobs20141/106563095
         message = re.sub(r'blobs\d+/\d+', 'blobsX', message)
 
+        # master fallback on blobs20141/106563095
+        message = re.sub(r'WikiaDataAccess could not obtain lock to generate data for: [A-Za-z0-9:]+', 'WikiaDataAccess could not obtain lock to generate data for: XXX', message)
+
         entry['@normalized_message'] = message
 
         return '{}-{}-{}'.format(env, exception_class or 'None', message)

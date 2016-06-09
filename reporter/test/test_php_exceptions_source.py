@@ -28,6 +28,11 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
             '@exception': {'class': 'WikiaException', 'message': 'Template file not found: /usr/wikia/slot1/6969/src/extensions/wikia/Rail/templates/RailController_LazyForAnons.php'}
         }) == 'Production-WikiaException-Template file not found: /extensions/wikia/Rail/templates/RailController_LazyForAnons.php'
 
+        assert self._source._normalize({
+            '@message': 'WikiaDispatcher::dispatch - Exception - MWException - WikiaDataAccess could not obtain lock to generate data for: wikicities:datamart:toparticles:4:1241752:200:cfcd208495d565ef66e7dff9f98764da::current',
+            '@exception': {'class': 'MWException', 'message': 'WikiaDataAccess could not obtain lock to generate data for: wikicities:datamart:toparticles:4:1241752:200:cfcd208495d565ef66e7dff9f98764da::current'}
+        }) == 'Production-MWException-WikiaDispatcher::dispatch - Exception - MWException - WikiaDataAccess could not obtain lock to generate data for: XXX'
+
         # UTF handling
         assert self._source._normalize({'@message': u'ąźć', '@exception': {'class': 'Exception'}}) == 'Production-Exception-ąźć'
         assert self._source._normalize({'@message': 'Foo', '@exception': {'class': 'WikiaException', 'message': u'ąźć'}}) == 'Production-WikiaException-ąźć'
