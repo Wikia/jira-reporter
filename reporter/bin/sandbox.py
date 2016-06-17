@@ -34,6 +34,7 @@ reports = list()
 #reports += PandoraErrorsSource().query(threshold=5)
 
 #reports += PHPExceptionsSource().query(threshold=50)
+reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
 #reports += PHPSecuritySource().query(threshold=0)
 
