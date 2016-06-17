@@ -139,24 +139,24 @@ class Source(object):
 
     def _get_entries(self, query):
         """ This method will query the source and return matching entries """
-        raise Exception("This method needs to be overwritten in your class!")
+        raise NotImplementedError("_get_entries() method needs to be overwritten in your class!")
 
     def _filter(self, entry):
         """ Callback used to filter entries """
-        raise Exception("This method needs to be overwritten in your class!")
+        raise NotImplementedError("_filter() method needs to be overwritten in your class!")
 
     def _normalize(self, entry):
         """
         Normalize given message by removing variables like server name
         to improve grouping of messages
         """
-        raise Exception("This method needs to be overwritten in your class!")
+        raise NotImplementedError("_normalize() method needs to be overwritten in your class!")
 
     def _get_report(self, entry):
         """
         Return a report for a given entry
         """
-        raise Exception("This method needs to be overwritten in your class!")
+        raise NotImplementedError("_get_report() method needs to be overwritten in your class!")
 
     def _update_report(self, report, entry):
         """
