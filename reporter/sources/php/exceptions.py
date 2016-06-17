@@ -22,7 +22,7 @@ h5. Backtrace
 {backtrace}
 """
 
-    def _get_entries(self, query='error'):
+    def _get_entries(self, query):
         """ Return errors and exceptions reported via WikiaLogger with error severity """
         return self._kibana.query_by_string(
             # DBQueryError exceptions are handled by DBQueryErrorsSource

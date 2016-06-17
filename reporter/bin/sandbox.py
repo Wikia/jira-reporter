@@ -33,7 +33,7 @@ reports = list()
 
 #reports += PandoraErrorsSource().query(threshold=5)
 
-#reports += PHPExceptionsSource().query(threshold=50)
+reports += PHPExceptionsSource().query(query='error', threshold=50)
 reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
 #reports += PHPSecuritySource().query(threshold=0)
@@ -48,7 +48,7 @@ reports += PHPExceptionsSource().query(query='critical', threshold=0)
 #reports += HeliosSource().query(threshold=0)
 
 # @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
-reports += AnemometerSource().query(threshold=0)
+#reports += AnemometerSource().query(threshold=0)
 
 for report in reports:
     print report
