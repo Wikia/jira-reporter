@@ -30,7 +30,7 @@ reports += source.query("PHP Strict Standards", threshold=200)
 reports += source.query("PHP Notice", threshold=2000)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Severity%20error
-reports += PHPExceptionsSource().query(threshold=50)
+reports += PHPExceptionsSource().query(query='error', threshold=50)
 reports += PHPExceptionsSource().query(query='critical', threshold=0)  # PLATFORM-2271
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/DBQuery%20errors
