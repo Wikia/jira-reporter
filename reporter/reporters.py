@@ -17,7 +17,7 @@ class Jira(object):
     @see http://jira-python.readthedocs.org/en/latest/
     """
 
-    JQL = "{hash_field} ~ '{hash_value}' OR description ~ 'Hash: {hash_value}'"
+    JQL = "description ~ '{hash_value}'"
 
     def __init__(self):
         self._logger = logging.getLogger('Jira')
@@ -38,7 +38,7 @@ class Jira(object):
         """
         self._logger.info('Checking {} unique ID...'.format(unique_id))
         tickets = self._jira.search_issues(
-            self.JQL.format(project='ER', hash_field='report_hash', hash_value=unique_id)
+            self.JQL.format(hash_value=unique_id)
         )
 
         if len(tickets) > 0:
@@ -69,7 +69,7 @@ class Jira(object):
         self._logger.info('Reporting "{}"'.format(report.get_summary()))
 
         # let's first check if the report is already in JIRA
-        # use "report_hash" custom field
+        # use "hash" added to a ticket description
         if self.ticket_exists(report.get_unique_id()):
             return False
 
