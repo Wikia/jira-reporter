@@ -28,13 +28,13 @@ reports = list()
 #source = DBQueryErrorsSource()
 #reports += source.query(threshold=2)
 
-#source = PHPAssertionsSource()
-#reports += source.query(threshold=5)
+source = PHPAssertionsSource()
+reports += source.query(threshold=5)
 
 #reports += PandoraErrorsSource().query(threshold=5)
 
-reports += PHPExceptionsSource().query(query='error', threshold=50)
-reports += PHPExceptionsSource().query(query='critical', threshold=0)
+#reports += PHPExceptionsSource().query(query='error', threshold=50)
+#reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
 #reports += PHPSecuritySource().query(threshold=0)
 

@@ -16,6 +16,8 @@ class PHPAssertionsSource(PHPLogsSource):
     FULL_MESSAGE_TEMPLATE = """
 h1. {assertion}
 
+{message}
+
 h5. Backtrace
 {backtrace}
 """
@@ -49,6 +51,10 @@ h5. Backtrace
         # {"title":"Attribute UserProfilePagesV3_birthday not found for user 26816594","status":404}
         message = re.sub(r'Attribute [^\s]+ not found for user \d+', 'Attribute X not found for user N', message)
 
+        # [404] Error connecting to the API (10.8.74.17:31440/user/28883525/attr/UserProfilePagesV3_birthday)
+        message = re.sub(r'\d+.\d+.\d+.\d+:\d+', 'N.N.N.N:N', message)  # normalize IP addresses
+        message = re.sub(r'/\d+', '/N', message)  # normalize user ID
+
         message = message.strip(': ')
 
         return '{}-{}'.format(exception.get('class'), message)
@@ -73,6 +79,7 @@ h5. Backtrace
         # format the report
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
             assertion=exception.get('message'),
+            message=entry.get('@message'),
             backtrace=self._get_backtrace_from_exception(exception)
         ).strip()
 

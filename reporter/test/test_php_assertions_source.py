@@ -21,3 +21,7 @@ class PHPAssertionsSourceTestClass(unittest.TestCase):
         assert self._source._normalize({
             '@exception': {'message': '{"title":"Attribute UserProfilePagesV3_birthday not found for user 26816594","status":404}'}
         }) == 'None-{"title":"Attribute X not found for user N","status":404}'
+
+        assert self._source._normalize({
+            '@exception': {'message': "[404] Error connecting to the API (10.8.74.17:31440/user/28883525/attr/UserProfilePagesV3_birthday)"}
+        }) == 'None-[404] Error connecting to the API (N.N.N.N:N/user/N/attr/UserProfilePagesV3_birthday)'
