@@ -25,3 +25,7 @@ class PHPAssertionsSourceTestClass(unittest.TestCase):
         assert self._source._normalize({
             '@exception': {'message': "[404] Error connecting to the API (10.8.74.17:31440/user/28883525/attr/UserProfilePagesV3_birthday)"}
         }) == 'None-[404] Error connecting to the API (N.N.N.N:N/user/N/attr/UserProfilePagesV3_birthday)'
+
+        assert self._source._normalize({
+            '@exception': {'message': "SASS compilation failed. Check PHP error log for more information. Error ID: qjiyzrao131pe600"}
+        }) == 'None-SASS compilation failed. Check PHP error log for more information. Error ID: X'

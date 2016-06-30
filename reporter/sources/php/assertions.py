@@ -55,6 +55,9 @@ h5. Backtrace
         message = re.sub(r'\d+.\d+.\d+.\d+:\d+', 'N.N.N.N:N', message)  # normalize IP addresses
         message = re.sub(r'/\d+', '/N', message)  # normalize user ID
 
+        # SASS compilation failed. Check PHP error log for more information. Error ID: qjiyzrao131pe600
+        message = re.sub(r'Error ID: [0-9a-z]+', 'Error ID: X', message)  # normalize error hash
+
         message = message.strip(': ')
 
         return '{}-{}'.format(exception.get('class'), message)
