@@ -28,8 +28,8 @@ reports = list()
 #source = DBQueryErrorsSource()
 #reports += source.query(threshold=2)
 
-source = PHPAssertionsSource()
-reports += source.query(threshold=5)
+#source = PHPAssertionsSource()
+#reports += source.query(threshold=5)
 
 #reports += PandoraErrorsSource().query(threshold=5)
 
@@ -48,7 +48,7 @@ reports += source.query(threshold=5)
 #reports += HeliosSource().query(threshold=0)
 
 # @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
-#reports += AnemometerSource().query(threshold=0)
+reports += AnemometerSource().query(threshold=0)
 
 for report in reports:
     print report

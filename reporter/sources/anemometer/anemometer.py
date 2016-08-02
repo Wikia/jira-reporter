@@ -10,7 +10,7 @@ class AnemometerSource(Source):
     """
     Query Anenometer data and report queries with the worst performance
     """
-    ANEMOMETER_URL = 'http://dev-drozdo/anemometer'
+    ANEMOMETER_URL = 'http://opstools-s1/anemometer'
     QUERY_TIME_SUM_THRESHOLD = 300  # do not report queries that take less than 250 sec (time sum over a day) [sec]
     QUERY_TIME_MEDIAN_THRESHOLD = 0.5  # do not report queries that take less than 0.25 sec (median time) [sec]
 
