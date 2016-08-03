@@ -176,7 +176,11 @@ class Source(object):
         metrics.set('query', query)
         metrics.set('entries', len(entries))
         metrics.set('reports', len(reports))
-        metrics.push()
+
+        try:
+            metrics.push()
+        except:
+            self._logger.error('Sending stats to InfluxDB failed', exc_info=True)
 
 
 class KibanaSource(Source):
