@@ -187,6 +187,7 @@ class KibanaSource(Source):
     ENV_PREVIEW = 'Preview'
     ENV_MAIN_DC = 'Production'
     ENV_BACKUP_DC = 'Reston'
+    ENV_STAGING = 'Staging'
 
     PREVIEW_HOST = 'staging-s1'
 
@@ -220,11 +221,16 @@ class KibanaSource(Source):
     def _get_env_from_entry(self, entry):
         """
         Get environment for given log entry
-        :param entry: dict
-        :return: string
+        :type entry dict
+        :rtype: str
         """
         host = entry.get('@source_host', '')
+        env = entry.get('@fields', {}).get('environment')
         is_preview = host == self.PREVIEW_HOST
+
+        # get env info from @fields.environment
+        if env == 'staging':
+            return self.ENV_STAGING
 
         if is_preview:
             # staging-s1
