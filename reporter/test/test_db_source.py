@@ -16,6 +16,8 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
 
         # filter by source host
         assert source._filter({'@source_host': 'ap-s20'}) is True
+        assert source._filter({'@source_host': 'staging-ap-s1'}) is True
+        assert source._filter({'@source_host': 'staging-task-s1'}) is True
         assert source._filter({'@source_host': 'dev-foo'}) is False
 
         # filter by MySQL error codes

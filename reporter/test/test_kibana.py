@@ -33,3 +33,19 @@ class KibanaSourceTestClass(unittest.TestCase):
         assert self._source.format_kibana_url(
             query='@exception.class: "Wikia\Util\AssertionException"'
         ) == 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query=%40exception.class%3A%20%22Wikia%5C%5CUtil%5C%5CAssertionException%22&from=6h&fields=@timestamp,@source_host,@message'
+
+    def test_get_env_from_entry(self):
+        # main DC (SJC)
+        assert self._source._get_env_from_entry({'@source_host': 'ap-s32'}) is self._source.ENV_MAIN_DC
+        assert self._source._get_env_from_entry({'@source_host': 'service-s32'}) is self._source.ENV_MAIN_DC
+
+        # backup DC (Reston)
+        assert self._source._get_env_from_entry({'@source_host': 'ap-r32'}) is self._source.ENV_BACKUP_DC
+        assert self._source._get_env_from_entry({'@source_host': 'service-r1'}) is self._source.ENV_BACKUP_DC
+
+        # preview / verify
+        assert self._source._get_env_from_entry({'@source_host': 'staging-s1'}) is self._source.ENV_PREVIEW
+        assert self._source._get_env_from_entry({'@source_host': 'staging-s2'}) is self._source.ENV_MAIN_DC
+
+        # staging
+        assert self._source._get_env_from_entry({'@fields': {'environment': 'staging'}}) is self._source.ENV_STAGING

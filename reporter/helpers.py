@@ -8,7 +8,7 @@ def is_production_host(host):
     """
     Return true if given host is from our main datacenter (SJC) or backup datacenter (Reston)
     """
-    return re.search(r'^(ap|task|cron|liftium|staging|deploy|auth)\-(s|r)', host) is not None
+    return re.search(r'^(ap|task|cron|liftium|staging|deploy|auth|staging-(ap|task))\-(s|r)', host) is not None
 
 
 def generalize_sql(sql):
