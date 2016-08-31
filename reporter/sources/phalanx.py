@@ -39,6 +39,9 @@ h3. Stacktrace
         message = re.sub(r'phalanx-\w\d', 'phalanx-*', message)
         message = re.sub(r'\d+.\d+.\d+.\d+:\d+', 'x.x.x.x:x', message)
 
+        # X-Request-Id: be0babcc-86da-4b27-bc1f-9025d314f745
+        message = re.sub(r'X-Request-Id: [a-z0-9-]+', '', message).rstrip()
+
         return '{}-{}-{}'.format(self.REPORT_LABEL, entry.get('logger_name'), message)
 
     def _get_kibana_url(self, entry):
