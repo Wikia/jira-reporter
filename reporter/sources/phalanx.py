@@ -26,6 +26,9 @@ h3. Stacktrace
 
     LIMIT = 10000
 
+    # X-Request-Id: be0babcc-86da-4b27-bc1f-9025d314f745
+    TRACE_ID_PATTERN = re.compile('X-Request-Id: ([a-f0-9-]+)')
+
     def _get_entries(self, query):
         # https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Phalanx%20service%20logs
         # -lvl: "INFO" - skip INFO level
@@ -34,13 +37,22 @@ h3. Stacktrace
     def _filter(self, entry):
         return True
 
+    def _get_trace_id(self, entry):
+        matches = re.search(self.TRACE_ID_PATTERN, entry.get('@message'))
+        return matches.group(1) if matches else None
+
     def _normalize(self, entry):
         message = entry.get('@message')
         message = re.sub(r'phalanx-\w\d', 'phalanx-*', message)
+        message = re.sub(r'\d+ms', 'Nms', message)
         message = re.sub(r'\d+.\d+.\d+.\d+:\d+', 'x.x.x.x:x', message)
 
-        # X-Request-Id: be0babcc-86da-4b27-bc1f-9025d314f745
-        message = re.sub(r'X-Request-Id: [a-z0-9-]+', '', message).rstrip()
+        # store trace ID - KibanaSource._update_report() will add a link to its log
+        entry['@fields'] = {
+            'trace_id': self._get_trace_id(entry)
+        }
+
+        message = re.sub(self.TRACE_ID_PATTERN, '', message).rstrip()
 
         return '{}-{}-{}'.format(self.REPORT_LABEL, entry.get('logger_name'), message)
 
