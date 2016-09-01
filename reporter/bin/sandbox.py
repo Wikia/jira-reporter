@@ -25,7 +25,7 @@ reports = list()
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
 
-reports += DBQueryErrorsSource().query(threshold=2)
+#reports += DBQueryErrorsSource().query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)
@@ -37,7 +37,7 @@ reports += DBQueryErrorsSource().query(threshold=2)
 
 #reports += PHPSecuritySource().query(threshold=0)
 
-#reports += PhalanxSource().query(threshold=5)
+reports += PhalanxSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 #reports += MercurySource().query('fatal', threshold=0)
