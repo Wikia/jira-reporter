@@ -290,7 +290,7 @@ class KibanaSource(Source):
             report.append_to_description('\n\n*[Request trace for {trace_id}|{url}]*'.format(
                 trace_id=trace_id,
                 url=self.format_kibana_url(
-                    query='@fields.trace_id: "{}"'.format(trace_id)
+                    query='"{}"'.format(trace_id)
                 )
             ))
 
