@@ -29,6 +29,9 @@ class Jira(object):
 
         self._logger.info("Using {} project on <{}>".format(self._project, self._server))
 
+    def get_api_client(self):
+        return self._jira
+
     def _get_issue_url(self, issue_id):
         return '{server}/browse/{issue_id}'.format(server=self._server, issue_id=issue_id)
 
