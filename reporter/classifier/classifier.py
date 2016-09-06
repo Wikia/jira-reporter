@@ -15,7 +15,7 @@ class ClassifierConfig(object):
 
         for section in ['components', 'paths']:
             with open('{}{}.yaml'.format(self.CLASSIFIER_CONFIG_DIR, section), mode='r') as fp:
-                self._config[section] = yaml.parse(fp)
+                self._config[section] = yaml.load(fp)[section]
 
     def __getitem__(self, item):
         """
