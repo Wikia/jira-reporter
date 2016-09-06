@@ -19,6 +19,7 @@ setup(
         'requests-oauthlib==0.4.2',
         'wikia.common.kibana==1.1.1',
         'wikia.common.perfmonitoring==1.0.0',
+        'PyYAML==3.11',
     ],
     include_package_data=True,
 )
