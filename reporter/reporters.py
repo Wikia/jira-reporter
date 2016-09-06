@@ -8,6 +8,7 @@ import logging
 from jira.client import JIRA
 
 from .config import JIRA_CONFIG
+from reporter.classifier import Classifier
 
 
 class Jira(object):
@@ -26,6 +27,8 @@ class Jira(object):
         self._fields = JIRA_CONFIG.get('fields')
         self._project = JIRA_CONFIG.get('project')
         self._server = self._jira.client_info()
+
+        self._classifier = Classifier()
 
         self._logger.info("Using {} project on <{}>".format(self._project, self._server))
 
@@ -90,6 +93,15 @@ class Jira(object):
             "description": description,
             "labels": report.get_labels()
         }
+
+        # PLATFORM-2405: classify the report: set a proper project and component
+        classification = self._classifier.classify(report)
+
+        if classification:
+            (project, component_id) = classification
+
+            ticket_dict['project']['key'] = project
+            ticket_dict['components'] = [{'id': component_id}]
 
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])

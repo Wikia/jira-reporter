@@ -9,6 +9,7 @@ import csv
 import logging
 import yaml
 
+from reporter.classifier import ClassifierConfig
 from reporter.reporters import Jira
 
 logging.basicConfig(
@@ -28,7 +29,7 @@ def _write_to_yaml(name, data):
     :type name str
     :type data dict
     """
-    with open('{}{}.yaml'.format(CLASSIFIER_CONFIG_DIR, name), mode='w') as fp:
+    with open('{}{}.yaml'.format(ClassifierConfig.CLASSIFIER_CONFIG_DIR, name), mode='w') as fp:
         fp.write(YAML_HEADER)
 
         yaml.dump({name: data}, fp, default_flow_style=False)
