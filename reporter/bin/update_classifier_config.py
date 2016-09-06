@@ -43,7 +43,7 @@ def update_components_mapping():
 
     components = {}
 
-    for component in jira_api.project_components('MAIN'):
+    for component in jira_api.project_components('MAIN') + jira_api.project_components('SER'):
         components[str(component.name.strip())] = int(component.id)
 
     _write_to_yaml('components', components)
