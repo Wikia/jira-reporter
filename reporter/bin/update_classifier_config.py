@@ -24,15 +24,15 @@ logger = logging.getLogger(__name__)
 
 
 def _write_to_yaml(name, data):
+    """
+    :type name str
+    :type data dict
+    """
     with open('{}{}.yaml'.format(CLASSIFIER_CONFIG_DIR, name), mode='w') as fp:
-        data = {
-            name: data
-        }
-
         fp.write(YAML_HEADER)
 
-        yaml.dump(data, fp, default_flow_style=False)
-        logger.info('{} generated'.format(fp.name))
+        yaml.dump({name: data}, fp, default_flow_style=False)
+        logger.info('{} generated (with {} items)'.format(fp.name, len(data.keys())))
 
 
 def update_components_mapping():
