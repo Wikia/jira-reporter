@@ -155,6 +155,9 @@ class Source(object):
     def _get_report(self, entry):
         """
         Return a report for a given entry
+
+        :type entry object
+        :rtype: reporter.reports.Report
         """
         raise NotImplementedError("_get_report() method needs to be overwritten in your class!")
 

@@ -23,3 +23,6 @@ check:
 
 sandbox:
 	python $(project_name)/bin/sandbox.py 2>&1 | less
+
+update_classifier_config:
+	python ${project_name}/bin/update_classifier_config.py

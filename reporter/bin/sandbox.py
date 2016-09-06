@@ -7,6 +7,8 @@ from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource,AnemometerSource
 
+from reporter.classifier import Classifier
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(name)-35s %(levelname)-8s %(message)s',
@@ -14,6 +16,7 @@ logging.basicConfig(
 )
 
 reports = list()
+classifier = Classifier()
 
 #source = PHPErrorsSource()
 #reports += source.query("PHP Fatal Error", threshold=5)
@@ -50,4 +53,5 @@ reports += PhalanxSource().query(threshold=5)
 #reports += AnemometerSource().query(threshold=0)
 
 for report in reports:
-    print report
+    print(report)
+    print(classifier.classify(report))

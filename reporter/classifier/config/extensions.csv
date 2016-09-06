@@ -1,0 +1,329 @@
+ls extensions/wikia -lh | awk '{ print $NF }',Component
+AbPerformanceTesting,In House AB Testing Framework
+AbTesting,In House AB Testing Framework
+AbuseFilterBypass,
+AchievementsII,"Achievements, Badges, Leaderboard"
+AdEngine,AdEngineering
+AdminDashboard,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+AjaxFunctions.php,
+AjaxPoll,Polls
+AnalyticsEngine,"Google, Universal Analytics"
+Answers,Answers
+AntiSpamInput,API Spam Protection
+ApiDocs,API
+AppPromoLanding,
+ARecoveryEngine,
+ArticleAsJson,Article
+ArticleComments,Comments
+ArticleMetaDescription,Article
+ArticlesAsResources,Article
+ArticleSummary,Article
+AssetsManager,
+AuthModal,
+AutoFollow,
+AutoMainpageFixer,
+AutomaticWikiAdoption,
+AutoPageCreate,CreateNewWiki
+BannerNotifications,Notifications
+BlogEditCategoryPrompter,Categories
+Blogs,Blogs
+BrokenRenameFix,Staff tools (wikis)
+Bucky,
+CanonicalHref,
+Captcha,
+CategoryBlueLinks,Categories
+CategoryExhibition,Categories
+CategoryGalleries,Categories
+CategoryPagination,Categories
+CategorySelect,Categories
+Chat2,Chat
+CheckpointCharlie,
+CityVisualization,
+CloseMyAccount,"User profile (profile masthead, general preferences)"
+CodeLint,
+CommentCSV,Comments
+CommentsOnly,Comments
+CommunityMessages,Community Page
+CommunityPage,Community Page
+Comteam,
+ConfirmEmailPrompt,Product Email
+ContentFeeds,Content Extensions (tags in wikitext)
+ContentReview,Content Extensions (tags in wikitext)
+ContentWarning,Content Extensions (tags in wikitext)
+ContributionAppreciation,
+ContributionPrototype,
+CookiePolicy,
+CoppaTool,Staff tools (wikis)
+CorporateFooter,
+CreateNewWiki,CreateNewWiki
+CreatePage,
+CuratedContent,Curated Conent
+Custom404Page,Community Page
+DataProvider,
+DesignSystem,Design System
+Development,Development platform and tools
+DMCARequest,
+DomainVerification,
+EditAccount,
+Editcount,
+EditorPreference,"Editor (incl. source, ck, visual, mini)"
+EditorSurvey,"Editor (incl. source, ck, visual, mini)"
+EditorSyntaxHighlighting,"Editor (incl. source, ck, visual, mini)"
+EditPageLayout,"Editor (incl. source, ck, visual, mini)"
+EditPreview,"Editor (incl. source, ck, visual, mini)"
+EditTagging,Content Extensions (tags in wikitext)
+Email,Product Email
+EmailsStorage,Product Email
+EmailTemplates,Product Email
+EmbeddableDiscussions,Discussions
+EmergencyBroadcastSystem,
+Evergreens,
+FacebookClient,Facebook Connect
+FastCat,
+FilePage,Community Page
+Flags,
+FliteTag,
+Follow,
+Forum,Forum & Message Wall
+FounderEmails,Product Email
+FounderProgressBar,
+GameGuides,
+GlobalCSSJS,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+GlobalFooter,
+GlobalNavigation,Navigation (global and local)
+GlobalShortcuts,
+GlobalWatchlist,
+GoogleAnalyticsSampling,"Google, Universal Analytics"
+GoogleDocs,"Google, Universal Analytics"
+GoogleFormTag,"Google, Universal Analytics"
+HAWelcome,
+Helios,
+HideTags,Content Extensions (tags in wikitext)
+HubRssFeed,"Corporate pages (Homepage, Hubs, WAM)"
+ImageLazyLoad,
+ImagePlaceholder,
+ImageReview,D.I.R.T
+ImageReviewMercury,Mercury
+ImageServing,
+ImageSizeInfoFunctions,
+ImageTweaks,
+IndexingPipeline,Search
+InfoboxBuilder,Portable Infoboxes
+InsightsBlogpostRedirect,Blogs
+InsightsV2,
+InstantGlobals,
+InterwikiDispatcher,
+InWikiExternalForm,
+InWikiGame,
+JavascriptAPI,API
+JSMessages,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+JsonFormat,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+JSSnippets,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+JSVariables,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+LandingPagesAsContent,Community Page
+LatestPhotos,
+LICENSE,
+Lightbox,Video & Lightbox & New Gallery
+Lilly,
+LinkSuggest,
+LinkToMobileApp,Mobile Apps
+Listusers,
+LocalSitemapPage,Community Page
+LookupContribs,
+LookupUser,
+LyricsApi,API
+MagicLinks,
+MainPageTag,Content Extensions (tags in wikitext)
+MediaGallery,Video & Lightbox & New Gallery
+MemcacheUserBlock,
+MercuryApi,Mercury
+MessageDocumentation,
+MiniEditor,"Editor (incl. source, ck, visual, mini)"
+MinimalMainPage,Community Page
+MobileAppTranslations,Mobile Apps
+MobileContent,Mobile Apps
+MonetizationModule,
+MostPopularCategories,Categories
+MostVisitedPages,"Corporate pages (Homepage, Hubs, WAM)"
+MultiTasks,
+MyHome,"User profile (profile masthead, general preferences)"
+NewWindowLinks,
+NjordPrototype,
+NLP,
+NotAValidWikia,
+Oasis,Oasis
+OpenGraphMetaCustomizations,
+Optimizely,Optimizely A/B Testing Framework
+OversightCompanion,
+PageClassification,
+PageShare,Sharing
+Paginator,
+PaidAssetDrop,
+ParserSpeed,Parser
+Parsoid,Parser
+PartnerFeed,
+PerSkinParserCache,Parser
+PhalanxII,Phalanx
+Piggyback,Staff tools (wikis)
+PiggyQuick,Staff tools (wikis)
+Places,
+POI,
+PolldaddyTag,Polls
+PollSnackTag,Polls
+PortabilityDashboard,Portable Infoboxes
+PortableInfobox,Portable Infoboxes
+PortableInfoboxBuilder,Portable Infoboxes
+PowerTools,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+PowerUser,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+ProtectSiteJS,
+Qualaroo,
+QuickCreate,
+QuickTools,Toolbar
+Rail,
+RandomWiki,
+RecentChanges,
+RecipesTemplate,
+Recirculation,Recirculation
+RelatedPages,
+RenderContentOnly,
+RestrictSessions,
+RobotsTxt,
+RTE,
+SASS,
+ScavengerHunt,
+Scribe,
+Search,Search
+SearchDigest,Search
+SearchNearMatch,Search
+Security,Security
+SemanticMediaWiki,Semantic MediaWiki
+SeoCrossLink,SEO
+SeoLinkHreflang,SEO
+SeoTesting,SEO
+SEOTweaks,SEO
+SEOTweaksGlobal,SEO
+ShareButtons,Sharing
+SharedHelp,Shared help
+ShowPerformanceStats,"Internal staff data, stats, and reports (incl. report tool)"
+Sitemap,
+SitemapPage,
+SitemapXml,
+SiteWideMessages,
+SkinChooser,
+SlowPagesBlacklist,
+SoundCloudTag,Content Extensions (tags in wikitext)
+SpecialCacheEpoch,
+SpecialCategoryIntersection,Categories
+SpecialContact2,
+SpecialCss,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
+SpecialDiscussions,Discussions
+SpecialDiscussionsLog,Discussions
+SpecialEditHub,"Corporate pages (Homepage, Hubs, WAM)"
+SpecialEmailTest,Product Email
+SpecialHealthcheck,
+SpecialInterwikiEdit,
+SpecialManageWikiaHome,"Corporate pages (Homepage, Hubs, WAM)"
+SpecialMultipleLookup,
+SpecialNewWikis,CreateNewWiki
+SpecialPageViews,
+SpecialPromote,Special:Promote
+SpecialProtectSite,
+SpecialStyleguide,
+SpecialUnlockdb,
+SpecialUnsubscribe,Product Email
+SpecialUnusedVideos,Video & Lightbox & New Gallery
+SpecialUserData,
+SpecialVersion,
+SpecialVideos,Video & Lightbox & New Gallery
+SpecialWithoutimages,
+SpitfiresContributionExperiments,
+SponsorshipDashboard,
+SpotifyTag,Content Extensions (tags in wikitext)
+Spotlights,spotlights-upgrade
+StaffLog,
+StaffPowers,
+StaffSig,
+Staging,
+SwiftSync,
+TabView,
+TagCloud,
+TagsReport,"Internal staff data, stats, and reports (incl. report tool)"
+TaskManager,
+Tasks,
+TemplateClassification,
+TemplateDraft,
+templates,
+TextRegex,
+ThemeDesigner,Theme Designer
+Thumbnails,Thumbnailer
+TimeAgoMessaging,
+Timeline,
+TOC,
+TOCimprovements,
+TopLists,
+TouchStorm,
+TraceViewer,
+Track,
+TwitterCards,
+TwitterTag,
+UploadInfo,
+UserActivity,Activity Feeds
+UserChangesHistory,"User profile (profile masthead, general preferences)"
+UserLogin,Login & Signup
+UserManagementPanel,"User profile (profile masthead, general preferences)"
+UserPageRedirects,
+UserPreferencesV2,"User profile (profile masthead, general preferences)"
+UserProfilePageV3,"User profile (profile masthead, general preferences)"
+UserRenameTool,Staff tools (wikis)
+UserTools,"User profile (profile masthead, general preferences)"
+VideoEmbedTool,Video & Lightbox & New Gallery
+VideoHandlers,Video & Lightbox & New Gallery
+VideoPageTool,Video & Lightbox & New Gallery
+VideosModule,Video & Lightbox & New Gallery
+VisitSource,
+VisualEditorTourExperiment,"Editor (incl. source, ck, visual, mini)"
+VKTag,
+Wall,Forum & Message Wall
+WallNotifications,Notifications
+WAM,"Corporate pages (Homepage, Hubs, WAM)"
+WAMPage,"Corporate pages (Homepage, Hubs, WAM)"
+WatchSubPages,
+WDACReview,
+WeiboTag,
+WhatIsMyIP,
+WhereIsExtension,
+WidgetFramework,
+WidgetTag,
+WikiaApi,API
+WikiaBar,
+WikiaHomePage,"Corporate pages (Homepage, Hubs, WAM)"
+WikiaHubsServices,"Corporate pages (Homepage, Hubs, WAM)"
+WikiaHubsV3,"Corporate pages (Homepage, Hubs, WAM)"
+WikiaInternal,
+WikiaInYourLang,
+WikiaIrcGateway,
+WikiaLogo,
+WikiaMaps,Interactive Maps
+WikiaMiniUpload,
+WikiaMiscMessages,
+WikiaMobile,
+WikiaMobileEditor,"Editor (incl. source, ck, visual, mini)"
+WikiaNewFiles,
+WikiaNewtalk,
+WikiaNotifier,
+WikiAnswers,Answers
+WikiaPhotoGallery,Video & Lightbox & New Gallery
+WikiaQuiz,
+WikiaRecentChangesBlockHandler,
+WikiaRSS,
+WikiaSeasons,
+WikiaSpamRegexBatch,API Spam Protection
+WikiaStats,"Internal staff data, stats, and reports (incl. report tool)"
+WikiaStyleGuide,
+WikiaWantedQueryPage,
+WikiaWhiteList,
+WikiFactory,Wiki factory
+WikiFactoryChangedHooks,Wiki factory
+WikiFeatures,
+XBoxGamerCardTag,
+YouTube,
