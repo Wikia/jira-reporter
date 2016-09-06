@@ -1,3 +1,4 @@
+import logging
 import yaml
 
 from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource
@@ -32,6 +33,8 @@ class Classifier(object):
     PROJECT_SER = 'SER'
 
     def __init__(self, config=ClassifierConfig()):
+        self._logger = logging.getLogger(self.__class__.__name__)
+
         self._components = config['components']
         self._paths = config['paths']
 
@@ -62,6 +65,13 @@ class Classifier(object):
         if PhalanxSource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Phalanx')
 
-        # TODO: classify using the report content and the paths inside it
+        # classify using the report content and the paths inside it (always report to MAIN)
+        description = report.get_description()
+
+        for path, component_name in self._paths.iteritems():
+            if path in description:
+                self._logger.info('Found "{}" in ticket\'s description, setting "{}" component'.
+                                  format(path, component_name))
+                return self.PROJECT_MAIN, self.get_component_id(component_name)
 
         return None
