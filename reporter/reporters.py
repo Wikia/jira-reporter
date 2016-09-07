@@ -106,11 +106,6 @@ class Jira(object):
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])
 
-        # set custom fields
-        if report.get_url() is not False:
-            # "The entered text is too long. It exceeds the allowed limit of 255 characters."
-            ticket_dict[self._fields['custom']['url']] = report.get_url()[:250]
-
         # report the ticket
         self._logger.info('Reporting {}'.format(json.dumps(ticket_dict)))
 
