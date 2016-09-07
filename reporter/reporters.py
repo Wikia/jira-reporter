@@ -101,14 +101,15 @@ class Jira(object):
             (project, component_id) = classification
 
             ticket_dict['project']['key'] = project
-            ticket_dict['components'] = [{'id': component_id}]
+            ticket_dict['components'] = [{'id': str(component_id)}]  # "expected 'id' property to be a string"
 
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])
 
         # set custom fields
         if report.get_url() is not False:
-            ticket_dict[self._fields['custom']['url']] = report.get_url()
+            # "The entered text is too long. It exceeds the allowed limit of 255 characters."
+            ticket_dict[self._fields['custom']['url']] = report.get_url()[:250]
 
         # report the ticket
         self._logger.info('Reporting {}'.format(json.dumps(ticket_dict)))
