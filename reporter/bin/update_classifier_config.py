@@ -57,7 +57,8 @@ def update_paths_mapping():
     paths = {}
 
     files = {
-        'extensions.csv': '/extensions/wikia/'
+        'core.csv': '/',
+        'extensions.csv': '/extensions/wikia/',
     }
 
     for csv_file, path_prefix in files.items():
