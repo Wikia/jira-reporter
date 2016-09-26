@@ -9,6 +9,7 @@ components:
   Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.): 11009
   Answers: 11816
   Appreciation prototype: 25301
+  AssetsManager: 26000
   Blogs: 11005
   CK Editor (RTE): 25713
   Categories: 11029
@@ -72,6 +73,7 @@ components:
   Special:Promote: 13316
   Staff permissions: 23301
   Staff tools (wikis): 11025
+  Static Assets Image Review Tool: 26304
   Tableau: 25201
   Theme Designer: 13103
   Thumbnailer, Vignette: 17400

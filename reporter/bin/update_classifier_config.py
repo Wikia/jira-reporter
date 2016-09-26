@@ -56,17 +56,23 @@ def update_paths_mapping():
     """
     paths = {}
 
-    with open(CLASSIFIER_CONFIG_DIR + 'extensions.csv', mode='r') as fp:
-        reader = csv.reader(fp)
+    files = {
+        'core.csv': '/',
+        'extensions.csv': '/extensions/wikia/',
+    }
 
-        # skip the CSV header
-        next(reader)
+    for csv_file, path_prefix in files.items():
+        with open(CLASSIFIER_CONFIG_DIR + csv_file, mode='r') as fp:
+            reader = csv.reader(fp)
 
-        for line in reader:
-            (extension_name, component_name) = line
+            # skip the CSV header
+            next(reader)
 
-            if component_name != '':
-                paths['/extensions/wikia/{}'.format(extension_name)] = component_name
+            for line in reader:
+                (extension_name, component_name) = line
+
+                if component_name != '':
+                    paths['{}{}'.format(path_prefix, extension_name)] = component_name
 
     _write_to_yaml('paths', paths)
 
