@@ -4,6 +4,7 @@ Contains handling of different services that reports can be sent to
 """
 import json
 import logging
+import time
 
 from jira.client import JIRA
 
@@ -25,6 +26,8 @@ class Jira(object):
         self._jira = JIRA(server=JIRA_CONFIG['url'], basic_auth=[JIRA_CONFIG['user'], JIRA_CONFIG['password']])
 
         self._fields = JIRA_CONFIG.get('fields')
+        self._last_seen_field = self._fields['custom']['last_seen']
+
         self._project = JIRA_CONFIG.get('project')
         self._server = self._jira.client_info()
 
@@ -41,6 +44,8 @@ class Jira(object):
     def ticket_exists(self, unique_id):
         """
         Checks if ticket with a given unique_id exists
+
+        :type unique_id str
         """
         self._logger.info('Checking {} unique ID...'.format(unique_id))
         tickets = self._jira.search_issues(
@@ -60,9 +65,27 @@ class Jira(object):
                     status=fields.resolution or fields.status  # Done / In Progress / Won't Fix / ...
                 ))
 
+                # PLATFORM-2441: set "ER Date" to indicate when was the last time this ticket was still valid
+                try:
+                    ticket.update(fields={
+                        self._last_seen_field: self.get_today_timestamp()
+                    })
+                except Exception:
+                    self._logger.error('Failed to update "ER Date" field ({})'.
+                                       format(self._last_seen_field), exc_info=True)
+
             return True
         else:
             return False
+
+    @staticmethod
+    def get_today_timestamp():
+        """
+        Get today's timestamp for Jira's date picker custom field
+
+        :rtype: str
+        """
+        return time.strftime('%Y-%m-%d')  # e.g. 2016-09-27
 
     def report(self, report):
         """
@@ -105,6 +128,9 @@ class Jira(object):
 
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])
+
+        # PLATFORM-2441: set "ER Date" to indicate when was the last time this ticket was still valid
+        ticket_dict[self._last_seen_field] = self.get_today_timestamp()
 
         # report the ticket
         self._logger.info('Reporting {}'.format(json.dumps(ticket_dict)))
