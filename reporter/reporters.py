@@ -26,7 +26,6 @@ class Jira(object):
     JQL = "description ~ '{hash_value}'"
 
     REOPEN_AFTER_DAYS = 14  # reopen still valid tickets when they were closed X days ago
-    REOPEN_TRANSITION_ID = 3
     REOPEN_TRANSITION_COMMENT = '[~errors] reopened this ticket - logs say it is still valid'
 
     STATUS_CLOSED = "Closed"
@@ -91,15 +90,20 @@ class Jira(object):
                     if self._ticket_is_older_than(ticket, days=self.REOPEN_AFTER_DAYS):
                         self._logger.info('Going to reopen {id} - it is still valid'.format(id=ticket.key))
 
+                        # get transition ID for Open status, it varies between projects
+                        transitions = {}
+
+                        for transition in self.get_api_client().transitions(issue=ticket):
+                            transitions[transition['name']] = transition['id']
+
                         # reopen and comment the ticket
-                        self.get_api_client().transition_issue(
-                                issue=ticket,
-                                transitionId=self.REOPEN_TRANSITION_ID,
-                                comment=self.REOPEN_TRANSITION_COMMENT
-                        )
                         try:
-                            pass
-                            # self._jira.add_comment(issue=ticket, body=self.REOPEN_TRANSITION_COMMENT)
+                            self.get_api_client().transition_issue(
+                                issue=ticket,
+                                transitionId=transitions['Open']
+                            )
+
+                            self.get_api_client().add_comment(issue=ticket, body=self.REOPEN_TRANSITION_COMMENT)
                         except Exception:
                             self._logger.error('Failed to reopen {}'.format(ticket), exc_info=True)
 
