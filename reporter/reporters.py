@@ -5,6 +5,10 @@ Contains handling of different services that reports can be sent to
 import json
 import logging
 import time
+import datetime
+
+from dateutil.parser import parse
+from dateutil.tz import tzutc
 
 from jira.client import JIRA
 
@@ -20,6 +24,13 @@ class Jira(object):
     """
 
     JQL = "description ~ '{hash_value}'"
+
+    REOPEN_AFTER_DAYS = 14  # reopen still valid tickets when they were closed X days ago
+    REOPEN_TRANSITION_COMMENT = '[~{assignee}], I reopened this ticket - logs say it is still valid'
+
+    STATUS_CLOSED = "Closed"
+    RESOLUTION_WONT_FIX = "Won't Fix"
+    RESOLUTION_DUPLICATE = "Duplicate"
 
     def __init__(self):
         self._logger = logging.getLogger('Jira')
@@ -74,6 +85,36 @@ class Jira(object):
                     self._logger.error('Failed to update "ER Date" field ({})'.
                                        format(self._last_seen_field), exc_info=True)
 
+                # SUS-1134: the ticket was closed (but not as "Won't Fix" or "Duplicate") over X days ago,
+                # but it's still valid -> reopen it
+                if str(fields.status) == self.STATUS_CLOSED and \
+                        str(fields.resolution) != self.RESOLUTION_WONT_FIX and \
+                        str(fields.resolution) != self.RESOLUTION_DUPLICATE:
+                    if self._ticket_is_older_than(ticket, days=self.REOPEN_AFTER_DAYS):
+                        self._logger.info('Going to reopen {id} - it is still valid'.format(id=ticket.key))
+
+                        # get transition ID for Open status, it varies between projects
+                        transitions = {}
+
+                        for transition in self.get_api_client().transitions(issue=ticket):
+                            transitions[transition['name']] = transition['id']
+
+                        # reopen and comment the ticket
+                        try:
+                            self.get_api_client().transition_issue(
+                                issue=ticket,
+                                transitionId=transitions['Open']
+                            )
+
+                            self.get_api_client().add_comment(
+                                issue=ticket,
+                                body=self.REOPEN_TRANSITION_COMMENT.format(
+                                    assignee=fields.assignee.name if fields.assignee else 'Unassigned'
+                                )
+                            )
+                        except Exception:
+                            self._logger.error('Failed to reopen {}'.format(ticket), exc_info=True)
+
             return True
         else:
             return False
@@ -86,6 +127,18 @@ class Jira(object):
         :rtype: str
         """
         return time.strftime('%Y-%m-%d')  # e.g. 2016-09-27
+
+    @staticmethod
+    def _ticket_is_older_than(ticket, days):
+        """
+        :type ticket jira.resources.Issue
+        :type days int
+        :rtype: bool
+        """
+        resolution_threshold = datetime.datetime.now(tz=tzutc()) - datetime.timedelta(days=days)
+        resolution_date = parse(ticket.fields.resolutiondate)
+
+        return resolution_date < resolution_threshold
 
     def report(self, report):
         """
