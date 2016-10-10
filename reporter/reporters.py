@@ -26,7 +26,7 @@ class Jira(object):
     JQL = "description ~ '{hash_value}'"
 
     REOPEN_AFTER_DAYS = 14  # reopen still valid tickets when they were closed X days ago
-    REOPEN_TRANSITION_COMMENT = '[~errors] reopened this ticket - logs say it is still valid'
+    REOPEN_TRANSITION_COMMENT = '[~{assignee}], I reopened this ticket - logs say it is still valid'
 
     STATUS_CLOSED = "Closed"
     RESOLUTION_WONT_FIX = "Won't Fix"
@@ -106,7 +106,12 @@ class Jira(object):
                                 transitionId=transitions['Open']
                             )
 
-                            self.get_api_client().add_comment(issue=ticket, body=self.REOPEN_TRANSITION_COMMENT)
+                            self.get_api_client().add_comment(
+                                issue=ticket,
+                                body=self.REOPEN_TRANSITION_COMMENT.format(
+                                    assignee=fields.assignee.name if fields.assignee else 'Unassigned'
+                                )
+                            )
                         except Exception:
                             self._logger.error('Failed to reopen {}'.format(ticket), exc_info=True)
 
