@@ -30,6 +30,7 @@ class Jira(object):
 
     STATUS_CLOSED = "Closed"
     RESOLUTION_WONT_FIX = "Won't Fix"
+    RESOLUTION_DUPLICATE = "Duplicate"
 
     def __init__(self):
         self._logger = logging.getLogger('Jira')
@@ -84,9 +85,11 @@ class Jira(object):
                     self._logger.error('Failed to update "ER Date" field ({})'.
                                        format(self._last_seen_field), exc_info=True)
 
-                # SUS-1134: the ticket was closed (but not as "Won't Fix") over X days ago,
+                # SUS-1134: the ticket was closed (but not as "Won't Fix" or "Duplicate") over X days ago,
                 # but it's still valid -> reopen it
-                if str(fields.status) == self.STATUS_CLOSED and str(fields.resolution) != self.RESOLUTION_WONT_FIX:
+                if str(fields.status) == self.STATUS_CLOSED and \
+                        str(fields.resolution) != self.RESOLUTION_WONT_FIX and \
+                        str(fields.resolution) != self.RESOLUTION_DUPLICATE:
                     if self._ticket_is_older_than(ticket, days=self.REOPEN_AFTER_DAYS):
                         self._logger.info('Going to reopen {id} - it is still valid'.format(id=ticket.key))
 
