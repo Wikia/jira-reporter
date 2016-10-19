@@ -47,6 +47,10 @@ h5. Backtrace
 
         # normalize services timeout errors
         message = re.sub(r'API call to /[^ ]+ timed out', 'API call to /X timed out', message)
+        message = re.sub(r'after \d+ milliseconds with \d+ bytes', 'after N milliseconds with N bytes', message)
+
+        # normalize user attributes URLs
+        message = re.sub(r'/attr/\w+', '/attr/X', message)
 
         # {"title":"Attribute UserProfilePagesV3_birthday not found for user 26816594","status":404}
         message = re.sub(r'Attribute [^\s]+ not found for user \d+', 'Attribute X not found for user N', message)
