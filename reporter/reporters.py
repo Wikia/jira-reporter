@@ -78,9 +78,13 @@ class Jira(object):
 
                 # PLATFORM-2441: set "ER Date" to indicate when was the last time this ticket was still valid
                 try:
-                    ticket.update(fields={
-                        self._last_seen_field: self.get_today_timestamp()
-                    })
+                    # SUS-1168: do not update ER date for tickets closed as "Won't Fix" or "Duplicate"
+                    if str(fields.resolution) != self.RESOLUTION_WONT_FIX and \
+                            str(fields.resolution) != self.RESOLUTION_DUPLICATE:
+                        self._logger.info('Updating ER date')
+                        ticket.update(fields={
+                            self._last_seen_field: self.get_today_timestamp()
+                        })
                 except Exception:
                     self._logger.error('Failed to update "ER Date" field ({})'.
                                        format(self._last_seen_field), exc_info=True)
