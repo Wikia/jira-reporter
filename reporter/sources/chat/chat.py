@@ -1,6 +1,7 @@
 from reporter.sources.common import KibanaSource
 from reporter.reports import Report
-import json, time
+import json
+import time
 
 
 class ChatLogsSource(KibanaSource):
@@ -72,8 +73,5 @@ h3. {full_message}
             description=description,
             label=self.REPORT_LABEL
         )
-
-        # eg. chat-infobox-builder
-        report.add_label('chat-error')
 
         return report
