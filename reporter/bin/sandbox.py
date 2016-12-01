@@ -5,7 +5,8 @@ This script is a sandbox for testing new sources
 import logging
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
-    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource,AnemometerSource
+    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource, AnemometerSource, \
+    ChatLogsSource
 
 from reporter.classifier import Classifier
 
@@ -40,7 +41,7 @@ classifier = Classifier()
 
 #reports += PHPSecuritySource().query(threshold=0)
 
-reports += PhalanxSource().query(threshold=5)
+# reports += PhalanxSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 #reports += MercurySource().query('fatal', threshold=0)
@@ -51,6 +52,10 @@ reports += PhalanxSource().query(threshold=5)
 
 # @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
 #reports += AnemometerSource().query(threshold=0)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Chat%20Server%20errors
+reports += ChatLogsSource().query('uncaughtException', threshold=5)
+reports += ChatLogsSource().query('SyntaxError', threshold=5)
 
 for report in reports:
     print(report)

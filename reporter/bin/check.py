@@ -9,7 +9,8 @@ from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, PhalanxSource, \
-    MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource
+    MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
+    ChatLogsSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -69,6 +70,10 @@ reports += VignetteThumbVerificationSource().query(threshold=5)
 
 # @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
 reports += AnemometerSource().query(threshold=0)
+
+# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Chat%20Server%20errors
+reports += ChatLogsSource().query('uncaughtException', threshold=1)
+reports += ChatLogsSource().query('SyntaxError', threshold=1)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
