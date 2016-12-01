@@ -72,8 +72,8 @@ reports += VignetteThumbVerificationSource().query(threshold=5)
 reports += AnemometerSource().query(threshold=0)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Chat%20Server%20errors
-reports += ChatLogsSource().query('uncaughtException', threshold=5)
-reports += ChatLogsSource().query('SyntaxError', threshold=5)
+reports += ChatLogsSource().query('uncaughtException', threshold=1)
+reports += ChatLogsSource().query('SyntaxError', threshold=1)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()

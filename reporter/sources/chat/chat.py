@@ -25,7 +25,6 @@ h3. {full_message}
 
     def _get_entries(self, query):
         """ Return entries matching given query """
-        self._kibana._since = int(time.time()) - 21600
         return self._kibana.query_by_string(
             query='@fields.level:error AND @source_host:chat-s* AND @message:*{}*'.format(query),
             limit=self.LIMIT
