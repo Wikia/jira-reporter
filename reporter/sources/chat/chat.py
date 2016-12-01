@@ -52,8 +52,7 @@ h3. {full_message}
         """
         Normalize given entry
         """
-        return 'Chat-{}-{}-{}'.format(
-            entry.get('namespace'),
+        return 'Chat-{}-{}'.format(
             entry.get('@message').encode('utf8'),
             self._get_env_from_entry(entry)
         )
@@ -61,7 +60,6 @@ h3. {full_message}
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
         message = entry.get('@message').encode('utf8')
-        namespace = entry.get('namespace', 'main')
 
         description = self.REPORT_TEMPLATE.format(
             full_message=message,
@@ -69,16 +67,13 @@ h3. {full_message}
             details=json.dumps(entry, indent=True)
         ).strip()
 
-        # eg. [infobox-builder] Translation not found
-        summary = '[{}] {}'.format(namespace, message)
-
         report = Report(
-            summary=summary,
+            summary=message,
             description=description,
             label=self.REPORT_LABEL
         )
 
         # eg. chat-infobox-builder
-        report.add_label('chat-{}'.format(namespace))
+        report.add_label('chat-error')
 
         return report
