@@ -1,7 +1,7 @@
 import logging
 import yaml
 
-from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource
+from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource, ChatLogsSource
 
 
 class ClassifierConfig(object):
@@ -64,6 +64,9 @@ class Classifier(object):
 
         if PhalanxSource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Phalanx')
+
+        if ChatLogsSource.REPORT_LABEL in labels:
+            return self.PROJECT_MAIN, self.get_component_id('Chat')
 
         # classify using the report content and the paths inside it (always report to MAIN)
         description = report.get_description()
