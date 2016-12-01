@@ -13,3 +13,4 @@ from pt_kill import KilledDatabaseQueriesSource
 from pandora import PandoraErrorsSource
 from phalanx import PhalanxSource
 from vignette import VignetteThumbVerificationSource
+from chat import ChatLogsSource

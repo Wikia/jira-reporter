@@ -8,7 +8,6 @@ import re
 import urllib
 
 from wikia.common.kibana import Kibana
-from wikia.common.perfmonitoring import PerfMonitoring
 
 
 class Source(object):
@@ -54,7 +53,6 @@ class Source(object):
                 counter=report.get_counter()
             ))
 
-        self._send_stats(query, entries, reports)
         return reports
 
     def _normalize_entries(self, entries):
@@ -166,24 +164,6 @@ class Source(object):
         Allow various sources a way to modify the report
         """
         pass
-
-    def _send_stats(self, query, entries, reports):
-        """
-        Send metrics to InfluxDB
-
-        They will be stored in 'jirareporter_reports' time series
-        """
-        metrics = PerfMonitoring(app_name='JIRAreporter', series_name='reports')
-
-        metrics.set('type', self.__class__.__name__)
-        metrics.set('query', query)
-        metrics.set('entries', len(entries))
-        metrics.set('reports', len(reports))
-
-        try:
-            metrics.push()
-        except:
-            self._logger.error('Sending stats to InfluxDB failed', exc_info=True)
 
 
 class KibanaSource(Source):
