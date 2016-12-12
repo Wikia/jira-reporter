@@ -82,7 +82,7 @@ reporter = Jira()
 
 reported = 0
 for report in reports:
-    sleep(seconds=1)  # avoid hitting Jira with too many searches for ticket hash (we perform 150+ of them)
+    sleep(1)  # avoid hitting Jira with too many searches for ticket hash (we perform 150+ of them)
 
     if reporter.report(report):
         reported += 1
