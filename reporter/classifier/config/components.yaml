@@ -8,11 +8,13 @@ components:
   Ad Engineering: 13800
   Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.): 11009
   Answers: 11816
-  Appreciation prototype: 25301
   AssetsManager: 26000
+  Automatic Template Classification: 27602
+  Backend scripts: 26831
   Blogs: 11005
   CK Editor (RTE): 25713
-  Categories: 11029
+  Category Pages: 27604
+  Category Select: 11029
   Chat: 11030
   Comments: 13100
   Community Page: 22300
@@ -21,7 +23,7 @@ components:
   Core MediaWiki: 11020
   Corporate pages (Homepage, Hubs, WAM): 11012
   CreateNewWiki: 20201
-  Curated Content: 19500
+  Curated Main Page: 19500
   D.I.R.T: 21708
   Deploy Tools: 11803
   Design System: 24501
@@ -29,38 +31,46 @@ components:
   Discussions: 20101
   Documentation/Knowledge Sharing: 21600
   DynamicPageList: 11701
-  Editor (incl. source, ck, visual, mini): 11032
-  ExactTarget (Marketing email): 20200
+  ExactTarget: 20200
   Facebook Connect: 13104
-  Fandom: 20009
+  Fandom-Stories: 20009
   File storage and Database: 11802
-  Forum & Message Wall: 11033
+  Forum: 11033
+  Global Shortcuts: 27603
   Google, Universal Analytics: 17504
   Helios: 21401
+  Home-page: 28907
+  Hubs: 28908
   In House AB Testing Framework: 14301
   Infobox Builder: 25702
   Interactive Maps: 15101
   Internal staff data, stats, and reports (incl. report tool): 11037
+  Lightbox: 28905
   Login & Signup: 11014
   Lua & Scribunto: 25715
   Media Wiki: 21403
   MediaWiki extensions: 24900
   Mercury: 19002
+  Message Wall: 28900
   Mini Editor: 25711
   Mobile Apps: 14101
   Mobile Recent Wiki Activity: 20900
+  Monobook: 28906
   Navigation (global and local): 11013
+  New Gallery: 28903
   Notifications: 11825
   Oasis (skin): 13500
   Optimizely A/B Testing Framework: 14302
   Pandora: 21400
   Phalanx: 20005
   Polls: 14200
+  Portability Metric: 27601
   Portable Infoboxes: 18502
   Portable Tables: 25701
   Product Email: 11039
   Quantcast: 25203
   RSS: 25703
+  Rebranding: 26705
   Recirculation: 24401
   SEO: 11003
   Search: 11001
@@ -79,10 +89,13 @@ components:
   Thumbnailer, Vignette: 17400
   Toolbar: 11007
   Unit Tests: 16800
+  User Template Classification: 27700
   User profile (profile masthead, general preferences): 11036
-  Video & Lightbox & New Gallery: 11004
+  Video: 28904
   Visual Editor: 25710
+  WAM: 28909
   Welcome Tool: 11600
-  Wiki factory: 11028
+  WikiFactory: 11028
   i18n: 11011
+  kapacitor: 28602
   spotlights-upgrade: 20601

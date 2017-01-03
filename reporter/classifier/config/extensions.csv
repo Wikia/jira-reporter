@@ -66,11 +66,11 @@ DMCARequest,
 DomainVerification,
 EditAccount,
 Editcount,
-EditorPreference,"Editor (incl. source, ck, visual, mini)"
-EditorSurvey,"Editor (incl. source, ck, visual, mini)"
-EditorSyntaxHighlighting,"Editor (incl. source, ck, visual, mini)"
-EditPageLayout,"Editor (incl. source, ck, visual, mini)"
-EditPreview,"Editor (incl. source, ck, visual, mini)"
+EditorPreference,"Visual Editor"
+EditorSurvey,"Visual Editor"
+EditorSyntaxHighlighting,"Visual Editor"
+EditPageLayout,"Visual Editor"
+EditPreview,"Visual Editor"
 EditTagging,Content Extensions (tags in wikitext)
 Email,Product Email
 EmailsStorage,Product Email
@@ -84,7 +84,7 @@ FilePage,Community Page
 Flags,
 FliteTag,
 Follow,
-Forum,Forum & Message Wall
+Forum,Forum
 FounderEmails,Product Email
 FounderProgressBar,
 GameGuides,
@@ -99,7 +99,7 @@ GoogleFormTag,"Google, Universal Analytics"
 HAWelcome,
 Helios,
 HideTags,Content Extensions (tags in wikitext)
-HubRssFeed,"Corporate pages (Homepage, Hubs, WAM)"
+HubRssFeed,"Hubs"
 ImageLazyLoad,
 ImagePlaceholder,
 ImageReview,D.I.R.T
@@ -134,17 +134,16 @@ LookupUser,
 LyricsApi,API
 MagicLinks,
 MainPageTag,Content Extensions (tags in wikitext)
-MediaGallery,Video & Lightbox & New Gallery
+MediaGallery,"New Gallery"
 MemcacheUserBlock,
 MercuryApi,Mercury
 MessageDocumentation,
-MiniEditor,"Editor (incl. source, ck, visual, mini)"
+MiniEditor,"Visual Editor"
 MinimalMainPage,Community Page
 MobileAppTranslations,Mobile Apps
 MobileContent,Mobile Apps
 MonetizationModule,
 MostPopularCategories,Categories
-MostVisitedPages,"Corporate pages (Homepage, Hubs, WAM)"
 MultiTasks,
 MyHome,"User profile (profile masthead, general preferences)"
 NewWindowLinks,
@@ -218,11 +217,11 @@ SpecialContact2,
 SpecialCss,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
 SpecialDiscussions,Discussions
 SpecialDiscussionsLog,Discussions
-SpecialEditHub,"Corporate pages (Homepage, Hubs, WAM)"
+SpecialEditHub,"Hubs"
 SpecialEmailTest,Product Email
 SpecialHealthcheck,
 SpecialInterwikiEdit,
-SpecialManageWikiaHome,"Corporate pages (Homepage, Hubs, WAM)"
+SpecialManageWikiaHome,"Home-page"
 SpecialMultipleLookup,
 SpecialNewWikis,CreateNewWiki
 SpecialPageViews,
@@ -231,10 +230,10 @@ SpecialProtectSite,
 SpecialStyleguide,
 SpecialUnlockdb,
 SpecialUnsubscribe,Product Email
-SpecialUnusedVideos,Video & Lightbox & New Gallery
+SpecialUnusedVideos,Video
 SpecialUserData,
 SpecialVersion,
-SpecialVideos,Video & Lightbox & New Gallery
+SpecialVideos,Video
 SpecialWithoutimages,
 SpitfiresContributionExperiments,
 SponsorshipDashboard,
@@ -276,17 +275,17 @@ UserPreferencesV2,"User profile (profile masthead, general preferences)"
 UserProfilePageV3,"User profile (profile masthead, general preferences)"
 UserRenameTool,Staff tools (wikis)
 UserTools,"User profile (profile masthead, general preferences)"
-VideoEmbedTool,Video & Lightbox & New Gallery
-VideoHandlers,Video & Lightbox & New Gallery
-VideoPageTool,Video & Lightbox & New Gallery
-VideosModule,Video & Lightbox & New Gallery
+VideoEmbedTool,Video
+VideoHandlers,Video
+VideoPageTool,Video
+VideosModule,Video
 VisitSource,
-VisualEditorTourExperiment,"Editor (incl. source, ck, visual, mini)"
+VisualEditorTourExperiment,"Visual Editor"
 VKTag,
-Wall,Forum & Message Wall
+Wall,Message Wall
 WallNotifications,Notifications
-WAM,"Corporate pages (Homepage, Hubs, WAM)"
-WAMPage,"Corporate pages (Homepage, Hubs, WAM)"
+WAM,"WAM"
+WAMPage,"WAM"
 WatchSubPages,
 WDACReview,
 WeiboTag,
@@ -296,9 +295,9 @@ WidgetFramework,
 WidgetTag,
 WikiaApi,API
 WikiaBar,
-WikiaHomePage,"Corporate pages (Homepage, Hubs, WAM)"
-WikiaHubsServices,"Corporate pages (Homepage, Hubs, WAM)"
-WikiaHubsV3,"Corporate pages (Homepage, Hubs, WAM)"
+WikiaHomePage,"Home-page"
+WikiaHubsServices,"Hubs"
+WikiaHubsV3,"Hubs"
 WikiaInternal,
 WikiaInYourLang,
 WikiaIrcGateway,
@@ -307,12 +306,12 @@ WikiaMaps,Interactive Maps
 WikiaMiniUpload,
 WikiaMiscMessages,
 WikiaMobile,
-WikiaMobileEditor,"Editor (incl. source, ck, visual, mini)"
+WikiaMobileEditor,"Visual Editor"
 WikiaNewFiles,
 WikiaNewtalk,
 WikiaNotifier,
 WikiAnswers,Answers
-WikiaPhotoGallery,Video & Lightbox & New Gallery
+WikiaPhotoGallery,"New Gallery"
 WikiaQuiz,
 WikiaRecentChangesBlockHandler,
 WikiaRSS,

@@ -45,19 +45,19 @@ paths:
   /extensions/wikia/Custom404Page: Community Page
   /extensions/wikia/DesignSystem: Design System
   /extensions/wikia/Development: Development platform and tools
-  /extensions/wikia/EditPageLayout: Editor (incl. source, ck, visual, mini)
-  /extensions/wikia/EditPreview: Editor (incl. source, ck, visual, mini)
+  /extensions/wikia/EditPageLayout: Visual Editor
+  /extensions/wikia/EditPreview: Visual Editor
   /extensions/wikia/EditTagging: Content Extensions (tags in wikitext)
-  /extensions/wikia/EditorPreference: Editor (incl. source, ck, visual, mini)
-  /extensions/wikia/EditorSurvey: Editor (incl. source, ck, visual, mini)
-  /extensions/wikia/EditorSyntaxHighlighting: Editor (incl. source, ck, visual, mini)
+  /extensions/wikia/EditorPreference: Visual Editor
+  /extensions/wikia/EditorSurvey: Visual Editor
+  /extensions/wikia/EditorSyntaxHighlighting: Visual Editor
   /extensions/wikia/Email: Product Email
   /extensions/wikia/EmailTemplates: Product Email
   /extensions/wikia/EmailsStorage: Product Email
   /extensions/wikia/EmbeddableDiscussions: Discussions
   /extensions/wikia/FacebookClient: Facebook Connect
   /extensions/wikia/FilePage: Community Page
-  /extensions/wikia/Forum: Forum & Message Wall
+  /extensions/wikia/Forum: Forum
   /extensions/wikia/FounderEmails: Product Email
   /extensions/wikia/GlobalCSSJS: Admin & Power user tools (Dashboard, Wiki Features,
     CSS, JS, Insights, etc.)
@@ -66,7 +66,7 @@ paths:
   /extensions/wikia/GoogleDocs: Google, Universal Analytics
   /extensions/wikia/GoogleFormTag: Google, Universal Analytics
   /extensions/wikia/HideTags: Content Extensions (tags in wikitext)
-  /extensions/wikia/HubRssFeed: Corporate pages (Homepage, Hubs, WAM)
+  /extensions/wikia/HubRssFeed: Hubs
   /extensions/wikia/ImageReview: D.I.R.T
   /extensions/wikia/ImageReviewMercury: Mercury
   /extensions/wikia/IndexingPipeline: Search
@@ -87,14 +87,13 @@ paths:
   /extensions/wikia/LocalSitemapPage: Community Page
   /extensions/wikia/LyricsApi: API
   /extensions/wikia/MainPageTag: Content Extensions (tags in wikitext)
-  /extensions/wikia/MediaGallery: Video & Lightbox & New Gallery
+  /extensions/wikia/MediaGallery: New Gallery
   /extensions/wikia/MercuryApi: Mercury
-  /extensions/wikia/MiniEditor: Editor (incl. source, ck, visual, mini)
+  /extensions/wikia/MiniEditor: Visual Editor
   /extensions/wikia/MinimalMainPage: Community Page
   /extensions/wikia/MobileAppTranslations: Mobile Apps
   /extensions/wikia/MobileContent: Mobile Apps
   /extensions/wikia/MostPopularCategories: Categories
-  /extensions/wikia/MostVisitedPages: Corporate pages (Homepage, Hubs, WAM)
   /extensions/wikia/MyHome: User profile (profile masthead, general preferences)
   /extensions/wikia/Oasis: Oasis
   /extensions/wikia/Optimizely: Optimizely A/B Testing Framework
@@ -136,14 +135,14 @@ paths:
     CSS, JS, Insights, etc.)
   /extensions/wikia/SpecialDiscussions: Discussions
   /extensions/wikia/SpecialDiscussionsLog: Discussions
-  /extensions/wikia/SpecialEditHub: Corporate pages (Homepage, Hubs, WAM)
+  /extensions/wikia/SpecialEditHub: Hubs
   /extensions/wikia/SpecialEmailTest: Product Email
-  /extensions/wikia/SpecialManageWikiaHome: Corporate pages (Homepage, Hubs, WAM)
+  /extensions/wikia/SpecialManageWikiaHome: Home-page
   /extensions/wikia/SpecialNewWikis: CreateNewWiki
   /extensions/wikia/SpecialPromote: Special:Promote
   /extensions/wikia/SpecialUnsubscribe: Product Email
-  /extensions/wikia/SpecialUnusedVideos: Video & Lightbox & New Gallery
-  /extensions/wikia/SpecialVideos: Video & Lightbox & New Gallery
+  /extensions/wikia/SpecialUnusedVideos: Video
+  /extensions/wikia/SpecialVideos: Video
   /extensions/wikia/SpotifyTag: Content Extensions (tags in wikitext)
   /extensions/wikia/Spotlights: spotlights-upgrade
   /extensions/wikia/TagsReport: Internal staff data, stats, and reports (incl. report
@@ -158,26 +157,25 @@ paths:
   /extensions/wikia/UserProfilePageV3: User profile (profile masthead, general preferences)
   /extensions/wikia/UserRenameTool: Staff tools (wikis)
   /extensions/wikia/UserTools: User profile (profile masthead, general preferences)
-  /extensions/wikia/VideoEmbedTool: Video & Lightbox & New Gallery
-  /extensions/wikia/VideoHandlers: Video & Lightbox & New Gallery
-  /extensions/wikia/VideoPageTool: Video & Lightbox & New Gallery
-  /extensions/wikia/VideosModule: Video & Lightbox & New Gallery
-  /extensions/wikia/VisualEditorTourExperiment: Editor (incl. source, ck, visual,
-    mini)
-  /extensions/wikia/WAM: Corporate pages (Homepage, Hubs, WAM)
-  /extensions/wikia/WAMPage: Corporate pages (Homepage, Hubs, WAM)
-  /extensions/wikia/Wall: Forum & Message Wall
+  /extensions/wikia/VideoEmbedTool: Video
+  /extensions/wikia/VideoHandlers: Video
+  /extensions/wikia/VideoPageTool: Video
+  /extensions/wikia/VideosModule: Video
+  /extensions/wikia/VisualEditorTourExperiment: Visual Editor
+  /extensions/wikia/WAM: WAM
+  /extensions/wikia/WAMPage: WAM
+  /extensions/wikia/Wall: Message Wall
   /extensions/wikia/WallNotifications: Notifications
   /extensions/wikia/WikiAnswers: Answers
   /extensions/wikia/WikiFactory: Wiki factory
   /extensions/wikia/WikiFactoryChangedHooks: Wiki factory
   /extensions/wikia/WikiaApi: API
-  /extensions/wikia/WikiaHomePage: Corporate pages (Homepage, Hubs, WAM)
-  /extensions/wikia/WikiaHubsServices: Corporate pages (Homepage, Hubs, WAM)
-  /extensions/wikia/WikiaHubsV3: Corporate pages (Homepage, Hubs, WAM)
+  /extensions/wikia/WikiaHomePage: Home-page
+  /extensions/wikia/WikiaHubsServices: Hubs
+  /extensions/wikia/WikiaHubsV3: Hubs
   /extensions/wikia/WikiaMaps: Interactive Maps
-  /extensions/wikia/WikiaMobileEditor: Editor (incl. source, ck, visual, mini)
-  /extensions/wikia/WikiaPhotoGallery: Video & Lightbox & New Gallery
+  /extensions/wikia/WikiaMobileEditor: Visual Editor
+  /extensions/wikia/WikiaPhotoGallery: New Gallery
   /extensions/wikia/WikiaSpamRegexBatch: API Spam Protection
   /extensions/wikia/WikiaStats: Internal staff data, stats, and reports (incl. report
     tool)
