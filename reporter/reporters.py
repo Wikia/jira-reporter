@@ -140,7 +140,7 @@ class Jira(object):
         :rtype: bool
         """
         resolution_threshold = datetime.datetime.now(tz=tzutc()) - datetime.timedelta(days=days)
-        resolution_date = parse(ticket.fields.resolutiondate)
+        resolution_date = parse(ticket.raw['fields'].resolutiondate)
 
         return resolution_date < resolution_threshold
 
