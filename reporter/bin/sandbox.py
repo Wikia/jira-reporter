@@ -3,6 +3,8 @@
 This script is a sandbox for testing new sources
 """
 import logging
+
+from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource, AnemometerSource, \
@@ -15,6 +17,10 @@ logging.basicConfig(
     format='%(asctime)s %(name)-35s %(levelname)-8s %(message)s',
     datefmt="%Y-%m-%d %H:%M:%S"
 )
+
+jira = Jira()
+ticket = jira._jira.issue('MAIN-9690')
+print(jira._ticket_is_older_than(ticket, 14)); import sys; sys.exit()
 
 reports = list()
 classifier = Classifier()

@@ -132,17 +132,20 @@ class Jira(object):
         """
         return time.strftime('%Y-%m-%d')  # e.g. 2016-09-27
 
-    @staticmethod
-    def _ticket_is_older_than(ticket, days):
+    def _ticket_is_older_than(self, ticket, days):
         """
         :type ticket jira.resources.Issue
         :type days int
         :rtype: bool
         """
         resolution_threshold = datetime.datetime.now(tz=tzutc()) - datetime.timedelta(days=days)
-        resolution_date = parse(ticket.raw['fields'].resolutiondate)
+        try:
+            resolution_date = parse(ticket.raw['fields'].get('resolutiondate'))
+        except:
+            self._logger.error('Failed to get the resolution date for {}'.format(ticket), exc_info=True)
+            resolution_date = None
 
-        return resolution_date < resolution_threshold
+        return resolution_date is not None and resolution_date < resolution_threshold
 
     def report(self, report):
         """
