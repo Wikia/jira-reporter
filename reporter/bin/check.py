@@ -61,7 +61,7 @@ reports += PHPSecuritySource().query(threshold=0)  # security problems is always
 reports += PhalanxSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
-reports += MercurySource().query('fatal', threshold=0)
+reports += MercurySource().query('emergency', threshold=0)
 reports += MercurySource().query('error', threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors

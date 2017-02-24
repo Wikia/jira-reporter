@@ -12,7 +12,7 @@ class MercurySource(MercuryLogsSource):
     def _get_entries(self, query):
         """ Return entries matching given severity """
         return self._kibana.query_by_string(
-            query='severity: "{}" AND name: "mercury" AND @source_host: /(mercury|staging)-(s|r).*/'.format(query),
+            query='severity: "{}" AND (name: "mobile-wiki" OR name: "mercury") AND @source_host: /(mercury|mobile-wiki|staging)-(s|r).*/'.format(query),
             limit=self.LIMIT
         )
 
