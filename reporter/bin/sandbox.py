@@ -18,10 +18,6 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 
-jira = Jira()
-ticket = jira._jira.issue('MAIN-9690')
-print(jira._ticket_is_older_than(ticket, 14)); import sys; sys.exit()
-
 reports = list()
 classifier = Classifier()
 
@@ -42,7 +38,7 @@ classifier = Classifier()
 
 #reports += PandoraErrorsSource().query(threshold=5)
 
-#reports += PHPExceptionsSource().query(query='error', threshold=50)
+reports += PHPExceptionsSource().query(query='error', threshold=50)
 #reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
 #reports += PHPSecuritySource().query(threshold=0)
@@ -60,8 +56,8 @@ classifier = Classifier()
 #reports += AnemometerSource().query(threshold=0)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Chat%20Server%20errors
-reports += ChatLogsSource().query('uncaughtException', threshold=5)
-reports += ChatLogsSource().query('SyntaxError', threshold=5)
+#reports += ChatLogsSource().query('uncaughtException', threshold=5)
+#reports += ChatLogsSource().query('SyntaxError', threshold=5)
 
 for report in reports:
     print(report)
