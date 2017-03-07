@@ -33,6 +33,12 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
             '@exception': {'class': 'MWException', 'message': 'WikiaDataAccess could not obtain lock to generate data for: wikicities:datamart:toparticles:4:1241752:200:cfcd208495d565ef66e7dff9f98764da::current'}
         }) == 'Production-MWException-WikiaDispatcher::dispatch - Exception - MWException - WikiaDataAccess could not obtain lock to generate data for: XXX'
 
+        # SUS-1768: MediaWiki handled Error exceptions
+        assert self._source._normalize({
+            '@message': 'MWExceptionHandler::report',
+            '@exception': {'class': 'Error', 'message': 'Call to a member function getRevisionFetched() on boolean'}
+        }) == 'Production-Error-Call to a member function getRevisionFetched() on boolean'
+
         # UTF handling
         assert self._source._normalize({'@message': u'ąźć', '@exception': {'class': 'Exception'}}) == 'Production-Exception-ąźć'
         assert self._source._normalize({'@message': 'Foo', '@exception': {'class': 'WikiaException', 'message': u'ąźć'}}) == 'Production-WikiaException-ąźć'

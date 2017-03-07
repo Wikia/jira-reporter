@@ -57,8 +57,8 @@ h5. Backtrace
 
         message = entry.get('@message', '')
 
-        # use a message from the exception
-        if exception_class == 'WikiaException':
+        # use a message from the generic exceptions
+        if exception_class in ('WikiaException', 'Error'):
             message = exception.get('message')
 
         message = message.encode('utf8')
