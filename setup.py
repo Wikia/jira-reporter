@@ -17,7 +17,7 @@ setup(
         'jira==0.32',
         'pytest==2.6.4',
         'requests-oauthlib==0.4.2',
-        'wikia.common.kibana==1.1.1',
+        'wikia.common.kibana==1.2.2',
         'PyYAML==3.11',
     ],
     include_package_data=True,
