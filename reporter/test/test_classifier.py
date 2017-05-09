@@ -19,12 +19,16 @@ class ClassifierTestClass(unittest.TestCase):
                 'CreatePage': 6,
                 'DPL': 7,
                 'CreateNewWiki': 8,
+                'Lua': 9,
+                'Core MediaWiki': 10,
             },
             'paths': {
                 '/extensions/wikia/Chat2': 'Chat',
                 '/extensions/wikia/CreatePage': 'CreatePage',
                 '/extensions/DynamicPageList': 'DPL',
                 '/extensions/wikia/CreateNewWiki': 'CreateNewWiki',
+                '/includes/parser/Parser.php': 'Core MediaWiki',
+                '/extensions/Scribunto': 'Lua',
             }
         }
         self.classifier = Classifier(config=classifier_config)
@@ -136,3 +140,62 @@ h5. Backtrace
         )
 
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 8)  # CreateNewWiki
+
+    def test_classify_LuaException_report(self):
+        # https://wikia-inc.atlassian.net/browse/SUS-2029
+        report = Report(
+            summary='[ScribuntoException] MWExceptionHandler::report',
+            description="""
+h1. ScribuntoException
+
+MWExceptionHandler::report
+
+h5. Backtrace
+* /extensions/Scribunto/common/Base.php:97
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:448
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:318
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:281
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:184
+* /extensions/Scribunto/engines/LuaCommon/LuaCommon.php:205
+* /extensions/Scribunto/engines/LuaCommon/LuaCommon.php:589
+* /extensions/Scribunto/common/Hooks.php:96
+* /includes/parser/Parser.php:3509
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Parser.php:3698
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Parser.php:3698
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Parser.php:3363
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Parser.php:3363
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Preprocessor_DOM.php:1651
+* /includes/parser/Preprocessor_DOM.php:1659
+* /extensions/Scribunto/engines/LuaCommon/LuaCommon.php:421
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:262
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:240
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:287
+* /extensions/Scribunto/engines/LuaStandalone/LuaStandaloneEngine.php:184
+* /extensions/Scribunto/engines/LuaCommon/LuaCommon.php:205
+* /extensions/Scribunto/engines/LuaCommon/LuaCommon.php:589
+* /extensions/Scribunto/common/Hooks.php:96
+* /includes/parser/Parser.php:3509
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Parser.php:3698
+* /includes/parser/Preprocessor_DOM.php:1189
+* /includes/parser/Parser.php:3273
+* /includes/parser/Parser.php:1203
+* /includes/parser/Parser.php:370
+* /includes/WikiPage.php:3192
+* /includes/PoolCounter.php:192
+* /includes/Article.php:634
+* /includes/actions/ViewAction.php:40
+* /includes/Wiki.php:528
+* /includes/Wiki.php:307
+* /includes/Wiki.php:667
+* /includes/Wiki.php:547
+* /index.php:58
+""".strip()
+        )
+
+        assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 9)  # LUA
