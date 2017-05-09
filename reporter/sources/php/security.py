@@ -25,7 +25,6 @@ h5. Backtrace
 """
 
     EXCEPTION_CLASS = 'Wikia\Security\Exception'
-    LIMIT = 25000
 
     def _get_entries(self, query):
         """ Return failed security assertions logs """

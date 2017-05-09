@@ -19,14 +19,12 @@ h3. {full_message}
 {{code}}
     """
 
-    LIMIT = 150000
-
     REPORT_LABEL = 'ChatServerErrors'
 
     def _get_entries(self, query):
         """ Return entries matching given query """
         return self._kibana.query_by_string(
-            query='@fields.level:error AND @source_host:chat-s* AND @message:*{}*'.format(query),
+            query='@fields.app_name:chat AND severity:error AND @source_host:chat-s* AND @message:*{}*'.format(query),
             limit=self.LIMIT
         )
 
