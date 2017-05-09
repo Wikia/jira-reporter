@@ -1,4 +1,5 @@
 import logging
+import re
 import yaml
 
 from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource, ChatLogsSource
@@ -71,10 +72,19 @@ class Classifier(object):
         # classify using the report content and the paths inside it (always report to MAIN)
         description = report.get_description()
 
-        for path, component_name in self._paths.iteritems():
-            if path in description:
-                self._logger.info('Found "{}" in ticket\'s description, setting "{}" component'.
-                                  format(path, component_name))
-                return self.PROJECT_MAIN, self.get_component_id(component_name)
+        # get the backtrace entries
+        backtrace_entries = re.findall(r'^\*\s?([^:]+):\d+', description, flags=re.MULTILINE)
+
+        # use the ticket description as a fallback when there's no backtrace
+        if not backtrace_entries:
+            backtrace_entries = [description]
+
+        # scan them from top
+        for backtrace_entry in backtrace_entries:
+            for path, component_name in self._paths.iteritems():
+                if path in backtrace_entry:
+                    self._logger.info('Found "{}" in ticket\'s description, setting "{}" component'.
+                                      format(path, component_name))
+                    return self.PROJECT_MAIN, self.get_component_id(component_name)
 
         return None
