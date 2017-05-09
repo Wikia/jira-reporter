@@ -178,7 +178,7 @@ class KibanaSource(Source):
 
     PREVIEW_HOST = 'staging-s1'
 
-    KIBANA_URL = 'https://kibana.wikia-inc.com/index.html#/dashboard/script/logstash.js?query={query}&from=6h&fields={fields}'
+    KIBANA_URL = "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'{query}')),sort:!('@timestamp',desc))"
 
     def __init__(self, period=3600):
         super(KibanaSource, self).__init__()
@@ -235,6 +235,7 @@ class KibanaSource(Source):
 
     @staticmethod
     def format_kibana_url(query, columns=None):
+        # https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'@fields.app_name:chat')),sort:!('@timestamp',desc))
         columns = columns or ['@timestamp', '@source_host', '@message']
 
         # do not split the query into Kibana subqueries
