@@ -13,5 +13,5 @@ Automated JIRA reporting of issue from various sources (PHP fatal errors, except
 ```
 virtualenv env
 source env/bin/activate
-PIP_INDEX_URL=http://pypi.wikia-services.com/simple/ pip install -e .
+PIP_INDEX_URL=https://artifactory.wikia-inc.com/artifactory/api/pypi/pypi/simple pip install -e .
 ```
