@@ -15,5 +15,3 @@ h3. {full_message}
 {details}
 {{code}}
     """
-
-    LIMIT = 150000

@@ -168,7 +168,7 @@ class Source(object):
 
 class KibanaSource(Source):
     """ elasticsearch-powered data provider """
-    LIMIT = 100000  # limit how many rows can be fetched from elasticsearch
+    LIMIT = 10000  # limit how many rows can be fetched from elasticsearch
 
     # TODO: move to a separate class
     ENV_PREVIEW = 'Preview'

@@ -19,8 +19,6 @@ h3. {full_message}
 {{code}}
     """
 
-    LIMIT = 150000
-
     REPORT_LABEL = 'ChatServerErrors'
 
     def _get_entries(self, query):
