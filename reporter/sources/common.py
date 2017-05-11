@@ -168,7 +168,7 @@ class Source(object):
 
 class KibanaSource(Source):
     """ elasticsearch-powered data provider """
-    LIMIT = 10000  # limit how many rows can be fetched from elasticsearch
+    LIMIT = 100000  # limit how many rows can be fetched from elasticsearch
 
     # TODO: move to a separate class
     ENV_PREVIEW = 'Preview'
@@ -180,9 +180,11 @@ class KibanaSource(Source):
 
     KIBANA_URL = "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'{query}')),sort:!('@timestamp',desc))"
 
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-other'
+
     def __init__(self, period=3600):
         super(KibanaSource, self).__init__()
-        self._kibana = Kibana(period=period)
+        self._kibana = Kibana(period=period, index_prefix=self.ELASTICSEARCH_INDEX_PREFIX)
 
     def _get_entries(self, query):
         """ Send the query to elasticsearch """
