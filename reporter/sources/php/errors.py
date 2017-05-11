@@ -137,6 +137,12 @@ class PHPErrorsSource(PHPLogsSource):
         message = re.sub(r'Undefined index: [^\s]+ in', 'Undefined index: X in', message)
         message = re.sub(r'Undefined offset: \d+ in', 'Undefined offset: N in', message)
 
+        # remove moving part of <!--LINK 0:459-->
+        message = re.sub(r'<!--LINK \d+:\d+-->', '<!--LINK N:N-->', message)
+
+        # remove PID from "Error while sending QUERY packet." warnings
+        message = re.sub(r'Error while sending \w+ packet. PID=\d+', 'Error while sending X packet. PID=N', message)
+
         # update the entry
         entry['@message_normalized'] = message
 
