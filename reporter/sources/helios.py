@@ -24,11 +24,13 @@ h3. {message}
     """
 
     LIMIT = 10000
-    IDENT = '/usr/wikia/helios/current/helios'
+
+    # use Helios-specific index
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-helios'
 
     def _get_entries(self, query):
         return self._kibana.query_by_string(
-                query='program: "{ident}" AND severity:"error"'.format(ident=self.IDENT),
+                query='severity:"error"',
                 limit=self.LIMIT)
 
     def _filter(self, entry):
@@ -50,8 +52,7 @@ h3. {message}
         Get the link to Kibana dashboard showing the provided error log entry
         """
         return self.format_kibana_url(
-            query='program: "{ident}" AND "{message}"'.format(
-                ident=self.IDENT,
+            query='@message: "{message}"'.format(
                 message=entry.get('@message')
             ),
             columns=['@timestamp', '@source_host', '@message']
