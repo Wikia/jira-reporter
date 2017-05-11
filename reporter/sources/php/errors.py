@@ -65,7 +65,8 @@ class PHPErrorsSource(PHPLogsSource):
             query=urllib.quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
                 host=host_regexp, message=matches.group(1).replace(',', ''), file=matches.group(2)
             )),
-            fields=','.join(['@timestamp', '@message', '@fields.http_url', '@source_host'])
+            fields=','.join(['@timestamp', '@message', '@fields.http_url', '@source_host']),
+            index=self.ELASTICSEARCH_INDEX_PREFIX
         )
 
     def _normalize(self, entry):
