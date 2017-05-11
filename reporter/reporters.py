@@ -177,17 +177,19 @@ class Jira(object):
             "labels": report.get_labels()
         }
 
-        # PLATFORM-2405: classify the report: set a proper project and component
-        classification = self._classifier.classify(report)
-
-        if classification:
-            (project, component_id) = classification
-
-            ticket_dict['project']['key'] = project
-            ticket_dict['components'] = [{'id': str(component_id)}]  # "expected 'id' property to be a string"
-
         # set default fields as defined in the config.py
         ticket_dict.update(self._fields['default'])
+
+        # PLATFORM-2405: classify the report: set a proper project and component
+        (project, component_id) = self._classifier.classify(report)
+
+        if project:
+            ticket_dict['project']['key'] = project
+            # overwrite default fields with project specific ones
+            ticket_dict.update(self._fields.get(project, {}))
+
+        if component_id:
+            ticket_dict['components'] = [{'id': str(component_id)}]  # "expected 'id' property to be a string"
 
         # PLATFORM-2441: set "ER Date" to indicate when was the last time this ticket was still valid
         ticket_dict[self._last_seen_field] = self.get_today_timestamp()

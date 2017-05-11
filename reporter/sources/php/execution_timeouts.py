@@ -37,7 +37,7 @@ The below URL is taking too much time to render. This is usually caused by extre
         url = self._get_url_from_entry(entry)
 
         return Report(
-            summary='Content is taking too long to render - {}'.format(url),
+            summary='Timeout error: {}'.format(url),
             description=self.REPORT_TEMPLATE.format(url=url),
             label=self.REPORT_LABEL
         )
