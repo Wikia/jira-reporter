@@ -26,13 +26,16 @@ h3. Stacktrace
 
     LIMIT = 10000
 
+    # use Phalanx-specific index
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-phalanx'
+
     # X-Request-Id: be0babcc-86da-4b27-bc1f-9025d314f745
     TRACE_ID_PATTERN = re.compile('X-Request-Id: ([a-f0-9-]+)')
 
     def _get_entries(self, query):
         # https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Phalanx%20service%20logs
         # -lvl: "INFO" - skip INFO level
-        return self._kibana.query_by_string(query='appname: "phalanx" AND -lvl: "INFO"', limit=self.LIMIT)
+        return self._kibana.query_by_string(query='-lvl: "INFO"', limit=self.LIMIT)
 
     def _filter(self, entry):
         return True
@@ -61,7 +64,7 @@ h3. Stacktrace
         Get the link to Kibana dashboard showing the provided error log entry
         """
         return self.format_kibana_url(
-            query='appname: "phalanx" AND -lvl: "INFO" AND logger_name: "{logger_name}"'.format(
+            query='-lvl: "INFO" AND logger_name: "{logger_name}"'.format(
                 logger_name=entry.get('logger_name')
             ),
             columns=['@timestamp', '@source_host', 'logger_name', 'lvl', '@message', 'stack_trace']
