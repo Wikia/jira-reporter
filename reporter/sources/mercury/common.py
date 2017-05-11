@@ -15,3 +15,7 @@ h3. {full_message}
 {details}
 {{code}}
     """
+
+    # use Mercury-specific index
+    # ELASTICSEARCH_INDEX_PREFIX = 'logstash-mercury'
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-mobile-wiki'

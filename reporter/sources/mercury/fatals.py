@@ -12,7 +12,7 @@ class MercurySource(MercuryLogsSource):
     def _get_entries(self, query):
         """ Return entries matching given severity """
         return self._kibana.query_by_string(
-            query='severity: "{}" AND (name: "mobile-wiki" OR name: "mercury") AND @source_host: /(mercury|mobile-wiki|staging)-(s|r).*/'.format(query),
+            query='@message:* AND severity: "{}" AND @source_host: /[sr].*/'.format(query),
             limit=self.LIMIT
         )
 
@@ -28,7 +28,7 @@ class MercurySource(MercuryLogsSource):
             return None
 
         return self.format_kibana_url(
-            query='name: "mercury" AND "{message}"'.format(
+            query='@message:"{message}"'.format(
                 message=message.encode('utf8')
             ),
             columns=['@timestamp', 'namespace', 'msg', 'error', 'severity']
@@ -38,7 +38,7 @@ class MercurySource(MercuryLogsSource):
         """
         Normalize given entry
         """
-        return 'Mercury-{}-{}-{}'.format(
+        return 'mobile-wiki-{}-{}-{}'.format(
             entry.get('namespace'),
             entry.get('msg').encode('utf8'),
             self._get_env_from_entry(entry)
