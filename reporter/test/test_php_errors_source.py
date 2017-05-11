@@ -131,6 +131,14 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Notice: Undefined offset: 43339 in /lib/Wikia/src/Domain/User/Preferences/UserPreferences.php on line 94',
         }) == 'PHP-PHP Notice: Undefined offset: N in /lib/Wikia/src/Domain/User/Preferences/UserPreferences.php on line 94-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Notice: Undefined index: <!--LINK 0:459--> in /includes/StringUtils.php on line 261',
+        }) == 'PHP-PHP Notice: Undefined index: <!--LINK N:N--> in /includes/StringUtils.php on line 261-Production'
+
+        assert self._source._normalize({
+            '@message': 'PHP Warning:  Error while sending QUERY packet. PID=21637 in /includes/db/DatabaseMysqli.php on line 44',
+        }) == 'PHP-PHP Warning:  Error while sending X packet. PID=N in /includes/db/DatabaseMysqli.php on line 44-Production'
+
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
