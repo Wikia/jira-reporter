@@ -22,6 +22,9 @@ class PHPLogsSource(KibanaSource):
 {{code}}
     """
 
+    # use MediaWiki-specific index
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-mediawiki'
+
     @staticmethod
     def _normalize_trace(trace):
         """
