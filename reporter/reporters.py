@@ -181,7 +181,12 @@ class Jira(object):
         ticket_dict.update(self._fields['default'])
 
         # PLATFORM-2405: classify the report: set a proper project and component
-        (project, component_id) = self._classifier.classify(report)
+        (project, component_id) = None, None
+
+        classification = self._classifier.classify(report)
+
+        if classification:
+            (project, component_id) = classification
 
         if project:
             ticket_dict['project']['key'] = project
