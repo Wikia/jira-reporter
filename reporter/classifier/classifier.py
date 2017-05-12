@@ -2,7 +2,7 @@ import logging
 import re
 import yaml
 
-from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource, ChatLogsSource
+from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource, ChatLogsSource, PHPExecutionTimeoutSource
 
 
 class ClassifierConfig(object):
@@ -32,6 +32,7 @@ class Classifier(object):
     """
     PROJECT_MAIN = 'MAIN'
     PROJECT_SER = 'SER'
+    PROJECT_COMMUNITY_TECHNICAL = 'CT'
 
     def __init__(self, config=ClassifierConfig()):
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -68,6 +69,10 @@ class Classifier(object):
 
         if ChatLogsSource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Chat')
+
+        if PHPExecutionTimeoutSource.REPORT_LABEL in labels:
+            # no component specified for this project
+            return self.PROJECT_COMMUNITY_TECHNICAL, None
 
         # classify using the report content and the paths inside it (always report to MAIN)
         description = report.get_description()
