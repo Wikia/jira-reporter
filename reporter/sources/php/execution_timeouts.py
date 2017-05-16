@@ -10,7 +10,7 @@ class PHPExecutionTimeoutSource(PHPLogsSource):
     reports should be sent to Community Support.
     """
 
-    REPORT_LABEL = "PHP Execution Timeout"
+    REPORT_LABEL = "php-timeout"
 
     REPORT_TEMPLATE = """
 The below URL is taking too much time to render. This is usually caused by extremely large articles.
