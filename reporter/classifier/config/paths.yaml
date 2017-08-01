@@ -45,7 +45,7 @@ paths:
   /extensions/wikia/Custom404Page: Community Page
   /extensions/wikia/DesignSystem: Design System
   /extensions/wikia/Development: Development platform and tools
-  /extensions/wikia/EditPageLayout: Visual Editor
+  /extensions/wikia/EditPageLayout: CK Editor (RTE)
   /extensions/wikia/EditPreview: Visual Editor
   /extensions/wikia/EditTagging: Content Extensions (tags in wikitext)
   /extensions/wikia/EditorPreference: Visual Editor
