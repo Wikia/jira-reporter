@@ -173,7 +173,6 @@ paths:
   /extensions/wikia/WikiaHomePage: Home-page
   /extensions/wikia/WikiaHubsServices: Hubs
   /extensions/wikia/WikiaHubsV3: Hubs
-  /extensions/wikia/WikiaMaps: Interactive Maps
   /extensions/wikia/WikiaMobileEditor: Visual Editor
   /extensions/wikia/WikiaPhotoGallery: New Gallery
   /extensions/wikia/WikiaSpamRegexBatch: API Spam Protection
