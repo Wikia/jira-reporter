@@ -2,32 +2,32 @@ ls extensions/wikia -lh | awk '{ print $NF }',Component
 AbPerformanceTesting,In House AB Testing Framework
 AbTesting,In House AB Testing Framework
 AbuseFilterBypass,
-AchievementsII,"Achievements, Badges, Leaderboard"
-AdEngine,AdEngineering
+AchievementsII,"Achievements"
+AdEngine,"Ad Engineering"
 AdminDashboard,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
 AjaxFunctions.php,
 AjaxPoll,Polls
 AnalyticsEngine,"Google, Universal Analytics"
 Answers,Answers
 AntiSpamInput,API Spam Protection
-ApiDocs,API
+ApiDocs,"Core MediaWiki"
 AppPromoLanding,
 ARecoveryEngine,
-ArticleAsJson,Article
+ArticleAsJson,"Core MediaWiki"
 ArticleComments,Comments
-ArticleMetaDescription,Article
-ArticlesAsResources,Article
-ArticleSummary,Article
+ArticleMetaDescription,"Core MediaWiki"
+ArticlesAsResources,"Core MediaWiki"
+ArticleSummary,"Core MediaWiki"
 AssetsManager,
 AuthModal,
 AutoFollow,
 AutoMainpageFixer,
 AutomaticWikiAdoption,
 AutoPageCreate,CreateNewWiki
-BannerNotifications,Notifications
+BannerNotifications,"Notifications (Old)"
 BlogEditCategoryPrompter,Categories
 Blogs,Blogs
-BrokenRenameFix,Staff tools (wikis)
+BrokenRenameFix,Staff tools
 Bucky,
 CanonicalHref,
 Captcha,
@@ -39,25 +39,25 @@ CategorySelect,Categories
 Chat2,Chat
 CheckpointCharlie,
 CityVisualization,
-CloseMyAccount,"User profile (profile masthead, general preferences)"
+CloseMyAccount,"User Profile"
 CodeLint,
 CommentCSV,Comments
 CommentsOnly,Comments
 CommunityMessages,Community Page
 CommunityPage,Community Page
 Comteam,
-ConfirmEmailPrompt,Product Email
-ContentFeeds,Content Extensions (tags in wikitext)
-ContentReview,Content Extensions (tags in wikitext)
-ContentWarning,Content Extensions (tags in wikitext)
+ConfirmEmailPrompt,"Transactional Email"
+ContentFeeds,"Core MediaWiki"
+ContentReview,"Core MediaWiki"
+ContentWarning,"Core MediaWiki"
 ContributionAppreciation,
 ContributionPrototype,
 CookiePolicy,
-CoppaTool,Staff tools (wikis)
+CoppaTool,"Staff tools"
 CorporateFooter,
 CreateNewWiki,CreateNewWiki
 CreatePage,
-CuratedContent,Curated Conent
+CuratedContent,
 Custom404Page,Community Page
 DataProvider,
 DesignSystem,Design System
@@ -71,26 +71,26 @@ EditorSurvey,"Visual Editor"
 EditorSyntaxHighlighting,"Visual Editor"
 EditPageLayout,"Visual Editor"
 EditPreview,"Visual Editor"
-EditTagging,Content Extensions (tags in wikitext)
-Email,Product Email
-EmailsStorage,Product Email
-EmailTemplates,Product Email
+EditTagging,"Core MediaWiki"
+Email,"Transactional Email"
+EmailsStorage,"Transactional Email"
+EmailTemplates,"Transactional Email"
 EmbeddableDiscussions,Discussions
 EmergencyBroadcastSystem,
 Evergreens,
-FacebookClient,Facebook Connect
+FacebookClient,
 FastCat,
 FilePage,Community Page
 Flags,
 FliteTag,
 Follow,
 Forum,Forum
-FounderEmails,Product Email
+FounderEmails,"Transactional Email"
 FounderProgressBar,
 GameGuides,
 GlobalCSSJS,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
 GlobalFooter,
-GlobalNavigation,Navigation (global and local)
+GlobalNavigation,Global Navigation
 GlobalShortcuts,
 GlobalWatchlist,
 GoogleAnalyticsSampling,"Google, Universal Analytics"
@@ -98,7 +98,7 @@ GoogleDocs,"Google, Universal Analytics"
 GoogleFormTag,"Google, Universal Analytics"
 HAWelcome,
 Helios,
-HideTags,Content Extensions (tags in wikitext)
+HideTags,"Core MediaWiki"
 HubRssFeed,"Hubs"
 ImageLazyLoad,
 ImagePlaceholder,
@@ -107,7 +107,7 @@ ImageReviewMercury,Mercury
 ImageServing,
 ImageSizeInfoFunctions,
 ImageTweaks,
-IndexingPipeline,Search
+IndexingPipeline,Search (Legacy)
 InfoboxBuilder,Portable Infoboxes
 InsightsBlogpostRedirect,Blogs
 InsightsV2,
@@ -115,7 +115,7 @@ InstantGlobals,
 InterwikiDispatcher,
 InWikiExternalForm,
 InWikiGame,
-JavascriptAPI,API
+JavascriptAPI,"Core MediaWiki"
 JSMessages,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
 JsonFormat,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
 JSSnippets,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"
@@ -123,17 +123,16 @@ JSVariables,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insigh
 LandingPagesAsContent,Community Page
 LatestPhotos,
 LICENSE,
-Lightbox,Video & Lightbox & New Gallery
-Lilly,
+Lightbox,Lightbox
 LinkSuggest,
 LinkToMobileApp,Mobile Apps
 Listusers,
 LocalSitemapPage,Community Page
 LookupContribs,
 LookupUser,
-LyricsApi,API
+LyricsApi,"Lyrics Wiki"
 MagicLinks,
-MainPageTag,Content Extensions (tags in wikitext)
+MainPageTag,"Core MediaWiki"
 MediaGallery,"New Gallery"
 MemcacheUserBlock,
 MercuryApi,Mercury
@@ -145,12 +144,12 @@ MobileContent,Mobile Apps
 MonetizationModule,
 MostPopularCategories,Categories
 MultiTasks,
-MyHome,"User profile (profile masthead, general preferences)"
+MyHome,User Profile
 NewWindowLinks,
 NjordPrototype,
 NLP,
 NotAValidWikia,
-Oasis,Oasis
+Oasis,Oasis (skin)
 OpenGraphMetaCustomizations,
 Optimizely,Optimizely A/B Testing Framework
 OversightCompanion,
@@ -158,13 +157,13 @@ PageClassification,
 PageShare,Sharing
 Paginator,
 PaidAssetDrop,
-ParserSpeed,Parser
-Parsoid,Parser
+ParserSpeed,"Core MediaWiki"
+Parsoid,"Core MediaWiki"
 PartnerFeed,
-PerSkinParserCache,Parser
+PerSkinParserCache,"Core MediaWiki"
 PhalanxII,Phalanx
-Piggyback,Staff tools (wikis)
-PiggyQuick,Staff tools (wikis)
+Piggyback,"Staff tools"
+PiggyQuick,"Staff tools"
 Places,
 POI,
 PolldaddyTag,Polls
@@ -191,9 +190,9 @@ RTE,
 SASS,
 ScavengerHunt,
 Scribe,
-Search,Search
-SearchDigest,Search
-SearchNearMatch,Search
+Search,Search (Legacy)
+SearchDigest,Search (Legacy)
+SearchNearMatch,Search (Legacy)
 Security,Security
 SemanticMediaWiki,Semantic MediaWiki
 SeoCrossLink,SEO
@@ -203,14 +202,14 @@ SEOTweaks,SEO
 SEOTweaksGlobal,SEO
 ShareButtons,Sharing
 SharedHelp,Shared help
-ShowPerformanceStats,"Internal staff data, stats, and reports (incl. report tool)"
+ShowPerformanceStats,Staff tools
 Sitemap,
 SitemapPage,
 SitemapXml,
 SiteWideMessages,
 SkinChooser,
 SlowPagesBlacklist,
-SoundCloudTag,Content Extensions (tags in wikitext)
+SoundCloudTag,"Core MediaWiki"
 SpecialCacheEpoch,
 SpecialCategoryIntersection,Categories
 SpecialContact2,
@@ -218,7 +217,7 @@ SpecialCss,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insight
 SpecialDiscussions,Discussions
 SpecialDiscussionsLog,Discussions
 SpecialEditHub,"Hubs"
-SpecialEmailTest,Product Email
+SpecialEmailTest,"Transactional Email"
 SpecialHealthcheck,
 SpecialInterwikiEdit,
 SpecialManageWikiaHome,"Home-page"
@@ -229,7 +228,7 @@ SpecialPromote,Special:Promote
 SpecialProtectSite,
 SpecialStyleguide,
 SpecialUnlockdb,
-SpecialUnsubscribe,Product Email
+SpecialUnsubscribe,"Transactional Email"
 SpecialUnusedVideos,Video
 SpecialUserData,
 SpecialVersion,
@@ -237,8 +236,8 @@ SpecialVideos,Video
 SpecialWithoutimages,
 SpitfiresContributionExperiments,
 SponsorshipDashboard,
-SpotifyTag,Content Extensions (tags in wikitext)
-Spotlights,spotlights-upgrade
+SpotifyTag,"Core MediaWiki"
+Spotlights,
 StaffLog,
 StaffPowers,
 StaffSig,
@@ -246,7 +245,7 @@ Staging,
 SwiftSync,
 TabView,
 TagCloud,
-TagsReport,"Internal staff data, stats, and reports (incl. report tool)"
+TagsReport,Staff tools
 TaskManager,
 Tasks,
 TemplateClassification,
@@ -267,14 +266,14 @@ TwitterCards,
 TwitterTag,
 UploadInfo,
 UserActivity,Activity Feeds
-UserChangesHistory,"User profile (profile masthead, general preferences)"
+UserChangesHistory,User Profile
 UserLogin,Login & Signup
-UserManagementPanel,"User profile (profile masthead, general preferences)"
+UserManagementPanel,User Profile
 UserPageRedirects,
-UserPreferencesV2,"User profile (profile masthead, general preferences)"
-UserProfilePageV3,"User profile (profile masthead, general preferences)"
-UserRenameTool,Staff tools (wikis)
-UserTools,"User profile (profile masthead, general preferences)"
+UserPreferencesV2,User Profile
+UserProfilePageV3,User Profile
+UserRenameTool,"Staff tools"
+UserTools,User Profile
 VideoEmbedTool,Video
 VideoHandlers,Video
 VideoPageTool,Video
@@ -283,7 +282,7 @@ VisitSource,
 VisualEditorTourExperiment,"Visual Editor"
 VKTag,
 Wall,Message Wall
-WallNotifications,Notifications
+WallNotifications,Notifications (Old)
 WAM,"WAM"
 WAMPage,"WAM"
 WatchSubPages,
@@ -293,7 +292,7 @@ WhatIsMyIP,
 WhereIsExtension,
 WidgetFramework,
 WidgetTag,
-WikiaApi,API
+WikiaApi,"Core MediaWiki"
 WikiaBar,
 WikiaHomePage,"Home-page"
 WikiaHubsServices,"Hubs"
@@ -317,12 +316,12 @@ WikiaRecentChangesBlockHandler,
 WikiaRSS,
 WikiaSeasons,
 WikiaSpamRegexBatch,API Spam Protection
-WikiaStats,"Internal staff data, stats, and reports (incl. report tool)"
+WikiaStats,Staff tools
 WikiaStyleGuide,
 WikiaWantedQueryPage,
 WikiaWhiteList,
-WikiFactory,Wiki factory
-WikiFactoryChangedHooks,Wiki factory
+WikiFactory,WikiFactory
+WikiFactoryChangedHooks,WikiFactory
 WikiFeatures,
 XBoxGamerCardTag,
 YouTube,
