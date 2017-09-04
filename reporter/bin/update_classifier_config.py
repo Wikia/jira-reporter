@@ -49,8 +49,10 @@ def update_components_mapping():
 
     _write_to_yaml('components', components)
 
+    return components
 
-def update_paths_mapping():
+
+def update_paths_mapping(components):
     """
     Generate reporter/classifier/paths.yaml with extensions / source code paths to component names mapping
     """
@@ -72,11 +74,14 @@ def update_paths_mapping():
                 (extension_name, component_name) = line
 
                 if component_name != '':
+                    if component_name not in components:
+                        raise Exception("'{}' component is not defined in Jira, please update your CSV file:\n{}".format(component_name, line))
+
                     paths['{}{}'.format(path_prefix, extension_name)] = component_name
 
     _write_to_yaml('paths', paths)
 
 
 if __name__ == '__main__':
-    update_components_mapping()
-    update_paths_mapping()
+    components = update_components_mapping()
+    update_paths_mapping(components)
