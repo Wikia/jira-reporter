@@ -61,3 +61,6 @@ reporter/config.py
 
 # code coverage
 .coverage*
+
+# vim
+*.swp
