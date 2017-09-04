@@ -8,7 +8,7 @@ index.php,
 includes/EmailNotification.php,
 includes/actions/ViewAction.php,
 includes/wikia/nirvana/WikiaApp.class.php,
-includes/EditPage.php,"Editor (incl. source, ck, visual, mini)"
+includes/EditPage.php,"Core MediaWiki"
 includes/WikiPage.php,
 includes/api/ApiMain.php,
 includes/RecentChange.php,
@@ -21,20 +21,20 @@ includes/PoolCounter.php,
 LocalSettings.php,
 includes/WebStart.php,
 includes/AjaxDispatcher.php,
-wikia.php,API
-api.php,API
+wikia.php,Nirvana API
+api.php,Core MediaWiki
 includes/StubObject.php,
 includes/wikia/FakeLocalFile.class.php,
 extensions/3rdparty/tabber/tabber.php,
 includes/GlobalFunctions.php,
 includes/wikia/nirvana/WikiaView.class.php,
-includes/api/ApiEditPage.php,"Editor (incl. source, ck, visual, mini)"
+includes/api/ApiEditPage.php,Source Editor
 extensions/AbuseFilter/AbuseFilter.parser.php,
 includes/Hooks.php,
 load.php,Core MediaWiki
 includes/Action.php,
 includes/actions/HistoryAction.php,
-extensions/VisualEditor,"Editor (incl. source, ck, visual, mini)"
+extensions/VisualEditor,Visual Editor
 includes/wikia/api/ArticlesApiController.class.php,
 includes/wikia/nirvana/WikiaResponse.class.php,
 includes/db/Database.php,
