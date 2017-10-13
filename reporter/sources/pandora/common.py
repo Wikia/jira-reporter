@@ -22,3 +22,4 @@ h3. Stacktrace
     """
 
     LIMIT = 10000
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash'
