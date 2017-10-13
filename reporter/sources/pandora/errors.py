@@ -12,7 +12,7 @@ class PandoraErrorsSource(PandoraLogsSource):
     def _get_entries(self, query):
         """ Return matching entries by given prefix """
         return self._kibana.query_by_string(
-            query='program: "raw_logstash" AND rawMessage: * AND -rawLevel:"INFO"'.format(query),
+            query='kubernetes.labels.type: "pandora" AND rawMessage: * AND -rawLevel:"INFO"'.format(query),
             limit=self.LIMIT
         )
 
