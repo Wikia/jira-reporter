@@ -33,6 +33,7 @@ class Classifier(object):
     PROJECT_MAIN = 'MAIN'
     PROJECT_SER = 'SER'
     PROJECT_COMMUNITY_TECHNICAL = 'CT'
+    PROJECT_ERROR_REPORTER = 'ER'
 
     def __init__(self, config=ClassifierConfig()):
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -61,8 +62,10 @@ class Classifier(object):
         if MercurySource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Mercury')
 
+        # we want Pandora services-related issues to be reported to ER project
+        # and let Jira move it to an appropriate project based on label
         if PandoraErrorsSource.REPORT_LABEL in labels:
-            return self.PROJECT_SER, self.get_component_id('Pandora')
+            return self.PROJECT_ERROR_REPORTER, None
 
         if PhalanxSource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Phalanx')

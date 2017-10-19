@@ -43,6 +43,9 @@ class ClassifierTestClass(unittest.TestCase):
         report = Report('foo', 'bar', label='Helios')
         assert self.classifier.classify(report) == (Classifier.PROJECT_SER, 1)
 
+        report = Report('foo', 'bar', label='PandoraErrors')
+        assert self.classifier.classify(report) == (Classifier.PROJECT_ERROR_REPORTER, None)
+
     def test_classify_chat_error_report(self):
         # https://wikia-inc.atlassian.net/browse/SUS-977
         report = Report(
