@@ -53,7 +53,7 @@ class PandoraErrorsSource(PandoraLogsSource):
         logger_name = entry.get('logger_name')
 
         # normalize hashes
-        message = re.sub(r'[a-f0-9]{4,}', 'HASH', message)
+        message = re.sub(r'[a-f0-9-]{4,}', 'HASH', message)
 
         # normalize numeric values
         message = re.sub(r'\d+', 'N', message)

@@ -53,3 +53,8 @@ class PandoraErrorsSourceTestClass(unittest.TestCase):
             'rawMessage': 'Site/Shard map invalid or missing entry for site 831',
             'logger_name': 'service.foo'
         }) == 'Pandora-Site/Shard map invalid or missing entry for site N-service.foo'
+
+        assert self._source._normalize({
+            'rawMessage': "Context property 'correlation ID' is missing from the Rabbit message, falling back to 'c2faca50-9106-4b7d-bfd3-5c3fd27e83b9'",
+            'logger_name': 'service.foo'
+        }) == "Pandora-Context property 'correlation ID' is missing from the Rabbit message, falling back to 'HASH'-service.foo"
