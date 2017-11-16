@@ -31,14 +31,14 @@ classifier = Classifier()
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
 
-#reports += DBQueryErrorsSource().query(threshold=2)
+reports += DBQueryErrorsSource().query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)
 
 #reports += PandoraErrorsSource().query(threshold=5)
 
-reports += PHPExceptionsSource().query(query='error', threshold=50)
+#reports += PHPExceptionsSource().query(query='error', threshold=50)
 #reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
 #reports += PHPSecuritySource().query(threshold=0)

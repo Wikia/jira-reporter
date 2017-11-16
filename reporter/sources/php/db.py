@@ -179,7 +179,7 @@ h5. Backtrace
         context = {
             'query': parsed.get('Query'),
             'function': function,
-            'error': '{} {}'.format(context.get('errno'), context.get('err', '').encode('utf-8')),
+            'error': '{} {}'.format(context.get('errno'), str(context.get('err', '')).encode('utf-8')),
         }
 
         return context
