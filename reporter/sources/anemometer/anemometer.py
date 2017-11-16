@@ -28,7 +28,7 @@ class AnemometerSource(Source):
 *Database*: {database}
 
 h5. Example query
-{{code}}
+{{code:sql}}
 {example}
 {{code}}
 

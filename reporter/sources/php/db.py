@@ -12,16 +12,21 @@ class DBQueryErrorsSource(PHPLogsSource):
     REPORT_LABEL = 'DBQueryErrors'
 
     FULL_MESSAGE_TEMPLATE = """
-*Query*: {{noformat}}{query}{{noformat}}
 *Function*: {function}
 *DB server*: {server}
 *Error*: {error}
 
+h3. Query
+{{code:sql}}
+{query}
+{{code}}
+
+h3. Message
 {{code}}
 {message}
 {{code}}
 
-h5. Backtrace
+h3. Backtrace
 {backtrace}
 """
 
@@ -173,13 +178,16 @@ h5. Backtrace
                 parsed[key] = value.strip()
 
         # normalize "DatabaseBase::sourceFile( /usr/wikia/slot1/3690/src/maintenance/cleanupStarter.sql )"
-        function = parsed.get('Function', '')
-        function = re.sub(r'/usr/wikia/slot1/\d+/src', '', function)
+        func = parsed.get('Function', '')
+        func = re.sub(r'/usr/wikia/slot1/\d+/src', '', func)
+
+        err_str = context.get('err', '')
+        err_str = err_str.encode('utf-8') if err_str else ''
 
         context = {
             'query': parsed.get('Query'),
-            'function': function,
-            'error': '{} {}'.format(context.get('errno'), str(context.get('err', '')).encode('utf-8')),
+            'function': func,
+            'error': '{} {}'.format(context.get('errno'), err_str),
         }
 
         return context

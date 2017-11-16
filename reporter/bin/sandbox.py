@@ -28,10 +28,10 @@ classifier = Classifier()
 #source = KilledDatabaseQueriesSource()
 #reports += source.query(threshold=0)
 
-source = DBQueryNoLimitSource()
-reports += source.query(threshold=50)
+#source = DBQueryNoLimitSource()
+#reports += source.query(threshold=50)
 
-#reports += DBQueryErrorsSource().query(threshold=2)
+reports += DBQueryErrorsSource().query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)

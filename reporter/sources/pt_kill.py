@@ -25,9 +25,9 @@ The following database query was killed by {{{{pt-kill}}}} script, because it wa
 
 This query is dead. This query is no more.
 
-{{noformat}}
+{{code:sql}}
 {query}
-{{noformat}}
+{{code}}
 
 *More details*:
 
