@@ -185,7 +185,36 @@ h5. Backtrace
         return context
 
 
-class DBQueryNoLimitSource(PHPLogsSource):
+class DBQueriesLogsSource(PHPLogsSource):
+    # use dedicated SQL logs index
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-mediawiki-sql'
+
+    def _get_entries(self, query):
+        """ This method will query the source and return matching entries """
+        raise NotImplementedError("_get_entries() method needs to be overwritten in your class!")
+
+    def _filter(self, entry):
+        """ Callback used to filter entries """
+        raise NotImplementedError("_filter() method needs to be overwritten in your class!")
+
+    def _normalize(self, entry):
+        """
+        Normalize given message by removing variables like server name
+        to improve grouping of messages
+        """
+        raise NotImplementedError("_normalize() method needs to be overwritten in your class!")
+
+    def _get_report(self, entry):
+        """
+        Return a report for a given entry
+
+        :type entry object
+        :rtype: reporter.reports.Report
+        """
+        raise NotImplementedError("_get_report() method needs to be overwritten in your class!")
+
+
+class DBQueryNoLimitSource(DBQueriesLogsSource):
     """ Get DB queries that return excessive number of rows """
     REPORT_LABEL = 'DBQueryNoLimit'
 
@@ -202,6 +231,9 @@ h5. Backtrace
 * {backtrace}
 """
 
+    # use dedicated SQL logs index
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-mediawiki-sql'
+
     def _get_entries(self, query):
         """ Return matching exception logs """
         # @see http://www.solrtutorial.com/solr-query-syntax.html
@@ -211,10 +243,6 @@ h5. Backtrace
         )
 
     def _filter(self, entry):
-        """ Remove log entries that are not coming from main DC """
-        if not entry.get('@message', '').startswith('SQL '):
-            return False
-
         # filter out by host
         # "@source_host": "ap-s10",
         host = entry.get('@source_host', '')
@@ -239,8 +267,7 @@ h5. Backtrace
         """ Format the report to be sent to JIRA """
         context = entry.get('@context')
 
-        query = entry.get('@message')
-        query = re.sub(r'^SQL', '', query).strip()  # remove "SQL" message prefix
+        query = entry.get('@message').strip()
 
         # format the report
         full_message = self.FULL_MESSAGE_TEMPLATE.format(
