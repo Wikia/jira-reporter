@@ -10,7 +10,7 @@ from time import sleep
 from reporter.reporters import Jira
 from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrorsSource,\
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
-    PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, PhalanxSource, \
+    PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, \
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
     ChatLogsSource, PHPExecutionTimeoutSource
 
@@ -56,9 +56,6 @@ reports += PandoraErrorsSource().query(threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1540
 reports += PHPSecuritySource().query(threshold=0)  # security problems is always important
-
-# @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Phalanx%20service%20logs
-#reports += PhalanxSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 reports += MercurySource().query('emergency', threshold=0)

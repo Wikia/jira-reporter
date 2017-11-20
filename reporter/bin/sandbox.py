@@ -7,7 +7,7 @@ import logging
 from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
-    PandoraErrorsSource, PHPSecuritySource, PhalanxSource, MercurySource, HeliosSource, AnemometerSource, \
+    PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
     ChatLogsSource
 
 from reporter.classifier import Classifier
@@ -42,8 +42,6 @@ reports += DBQueryErrorsSource().query(threshold=2)
 #reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
 #reports += PHPSecuritySource().query(threshold=0)
-
-# reports += PhalanxSource().query(threshold=5)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 #reports += MercurySource().query('fatal', threshold=0)

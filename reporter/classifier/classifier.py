@@ -2,7 +2,7 @@ import logging
 import re
 import yaml
 
-from reporter.sources import PandoraErrorsSource, PhalanxSource, MercurySource, HeliosSource, ChatLogsSource, PHPExecutionTimeoutSource
+from reporter.sources import PandoraErrorsSource, MercurySource, HeliosSource, ChatLogsSource, PHPExecutionTimeoutSource
 
 
 class ClassifierConfig(object):
@@ -66,9 +66,6 @@ class Classifier(object):
         # and let Jira move it to an appropriate project based on label
         if PandoraErrorsSource.REPORT_LABEL in labels:
             return self.PROJECT_ERROR_REPORTER, None
-
-        if PhalanxSource.REPORT_LABEL in labels:
-            return self.PROJECT_MAIN, self.get_component_id('Phalanx')
 
         if ChatLogsSource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Chat')
