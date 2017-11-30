@@ -5,6 +5,7 @@ Export classes than will be used by "bin" scripts and tests
 from common import Source
 
 from anemometer import AnemometerSource
+from backend import BackendSource
 from caching import NotCachedWikiaApiResponsesSource
 from helios import HeliosSource
 from mercury import MercurySource
