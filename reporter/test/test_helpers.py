@@ -12,6 +12,7 @@ class UtilsTestClass(unittest.TestCase):
         assert is_production_host('ap-s32')
         assert is_production_host('task-s2')
         assert is_production_host('cron-s1')
+        assert is_production_host('job-s1')
 
         # preview env
         assert is_production_host('staging-s1')
