@@ -21,6 +21,7 @@ class ClassifierTestClass(unittest.TestCase):
                 'CreateNewWiki': 8,
                 'Lua': 9,
                 'Core MediaWiki': 10,
+                'Backend Scripts': 11,
             },
             'paths': {
                 '/extensions/wikia/Chat2': 'Chat',
@@ -45,6 +46,9 @@ class ClassifierTestClass(unittest.TestCase):
 
         report = Report('foo', 'bar', label='PandoraErrors')
         assert self.classifier.classify(report) == (Classifier.PROJECT_ERROR_REPORTER, None)
+
+        report = Report('foo', 'bar', label='BackendErrors')
+        assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 11)
 
     def test_classify_chat_error_report(self):
         # https://wikia-inc.atlassian.net/browse/SUS-977
