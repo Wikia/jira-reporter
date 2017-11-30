@@ -2,7 +2,8 @@ import logging
 import re
 import yaml
 
-from reporter.sources import PandoraErrorsSource, MercurySource, HeliosSource, ChatLogsSource, PHPExecutionTimeoutSource
+from reporter.sources import PandoraErrorsSource, MercurySource, HeliosSource, ChatLogsSource, \
+    PHPExecutionTimeoutSource, BackendSource
 
 
 class ClassifierConfig(object):
@@ -69,6 +70,9 @@ class Classifier(object):
 
         if ChatLogsSource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Chat')
+
+        if BackendSource.REPORT_LABEL in labels:
+            return self.PROJECT_MAIN, self.get_component_id('Backend Scripts')
 
         if PHPExecutionTimeoutSource.REPORT_LABEL in labels:
             # no component specified for this project

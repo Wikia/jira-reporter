@@ -8,7 +8,7 @@ from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
-    ChatLogsSource
+    ChatLogsSource, BackendSource
 
 from reporter.classifier import Classifier
 
@@ -31,7 +31,7 @@ classifier = Classifier()
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
 
-reports += DBQueryErrorsSource().query(threshold=2)
+# reports += DBQueryErrorsSource().query(threshold=2)
 
 #source = PHPAssertionsSource()
 #reports += source.query(threshold=5)
@@ -56,6 +56,8 @@ reports += DBQueryErrorsSource().query(threshold=2)
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Chat%20Server%20errors
 #reports += ChatLogsSource().query('uncaughtException', threshold=5)
 #reports += ChatLogsSource().query('SyntaxError', threshold=5)
+
+reports += BackendSource().query(threshold=1)
 
 for report in reports:
     print(report)

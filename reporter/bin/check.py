@@ -12,7 +12,7 @@ from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrors
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, \
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
-    ChatLogsSource, PHPExecutionTimeoutSource
+    ChatLogsSource, PHPExecutionTimeoutSource, BackendSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -76,6 +76,8 @@ reports += ChatLogsSource().query('SyntaxError', threshold=1)
 
 # @see https://kibana5.wikia-inc.com/app/kibana#/discover/b4a08460-3633-11e7-8beb-4b869586dfbf?_g=(time%3A(from%3Anow-6h%2Cmode%3Aquick%2Cto%3Anow))
 reports += PHPExecutionTimeoutSource(period=21600).query(threshold=5)
+
+reports += BackendSource().query(threshold=2)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
