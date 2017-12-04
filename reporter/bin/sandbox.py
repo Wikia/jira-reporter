@@ -8,7 +8,7 @@ from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
-    ChatLogsSource, BackendSource
+    ChatLogsSource, BackendSource, PHPTriggeredSource
 
 from reporter.classifier import Classifier
 
@@ -57,7 +57,9 @@ classifier = Classifier()
 #reports += ChatLogsSource().query('uncaughtException', threshold=5)
 #reports += ChatLogsSource().query('SyntaxError', threshold=5)
 
-reports += BackendSource().query(threshold=1)
+#reports += BackendSource().query(threshold=1)
+
+reports += PHPTriggeredSource().query(threshold=1)
 
 for report in reports:
     print(report)
