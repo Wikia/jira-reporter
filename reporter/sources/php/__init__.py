@@ -5,3 +5,4 @@ from .errors import PHPErrorsSource
 from .exceptions import PHPExceptionsSource
 from .security import PHPSecuritySource
 from .execution_timeouts import PHPExecutionTimeoutSource
+from .triggers import PHPTriggeredSource
