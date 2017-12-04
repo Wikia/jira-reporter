@@ -12,7 +12,7 @@ from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrors
     DBQueryNoLimitSource, NotCachedWikiaApiResponsesSource, KilledDatabaseQueriesSource, \
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, \
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
-    ChatLogsSource, PHPExecutionTimeoutSource, BackendSource
+    ChatLogsSource, PHPExecutionTimeoutSource, BackendSource, PHPTriggeredSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -78,6 +78,8 @@ reports += ChatLogsSource().query('SyntaxError', threshold=1)
 reports += PHPExecutionTimeoutSource(period=21600).query(threshold=5)
 
 reports += BackendSource().query(threshold=2)
+
+reports += PHPTriggeredSource().query(threshold=1)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
