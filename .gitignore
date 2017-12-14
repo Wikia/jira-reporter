@@ -55,6 +55,7 @@ target/
 
 # IDE
 .idea/
+jira-reporter.iml
 
 # config files
 reporter/config.py
