@@ -8,11 +8,14 @@ components:
   Ad Engineering: 13800
   Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.): 11009
   Answers: 11816
+  Apester: 38421
+  Article Video service: 38479
   AssetsManager: 26000
   Automatic Template Classification: 27602
   Backend Scripts: 26831
   Blogs: 11005
   CK Editor (RTE): 25713
+  Careers Page: 38405
   Categories: 27604
   Category Select: 11029
   Chat: 11030
@@ -59,6 +62,9 @@ components:
   Infobox Builder: 25702
   Interactive Maps: 15101
   JS Review Tool: 31300
+  JW Player: 38422
+  Jenkins: 38200
+  Lift Igniter Metadata service: 38300
   Lightbox: 28905
   Login & Signup: 11014
   Lua & Scribunto: 25715
@@ -71,6 +77,7 @@ components:
   Mini Editor: 25711
   Mobile Apps: 14101
   Mobile Skin: 34101
+  Mobile Wiki: 38480
   Monobook: 28906
   New Gallery: 28903
   News + Stories (CMS): 33806

@@ -45,6 +45,7 @@ paths:
   /extensions/wikia/Custom404Page: Community Page
   /extensions/wikia/DesignSystem: Design System
   /extensions/wikia/Development: Development platform and tools
+  /extensions/wikia/Discussions: Discussions
   /extensions/wikia/EditPageLayout: Visual Editor
   /extensions/wikia/EditPreview: Visual Editor
   /extensions/wikia/EditTagging: Core MediaWiki
