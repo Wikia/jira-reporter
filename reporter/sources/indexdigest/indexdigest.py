@@ -49,6 +49,7 @@ h6. Reported by {version} - https://github.com/macbre/index-digest#checks
         return entry.get('report').get('type') not in [
             'non_utf_columns',
             'not_used_columns',
+            'data_too_old',
         ]
 
     def _normalize(self, entry):
