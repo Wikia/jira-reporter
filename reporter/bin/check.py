@@ -13,7 +13,7 @@ from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrors
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, \
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
     ChatLogsSource, PHPExecutionTimeoutSource, BackendSource, PHPTriggeredSource, \
-    IndexDigestSource
+    IndexDigestSource, ReportsPipeSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -83,6 +83,8 @@ reports += BackendSource().query(threshold=2)
 reports += PHPTriggeredSource().query(threshold=1)
 
 reports += IndexDigestSource().query(threshold=1)
+
+reports += ReportsPipeSource().query(threshold=1)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
