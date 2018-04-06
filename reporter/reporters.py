@@ -159,7 +159,11 @@ class Jira(object):
 
         # let's first check if the report is already in JIRA
         # use "hash" added to a ticket description
-        if self.ticket_exists(report.get_unique_id()):
+        try:
+            if self.ticket_exists(report.get_unique_id()):
+                return False
+        except Exception:
+            self._logger.error('Failed to look up ticket duplicates', exc_info=True)
             return False
 
         # add a hash and counter
