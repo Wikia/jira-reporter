@@ -7,7 +7,7 @@ import logging
 import re
 import urllib
 
-from wikia.common.kibana import Kibana
+from wikia_common_kibana import Kibana
 
 
 class Source(object):
