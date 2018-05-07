@@ -1,11 +1,17 @@
 import json
 import re
-import urllib
 
 from reporter.helpers import is_production_host
 from reporter.reports import Report
 
 from .common import PHPLogsSource
+
+try:
+    # Py2.7
+    from urllib import quote
+except ImportError:
+    # Py3
+    from urllib.parse import quote
 
 
 class PHPErrorsSource(PHPLogsSource):
@@ -62,7 +68,7 @@ class PHPErrorsSource(PHPLogsSource):
             return None
 
         return self.KIBANA_URL.format(
-            query=urllib.quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
+            query=quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
                 host=host_regexp, message=matches.group(1).replace(',', ''), file=matches.group(2)
             )),
             fields=','.join(['@timestamp', '@message', '@fields.http_url', '@source_host']),
