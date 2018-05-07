@@ -5,7 +5,13 @@ Common classes allowing us to access logs from various sources
 import hashlib
 import logging
 import re
-import urllib
+
+try:
+    # Py2.7
+    from urllib import quote
+except ImportError:
+    # Py3
+    from urllib.parse import quote
 
 from wikia_common_kibana import Kibana
 
@@ -246,7 +252,7 @@ class KibanaSource(Source):
         query = query.replace('\\', '\\\\')
 
         return KibanaSource.KIBANA_URL.format(
-            query=urllib.quote(query),
+            query=quote(query),
             fields=','.join(columns),
             index=self.ELASTICSEARCH_INDEX_PREFIX
         )

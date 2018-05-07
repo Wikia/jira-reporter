@@ -65,7 +65,7 @@ h3. The Camel says "{{{{{full_message}}}}}"
         Normalize given entry
         """
         return 'Backend-{}-{}-{}'.format(
-            entry.get('@message').encode('utf8'),
+            entry.get('@message'),
             entry.get('@fields', {}).get('script_name', 'n/a'),
             generalize_sql(entry.get('@context', {}).get('error', 'n/a'))
         )

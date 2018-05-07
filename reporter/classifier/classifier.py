@@ -90,7 +90,7 @@ class Classifier(object):
 
         # scan them from top
         for backtrace_entry in backtrace_entries:
-            for path, component_name in self._paths.iteritems():
+            for path, component_name in self._paths.items():
                 if path in backtrace_entry:
                     self._logger.info('Found "{}" in ticket\'s description, setting "{}" component'.
                                       format(path, component_name))

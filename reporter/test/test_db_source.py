@@ -2,6 +2,8 @@
 """
 Set of unit tests for DBQueryErrorsSource
 """
+from __future__ import unicode_literals
+
 import unittest
 
 from ..sources.php.db import DBQueryErrorsSource
@@ -40,11 +42,11 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
             self._check_is_filtered_out(function, err_no, expected)
 
     @staticmethod
-    def _check_is_filtered_out(function, err_no, expected):
+    def _check_is_filtered_out(func, err_no, expected):
         assert DBQueryErrorsSource()._filter({
             '@source_host': 'ap-s20',
             '@context': {'errno': err_no},
-            '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: {}'.format(function)}
+            '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: {}'.format(func)}
         }) is expected
 
     def test_get_context_from_entry(self):
