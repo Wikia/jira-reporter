@@ -16,7 +16,7 @@ coverage:
 	coverage report $(coverage_options)
 
 lint:
-	pep8 $(project_name)/; pylint $(project_name)/
+	pylint $(project_name)/ --ignore=test
 
 check:
 	python $(project_name)/bin/check.py
