@@ -4,12 +4,12 @@ import re
 from reporter.helpers import is_production_host
 from reporter.reports import Report
 
-from common import PHPLogsSource
+from .common import PHPLogsSource
 
 
 class PHPAssertionsSource(PHPLogsSource):
     """
-    Report failed asserts reported by Wikia\Util\AssertionException
+    Report failed asserts reported by Wikia\\Util\AssertionException
     """
     REPORT_LABEL = 'PHPAssertion'
 
@@ -75,7 +75,7 @@ h5. Backtrace
         exception = entry.get('@exception', {})
 
         return self.format_kibana_url(
-            query='@exception.class: "Wikia\Util\AssertionException" AND @exception.message:"{}"'.format(exception.get('message')),
+            query='@exception.class: "Wikia\\Util\AssertionException" AND @exception.message:"{}"'.format(exception.get('message')),
             columns=['@timestamp', '@source_host', '@fields.http_url']
         )
 

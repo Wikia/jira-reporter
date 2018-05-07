@@ -6,7 +6,7 @@ Report issues from Helios service
 import json
 import re
 
-from common import KibanaSource
+from .common import KibanaSource
 
 from reporter.reports import Report
 from reporter.helpers import is_production_host

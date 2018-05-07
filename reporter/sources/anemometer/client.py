@@ -1,7 +1,12 @@
 import logging
 import requests
 
-from  urllib import urlencode
+try:
+    # Py 2.7
+    from urllib import urlencode
+except ImportError:
+    # Py3
+    from urllib.parse import urlencode
 
 from requests.exceptions import RequestException
 

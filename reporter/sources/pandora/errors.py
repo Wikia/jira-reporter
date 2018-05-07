@@ -2,7 +2,7 @@ import re
 
 from reporter.reports import Report
 
-from common import PandoraLogsSource
+from .common import PandoraLogsSource
 
 
 class PandoraErrorsSource(PandoraLogsSource):

@@ -65,3 +65,4 @@ reporter/config.py
 
 # vim
 *.swp
+.pytest_cache/

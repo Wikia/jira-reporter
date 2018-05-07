@@ -4,7 +4,7 @@ Report slow queries killed by pt-kill script
 
 import json
 
-from common import KibanaSource
+from .common import KibanaSource
 
 from reporter.helpers import generalize_sql, get_method_from_query
 from reporter.reports import Report

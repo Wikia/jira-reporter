@@ -62,7 +62,7 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
         }
 
         context = DBQueryErrorsSource._get_context_from_entry(entry)
-        print context
+        print(context)
 
         assert context.get('error') == '42 Foo'
         assert context.get('function') == 'DPLMain:dynamicPageList'

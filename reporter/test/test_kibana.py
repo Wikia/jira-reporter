@@ -32,7 +32,7 @@ class KibanaSourceTestClass(unittest.TestCase):
         ) == "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'%40exception.class%3A%20%22Wikia%5C%5CSecurity%5C%5CException%22%20AND%20%40context.transaction%3A%20%22foo/bar%22')),sort:!('@timestamp',desc))"
 
         assert self._source.format_kibana_url(
-            query='@exception.class: "Wikia\Util\AssertionException"'
+            query='@exception.class: "Wikia\\Util\AssertionException"'
         ) == "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'%40exception.class%3A%20%22Wikia%5C%5CUtil%5C%5CAssertionException%22')),sort:!('@timestamp',desc))"
 
     def test_get_env_from_entry(self):

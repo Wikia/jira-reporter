@@ -2,7 +2,7 @@
 Report caching related problems
 """
 
-from common import KibanaSource
+from .common import KibanaSource
 
 from reporter.helpers import is_production_host
 from reporter.reports import Report

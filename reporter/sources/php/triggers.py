@@ -3,7 +3,7 @@ import json
 from reporter.helpers import is_production_host
 from reporter.reports import Report
 
-from common import PHPLogsSource
+from .common import PHPLogsSource
 
 
 class PHPTriggeredSource(PHPLogsSource):
