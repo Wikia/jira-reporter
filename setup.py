@@ -8,7 +8,7 @@ with open('README.rst') as f:
 setup(
     name='reporter',
     version=__version__,
-    description='Automated JIRA reporting of PHP fatal errors',
+    description='Automated JIRA reporting of various errors and issues found in logs',
     long_description=long_description,
     url='https://github.com/Wikia/jira-reporter',
     author='macbre',
@@ -17,7 +17,7 @@ setup(
         'jira==0.32',
         'pytest==2.6.4',
         'requests-oauthlib==0.4.2',
-        'wikia.common.kibana==2.1.2',
+        'wikia-common-kibana==2.2.3',
         'PyYAML==3.11',
     ],
     include_package_data=True,

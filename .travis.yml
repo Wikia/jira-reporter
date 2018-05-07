@@ -1,6 +1,4 @@
 language: python
-env:
-  - "PIP_INDEX_URL=http://pypi.wikia-services.com/simple/"
 python:
   - "2.7"
 install:
