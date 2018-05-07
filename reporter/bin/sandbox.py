@@ -41,7 +41,7 @@ classifier = Classifier()
 #reports += PHPExceptionsSource().query(query='error', threshold=50)
 #reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
-#reports += PHPSecuritySource().query(threshold=0)
+reports += PHPSecuritySource().query(threshold=0)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 #reports += MercurySource().query('fatal', threshold=0)
@@ -63,7 +63,7 @@ classifier = Classifier()
 
 #reports += IndexDigestSource().query(threshold=1)
 
-reports += ReportsPipeSource().query(threshold=1)
+#reports += ReportsPipeSource().query(threshold=1)
 
 for report in reports:
     print(report)
