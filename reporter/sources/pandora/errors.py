@@ -38,11 +38,15 @@ class PandoraErrorsSource(PandoraLogsSource):
         if not message:
             return None
 
+        appname = entry.get('appname')
+
         return self.format_kibana_url(
-            query='appname: * AND "{message}"'.format(
+            query='appname: "{appname}" AND rawMessage: "{message}"'.format(
+                appname=appname,
                 message=message.encode('utf8')
             ),
-            columns=['@timestamp', 'rawLevel', 'logger_name', 'rawMessage', 'thread_name']
+            columns=['@timestamp', 'rawLevel', 'logger_name', 'rawMessage', 'thread_name'],
+            index='logstash'  # search in all indices
         )
 
     def _normalize(self, entry):
