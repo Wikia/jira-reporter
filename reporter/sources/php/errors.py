@@ -61,11 +61,13 @@ class PHPErrorsSource(PHPLogsSource):
         if not matches:
             return None
 
+        columns = ['@timestamp', '@message', '@fields.http_url', '@source_host']
+
         return self.KIBANA_URL.format(
             query=urllib.quote('@source_host: {host} AND "{message}" AND "{file}"'.format(
                 host=host_regexp, message=matches.group(1).replace(',', ''), file=matches.group(2)
             )),
-            fields=','.join(['@timestamp', '@message', '@fields.http_url', '@source_host']),
+            columns="'{}'".format("','".join(columns)),
             index=self.ELASTICSEARCH_INDEX_PREFIX
         )
 
