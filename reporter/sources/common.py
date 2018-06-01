@@ -178,7 +178,7 @@ class KibanaSource(Source):
 
     PREVIEW_HOST = 'staging-s1'
 
-    KIBANA_URL = "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'{index}-*',query:(query_string:(analyze_wildcard:!t,query:'{query}')),sort:!('@timestamp',desc))"
+    KIBANA_URL = "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!({columns}),index:'{index}-*',query:(query_string:(analyze_wildcard:!t,query:'{query}')),sort:!('@timestamp',desc))"
 
     ELASTICSEARCH_INDEX_PREFIX = 'logstash-other'
 
@@ -235,7 +235,7 @@ class KibanaSource(Source):
 
         return env
 
-    def format_kibana_url(self, query, columns=None):
+    def format_kibana_url(self, query, columns=None, index=None):
         # https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'@fields.app_name:chat')),sort:!('@timestamp',desc))
         columns = columns or ['@timestamp', '@source_host', '@message']
 
@@ -245,10 +245,12 @@ class KibanaSource(Source):
         # encode backslashes
         query = query.replace('\\', '\\\\')
 
+        # it's rison-encode URL
+        # @see https://discuss.elastic.co/t/access-discover-tab-with-parameters/50914/2
         return KibanaSource.KIBANA_URL.format(
             query=urllib.quote(query),
-            fields=','.join(columns),
-            index=self.ELASTICSEARCH_INDEX_PREFIX
+            columns="'{}'".format("','".join(columns)),
+            index=index or self.ELASTICSEARCH_INDEX_PREFIX
         )
 
     def _get_kibana_url(self, entry):
