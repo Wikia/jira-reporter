@@ -8,7 +8,8 @@ from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
-    ChatLogsSource, BackendSource, PHPTriggeredSource, IndexDigestSource, ReportsPipeSource
+    ChatLogsSource, BackendSource, PHPTriggeredSource, IndexDigestSource, ReportsPipeSource, \
+    DBReadQueryOnMaster
 
 from reporter.classifier import Classifier
 
@@ -41,7 +42,7 @@ classifier = Classifier()
 #reports += PHPExceptionsSource().query(query='error', threshold=50)
 #reports += PHPExceptionsSource().query(query='critical', threshold=0)
 
-reports += PHPSecuritySource().query(threshold=0)
+#reports += PHPSecuritySource().query(threshold=0)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-2055
 #reports += MercurySource().query('fatal', threshold=0)
@@ -64,6 +65,8 @@ reports += PHPSecuritySource().query(threshold=0)
 #reports += IndexDigestSource().query(threshold=1)
 
 #reports += ReportsPipeSource().query(threshold=1)
+
+reports += DBReadQueryOnMaster().query(threshold=1)
 
 for report in reports:
     print(report)

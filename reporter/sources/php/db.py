@@ -300,3 +300,89 @@ h5. Backtrace
             description=description,
             label=self.REPORT_LABEL
         )
+
+
+class DBReadQueryOnMaster(DBQueriesLogsSource):
+    """ Get DB queries that were made on master node when they should be performed on slaves"""
+    REPORT_LABEL = 'DBMasterQueryOnGET'
+
+    FULL_MESSAGE_TEMPLATE = """
+The database query below was performed on master node when handling GET request.
+Refactor the code to use database slaves or move it to an offline task.
+
+h3. Query
+{{code:sql}}
+{query}
+{{code}}
+
+*Function*: {function}
+*DB server*: {server}
+
+h5. Backtrace
+{backtrace}
+"""
+
+    # use dedicated SQL logs index
+    ELASTICSEARCH_INDEX_PREFIX = 'logstash-mediawiki-sql'
+
+    def _get_entries(self, query):
+        """ Return matching logs """
+        # @see https://kibana5.wikia-inc.com/goto/df410efc54de95bcb68a0d327539cb61
+        return self._kibana.query_by_string(
+            query='@context.server: "geo-db-sharedb-master.query.consul" AND '
+                  '@fields.http_method: "GET" AND '
+                  '@fields.environment: "prod" AND '
+                  '@fields.datacenter: "sjc"',
+            limit=self.LIMIT
+        )
+
+    def _filter(self, entry):
+        """ Ignore transaction control queries """
+        query = entry.get('@message')
+        if query.startswith('BEGIN ') or query.startswith('COMMIT '):
+            return False
+
+        return True
+
+    def _normalize(self, entry):
+        """ Normalize the entry """
+        method = entry.get('@context').get('method')
+        return '{}'.format(method)
+
+    def _get_report(self, entry):
+        """ Format the report to be sent to JIRA """
+        context = entry.get('@context')
+
+        query = entry.get('@message').strip()
+
+        # format the report
+        full_message = self.FULL_MESSAGE_TEMPLATE.format(
+            query=query,
+            function=context.get('method'),
+            server=context.get('server'),
+            backtrace=self._get_backtrace_from_exception(entry.get('@exception'))
+        ).strip()
+
+        report = Report(
+            summary='[{method}] The database query should be moved to slave or an offline task'.format(
+                method=context.get('method')),
+            description=full_message,
+            label=self.REPORT_LABEL
+        )
+
+        report.add_label('active-active')
+        report.add_label('database')
+
+        return report
+
+    def _get_kibana_url(self, entry):
+        """
+        Get the link to Kibana dashboard showing the provided error log entry
+        """
+        context = entry.get('@context')
+
+        return self.format_kibana_url(
+            query='@context.method: "{}"'.format(context.get('method')),
+            columns=['@message', '@context.db_name', '@context.server', '@fields.http_method', '@fields.http_url'],
+            index='logstash-mediawiki-sql'
+        )
