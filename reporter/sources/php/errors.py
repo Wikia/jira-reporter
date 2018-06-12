@@ -145,6 +145,10 @@ class PHPErrorsSource(PHPLogsSource):
         # remove PID from "Error while sending QUERY packet." warnings
         message = re.sub(r'Error while sending \w+ packet. PID=\d+', 'Error while sending X packet. PID=N', message)
 
+        # FD_SETSIZE.It is set to 1024, but you have descriptors numbered at least as high as 2279.
+        message = re.sub(r'descriptors numbered at least as high as \d+', 'descriptors numbered at least as high as N', message)
+        message = re.sub(r'--enable-fd-setsize=\d+', '--enable-fd-setsize=N', message)
+
         # update the entry
         entry['@message_normalized'] = message
 

@@ -139,6 +139,15 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '@message': 'PHP Warning:  Error while sending QUERY packet. PID=21637 in /includes/db/DatabaseMysqli.php on line 44',
         }) == 'PHP-PHP Warning:  Error while sending X packet. PID=N in /includes/db/DatabaseMysqli.php on line 44-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Warning: stream_select(): You MUST recompile PHP with a larger value of FD_SETSIZE.\n'
+            'It is set to 1024, but you have descriptors numbered at least as high as 2279.\n'
+            ' --enable-fd-setsize=3072 is recommended, but you may want to set it\n'
+            'to equal the maximum number of open files supported by your system,\n'
+            'in order to avoid seeing this error again at a later date. in '
+            '/usr/wikia/slot1/23724/src/includes/objectcache/MemcachedClient.php on line 1359',
+        }) == 'PHP-PHP Warning: stream_select(): You MUST recompile PHP with a larger value of FD_SETSIZE.It is set to 1024, but you have descriptors numbered at least as high as N. --enable-fd-setsize=N is recommended, but you may want to set itto equal the maximum number of open files supported by your system,in order to avoid seeing this error again at a later date. in /includes/objectcache/MemcachedClient.php on line 1359-Production'
+
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
