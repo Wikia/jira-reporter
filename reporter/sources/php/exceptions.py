@@ -28,8 +28,7 @@ h5. Backtrace
             # DBQueryError exceptions are handled by DBQueryErrorsSource
             # and skip wfDebugLog calls from WikiFactory
             query='@fields.app_name: "mediawiki" AND severity: "{severity}" AND @exception.class: * AND '\
-                  '-@exception.class: "DBQueryError" AND -@context.logGroup: "createwiki" AND '\
-                  '@source_host: /[rs].*/'.
+                  '-@exception.class: "DBQueryError" AND -@context.logGroup: "createwiki"'.
                   format(
                     severity=query
                   ),
