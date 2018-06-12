@@ -9,7 +9,7 @@ from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
     ChatLogsSource, BackendSource, PHPTriggeredSource, IndexDigestSource, ReportsPipeSource, \
-    DBReadQueryOnMaster
+    DBReadQueryOnMaster, PHPTypeErrorsSource
 
 from reporter.classifier import Classifier
 
@@ -66,7 +66,9 @@ classifier = Classifier()
 
 #reports += ReportsPipeSource().query(threshold=1)
 
-reports += DBReadQueryOnMaster().query(threshold=1)
+#reports += DBReadQueryOnMaster().query(threshold=1)
+
+reports += PHPTypeErrorsSource().query(threshold=5)
 
 for report in reports:
     print(report)

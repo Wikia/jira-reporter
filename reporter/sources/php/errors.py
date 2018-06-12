@@ -14,7 +14,7 @@ class PHPErrorsSource(PHPLogsSource):
 
     def _get_entries(self, query):
         """ Return matching entries by given prefix """
-        return self._kibana.query_by_string(query='@message:"^{}" AND @source_host: /[rs].*/'.format(query), limit=self.LIMIT)
+        return self._kibana.query_by_string(query='@message:"^{}"'.format(query), limit=self.LIMIT)
 
     def _filter(self, entry):
         """ Remove log entries that are not coming from main DC or lack key information """
