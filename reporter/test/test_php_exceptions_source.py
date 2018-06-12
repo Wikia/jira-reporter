@@ -4,7 +4,7 @@ Set of unit tests for PHPExceptionsSource
 """
 import unittest
 
-from ..sources import PHPExceptionsSource
+from ..sources import PHPExceptionsSource, PHPTypeErrorsSource
 
 
 class PHPExceptionsSourceTestClass(unittest.TestCase):
@@ -48,3 +48,28 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
 
         # PHP Fatal errors with the exception backtrace should be ignored
         assert self._source._filter({'@message': 'PHP Fatal error: Maximum execution', "@exception": {"class": "Exception"}, '@source_host': 'ap-s10'}) is False
+
+
+class PHPTypeErrorsSourceTestClass(unittest.TestCase):
+    """
+    Unit tests for PHPTypeErrorsSource class
+    """
+    def setUp(self):
+        self._source = PHPTypeErrorsSource()
+
+    def test_report(self):
+        message = 'Argument 1 passed to DesignSystemCommunityHeaderModel::formatLocalNavData() must be ' \
+            'of the type array, null given, called in /usr/wikia/slot1/23746/src/includes/wikia/' \
+            'models/DesignSystemCommunityHeaderModel.class.php on line 140'
+
+        report = self._source._get_report({
+            '@exception': {
+                'error': 'TypeError',
+                'message': message,
+            },
+            '@source_host': 'cron-s1',
+        })
+
+        assert message in report.get_description()
+        assert report.get_summary() == 'Argument 1 passed to DesignSystemCommunityHeaderModel::formatLocalNavData() ' \
+                                       'must be of the type array, null given'
