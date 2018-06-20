@@ -169,6 +169,9 @@ class PHPTypeErrorsSource(PHPLogsSource):
         exception_class = exception.get('class')
         exception_message = exception.get('message')
 
+        # Remove release-specific part of a file path
+        exception_message = re.sub(r'/usr/wikia/slot\d/\d+/src', '', exception_message)
+
         return '{}-{}-{}'.format(env, exception_class, exception_message)
 
     def _get_kibana_url(self, entry):
