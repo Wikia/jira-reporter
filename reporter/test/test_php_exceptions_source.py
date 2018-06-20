@@ -57,19 +57,27 @@ class PHPTypeErrorsSourceTestClass(unittest.TestCase):
     def setUp(self):
         self._source = PHPTypeErrorsSource()
 
-    def test_report(self):
-        message = 'Argument 1 passed to DesignSystemCommunityHeaderModel::formatLocalNavData() must be ' \
+        self.message = 'Argument 1 passed to DesignSystemCommunityHeaderModel::formatLocalNavData() must be ' \
             'of the type array, null given, called in /usr/wikia/slot1/23746/src/includes/wikia/' \
             'models/DesignSystemCommunityHeaderModel.class.php on line 140'
 
-        report = self._source._get_report({
+        self.entry = {
             '@exception': {
                 'error': 'TypeError',
-                'message': message,
+                'message': self.message,
             },
             '@source_host': 'cron-s1',
-        })
+        }
 
-        assert message in report.get_description()
+    def test_report(self):
+        report = self._source._get_report(self.entry)
+
+        assert self.message in report.get_description()
+
+        assert self._source._normalize(self.entry) == 'Production-None-Argument 1 passed to ' \
+            'DesignSystemCommunityHeaderModel::formatLocalNavData() ' \
+            'must be of the type array, null given, called in ' \
+            '/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php on line 140'
+
         assert report.get_summary() == 'Argument 1 passed to DesignSystemCommunityHeaderModel::formatLocalNavData() ' \
                                        'must be of the type array, null given'
