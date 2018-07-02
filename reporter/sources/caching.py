@@ -36,13 +36,7 @@ curl -svo /dev/null "{url}"
 
     def _filter(self, entry):
         """ Remove log entries that are not coming from main DC Apache servers """
-        # filter out by host
-        # "@source_host": "ap-s10",
-        host = entry.get('@source_host', '')
-        if not host.startswith('ap-') or not is_from_production_host(host):
-            return False
-
-        return True
+        return is_from_production_host(entry)
 
     def _normalize(self, entry):
         """ Normalize the entry using the controller and method names """
