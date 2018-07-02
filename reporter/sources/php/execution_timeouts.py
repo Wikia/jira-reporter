@@ -1,4 +1,4 @@
-from reporter.helpers import is_production_host
+from reporter.helpers import is_from_production_host
 from reporter.reports import Report
 from common import PHPLogsSource
 
@@ -26,7 +26,7 @@ The below URL is taking too much time to render. This is usually caused by extre
         )
 
     def _filter(self, entry):
-        return is_production_host(entry.get('@source_host', ''))
+        return is_from_production_host(entry)
 
     def _normalize(self, entry):
         url = self._get_url_from_entry(entry)

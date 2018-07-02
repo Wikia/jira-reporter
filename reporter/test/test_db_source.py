@@ -15,15 +15,12 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
         source = DBQueryErrorsSource()
 
         # filter by source host
-        assert source._filter({'@source_host': 'ap-s20'}) is True
-        assert source._filter({'@source_host': 'staging-ap-s1'}) is True
-        assert source._filter({'@source_host': 'staging-task-s1'}) is True
-        assert source._filter({'@source_host': 'dev-foo'}) is False
+        assert source._filter({'@fields': {'environment': 'prod'}}) is True
 
         # filter by MySQL error codes
-        assert source._filter({'@source_host': 'ap-s20', '@context': {'errno': 1200}}) is True
-        assert source._filter({'@source_host': 'ap-s20', '@context': {'errno': 1205}}) is False
-        assert source._filter({'@source_host': 'ap-s20', '@context': {'errno': 1213}}) is False
+        assert source._filter({'@fields': {'environment': 'prod'}, '@context': {'errno': 1200}}) is True
+        assert source._filter({'@fields': {'environment': 'prod'}, '@context': {'errno': 1205}}) is False
+        assert source._filter({'@fields': {'environment': 'prod'}, '@context': {'errno': 1213}}) is False
 
         # filter out "Query execution was interrupted" errors coming from SMW and DPL
         cases = (
@@ -42,7 +39,7 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
     @staticmethod
     def _check_is_filtered_out(function, err_no, expected):
         assert DBQueryErrorsSource()._filter({
-            '@source_host': 'ap-s20',
+            '@fields': {'environment': 'prod'},
             '@context': {'errno': err_no},
             '@exception': {'message': 'Foo\nQuery: SELECT foo FROM bar\nFunction: {}'.format(function)}
         }) is expected

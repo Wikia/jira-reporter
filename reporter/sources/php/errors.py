@@ -2,7 +2,7 @@ import json
 import re
 import urllib
 
-from reporter.helpers import is_production_host
+from reporter.helpers import is_from_production_host
 from reporter.reports import Report
 
 from common import PHPLogsSource
@@ -18,13 +18,10 @@ class PHPErrorsSource(PHPLogsSource):
 
     def _filter(self, entry):
         """ Remove log entries that are not coming from main DC or lack key information """
-        message = entry.get('@message', '')
-        host = entry.get('@source_host', '')
-
-        # filter out by host
-        # "@source_host": "ap-s10",
-        if not is_production_host(host):
+        if not is_from_production_host(entry):
             return False
+
+        message = entry.get('@message', '')
 
         # filter out errors without a clear context
         # on line 115

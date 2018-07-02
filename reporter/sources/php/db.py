@@ -1,7 +1,7 @@
 import json
 import re
 
-from reporter.helpers import generalize_sql, is_production_host
+from reporter.helpers import generalize_sql, is_from_production_host
 from reporter.reports import Report
 
 from common import PHPLogsSource
@@ -43,12 +43,8 @@ h3. Backtrace
         return self._kibana.get_rows(match={"@exception.class": 'DBQueryError'}, limit=self.LIMIT)
 
     def _filter(self, entry):
-        """ Remove log entries that are not coming from main DC """
-        host = entry.get('@source_host', '')
-
-        # filter out by host
-        # "@source_host": "ap-s10",
-        if not is_production_host(host):
+        """ Remove log entries that are not coming from production datacenters """
+        if not is_from_production_host(entry):
             return False
 
         context = entry.get('@context', {})
@@ -251,10 +247,7 @@ h5. Backtrace
         )
 
     def _filter(self, entry):
-        # filter out by host
-        # "@source_host": "ap-s10",
-        host = entry.get('@source_host', '')
-        if not is_production_host(host):
+        if not is_from_production_host(entry):
             return False
 
         # remove those that do not return enough rows

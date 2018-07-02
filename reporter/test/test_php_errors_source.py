@@ -16,10 +16,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         self._source._query = 'PHP Fatal Error'
 
     def test_filter(self):
-        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': self._source.PREVIEW_HOST}) is True
-        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-s32'}) is True
-        assert self._source._filter({'@message': 'PHP Fatal Error: bar', '@source_host': 'ap-s32'}) is False  # no context
-        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@source_host': 'ap-r32'}) is True  # we do serve production traffic from Reston
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@fields': {'environment': 'preview'}}) is True
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@fields': {'environment': 'prod'}}) is True
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar', '@fields': {'environment': 'prod'}}) is False  # no context
+        assert self._source._filter({'@message': 'PHP Fatal Error: bar on line 22', '@fields': {'environment': 'sandbox'}}) is False  # ignore sandbox errors
         assert self._source._filter({}) is False  # empty message
 
         assert self._source._filter({'@message': 'PHP Fatal Error: Allowed memory size of 536870912 bytes exhausted on line 42', '@source_host': 'ap-s32'}) is False  # do not report OOM errors
@@ -258,14 +258,11 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         assert DBQueryErrorsSource._get_context_from_entry({}) is None
 
     def test_filter(self):
-        assert self._source._filter({'@source_host': self._source.PREVIEW_HOST}) is True
-        assert self._source._filter({'@source_host': 'ap-s32'}) is True
-        assert self._source._filter({'@source_host': 'ap-r32'}) is True
         assert self._source._filter({}) is False  # empty message
 
-        assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1213, "err": "Deadlock found when trying to get lock; try restarting transaction (10.8.44.31)"}}) is False  # deadlock
-        assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1205, "err": "Lock wait timeout exceeded; try restarting transaction (10.8.62.66)"}}) is False  # lock wait timemout
-        assert self._source._filter({'@source_host': 'ap-s32', '@context': {"errno": 1317, "err": "Query execution was interrupted (10.8.62.57)"}}) is True
+        assert self._source._filter({'@fields': {'environment': 'prod'}, '@context': {"errno": 1213, "err": "Deadlock found when trying to get lock; try restarting transaction (10.8.44.31)"}}) is False  # deadlock
+        assert self._source._filter({'@fields': {'environment': 'prod'}, '@context': {"errno": 1205, "err": "Lock wait timeout exceeded; try restarting transaction (10.8.62.66)"}}) is False  # lock wait timemout
+        assert self._source._filter({'@fields': {'environment': 'prod'}, '@context': {"errno": 1317, "err": "Query execution was interrupted (10.8.62.57)"}}) is True
 
     def test_get_report(self):
         self._source._normalize(self._entry)
