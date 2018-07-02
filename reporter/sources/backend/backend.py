@@ -2,7 +2,7 @@ import json
 import re
 
 from reporter.sources.common import KibanaSource
-from reporter.helpers import is_production_host, generalize_sql
+from reporter.helpers import is_from_production_host, generalize_sql
 from reporter.reports import Report
 
 
@@ -40,7 +40,7 @@ h3. The Camel says "{{{{{full_message}}}}}"
         host = entry.get('@source_host', '')
 
         # errors will most likely come from job-s1
-        if not is_production_host(host):
+        if not is_from_production_host(host):
             return False
 
         return True

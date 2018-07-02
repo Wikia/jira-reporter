@@ -1,6 +1,6 @@
 import json
 
-from reporter.helpers import is_production_host
+from reporter.helpers import is_from_production_host
 from reporter.reports import Report
 
 from common import PHPLogsSource
@@ -31,13 +31,7 @@ h5. Backtrace
         return self._kibana.get_rows(match={"@exception.class": self.EXCEPTION_CLASS}, limit=self.LIMIT)
 
     def _filter(self, entry):
-        # filter out by host
-        # "@source_host": "ap-s10",
-        host = entry.get('@source_host', '')
-        if not is_production_host(host):
-            return False
-
-        return True
+        return is_from_production_host(entry)
 
     def _normalize(self, entry):
         """ Normalize using the assertion class and message """

@@ -4,11 +4,19 @@ Set of helper functions
 import re
 
 
-def is_production_host(host):
+def is_from_production_host(entry):
     """
     Return true if given host is from our main datacenter (SJC) or backup datacenter (Reston)
+
+    Handles both string value taken from @source_host or the entire entry from logs
+
+    :type host str|object
+    :rtype: bool
     """
-    return re.search(r'^(ap|task|cron|job|liftium|staging|deploy|auth|staging-(ap|task))\-(s|r)', host) is not None
+    if isinstance(entry, str):
+        return re.search(r'^(ap|task|cron|job|liftium|staging|deploy|auth|staging-(ap|task))\-(s|r)', entry) is not None
+    else:
+        return entry.get('@fields', {}).get('environment') in ['prod', 'preview', 'verify']
 
 
 def generalize_sql(sql):

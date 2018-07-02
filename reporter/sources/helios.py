@@ -9,7 +9,7 @@ import re
 from common import KibanaSource
 
 from reporter.reports import Report
-from reporter.helpers import is_production_host
+from reporter.helpers import is_from_production_host
 
 
 class HeliosSource(KibanaSource):
@@ -34,7 +34,7 @@ h3. {message}
                 limit=self.LIMIT)
 
     def _filter(self, entry):
-        if not is_production_host(entry.get('@source_host')):
+        if not is_from_production_host(entry.get('@source_host')):
             return False
 
         return True
