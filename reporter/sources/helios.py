@@ -4,7 +4,6 @@ Report issues from Helios service
 @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
 """
 import json
-import re
 
 from common import KibanaSource
 
@@ -30,20 +29,14 @@ h3. {message}
 
     def _get_entries(self, query):
         return self._kibana.query_by_string(
-                query='severity:"error"',
+                query='level:"error"',
                 limit=self.LIMIT)
 
     def _filter(self, entry):
-        if not is_from_production_host(entry.get('@source_host')):
-            return False
-
-        return True
+        return is_from_production_host(entry)
 
     def _normalize(self, entry):
         message = entry.get('@message')
-
-        # normalize SQL errors
-        message = re.sub(r'Duplicate entry \'[^\']+\' for key \'\w+\'', "Duplicate entry 'X' for key 'X'", message)
 
         return '{}-{}'.format(self.REPORT_LABEL, message)
 
@@ -55,7 +48,7 @@ h3. {message}
             query='@message: "{message}"'.format(
                 message=entry.get('@message')
             ),
-            columns=['@timestamp', '@source_host', '@message']
+            columns=['@timestamp', '@message']
         )
 
     def _get_report(self, entry):
