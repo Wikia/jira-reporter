@@ -49,7 +49,7 @@ classifier = Classifier()
 #reports += MercurySource().query('error', threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
-#reports += HeliosSource().query(threshold=0)
+reports += HeliosSource().query(threshold=0)
 
 # @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
 #reports += AnemometerSource().query(threshold=0)
@@ -68,7 +68,7 @@ classifier = Classifier()
 
 #reports += DBReadQueryOnMaster().query(threshold=1)
 
-reports += PHPTypeErrorsSource().query(threshold=5)
+#reports += PHPTypeErrorsSource().query(threshold=5)
 
 for report in reports:
     print(report)
