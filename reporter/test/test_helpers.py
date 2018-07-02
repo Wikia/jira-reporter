@@ -35,6 +35,10 @@ class UtilsTestClass(unittest.TestCase):
         assert is_from_production_host({'@fields': {'environment': 'sandbox'}}) is False
         assert is_from_production_host({}) is False
 
+        # kubernetes
+        assert is_from_production_host({'kubernetes': {'namespace_name': 'prod'}}) is True
+        assert is_from_production_host({'kubernetes': {'namespace_name': 'dev'}}) is False
+
         # we should ignore source_host and just rely on an environment data
         assert is_from_production_host({'@source_host': 'ap-s32'}) is False
 
