@@ -3,29 +3,40 @@ Set of unit tests for helper functions
 """
 import unittest
 
-from ..helpers import is_production_host, generalize_sql, get_method_from_query
+from ..helpers import is_from_production_host, generalize_sql, get_method_from_query
 
 
 class UtilsTestClass(unittest.TestCase):
     @staticmethod
     def test_is_main_dc_host():
-        assert is_production_host('ap-s32')
-        assert is_production_host('task-s2')
-        assert is_production_host('cron-s1')
-        assert is_production_host('job-s1')
+        assert is_from_production_host('ap-s32')
+        assert is_from_production_host('task-s2')
+        assert is_from_production_host('cron-s1')
+        assert is_from_production_host('job-s1')
 
         # preview env
-        assert is_production_host('staging-s1')
+        assert is_from_production_host('staging-s1')
 
         # new staging
-        assert is_production_host('staging-ap-s1')
-        assert is_production_host('staging-task-s1')
+        assert is_from_production_host('staging-ap-s1')
+        assert is_from_production_host('staging-task-s1')
 
-        assert is_production_host('ap-r32')
-        assert is_production_host('dev-foo') is False
+        assert is_from_production_host('ap-r32')
+        assert is_from_production_host('dev-foo') is False
 
-        assert is_production_host('deploy-s3')
-        assert is_production_host('deploy-r2')
+        assert is_from_production_host('deploy-s3')
+        assert is_from_production_host('deploy-r2')
+
+        # new handling
+        assert is_from_production_host({'@fields': {'environment': 'prod'}})
+        assert is_from_production_host({'@fields': {'environment': 'verify'}})
+        assert is_from_production_host({'@fields': {'environment': 'preview'}})
+
+        assert is_from_production_host({'@fields': {'environment': 'sandbox'}}) is False
+        assert is_from_production_host({}) is False
+
+        # we should ignore source_host and just rely on an environment data
+        assert is_from_production_host({'@source_host': 'ap-s32'}) is False
 
     def test_generalize_sql(self):
         assert generalize_sql(None) is None
