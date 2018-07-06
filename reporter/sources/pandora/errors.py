@@ -55,6 +55,7 @@ class PandoraErrorsSource(PandoraLogsSource):
         """
         message = entry.get('rawMessage').encode('utf8')
         logger_name = entry.get('logger_name')
+        app_name = entry.get('appname')
 
         # normalize hashes
         message = re.sub(r'[a-f0-9-]{4,}', 'HASH', message)
@@ -70,7 +71,7 @@ class PandoraErrorsSource(PandoraLogsSource):
         # error while sending: {"args":{"prevRevision":false
         message = re.sub(r'{.*}$', '{json here}', message)
 
-        return 'Pandora-{}-{}'.format(message, logger_name)
+        return 'Pandora-{}-{}-{}'.format(message, logger_name, app_name)
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
