@@ -42,7 +42,7 @@ class ClassifierTestClass(unittest.TestCase):
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 2)
 
         report = Report('foo', 'bar', label='Helios')
-        assert self.classifier.classify(report) == (Classifier.PROJECT_SER, 1)
+        assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 1)
 
         report = Report('foo', 'bar', label='PandoraErrors')
         assert self.classifier.classify(report) == (Classifier.PROJECT_ERROR_REPORTER, None)
