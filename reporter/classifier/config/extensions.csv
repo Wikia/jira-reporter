@@ -230,10 +230,10 @@ SpecialProtectSite,
 SpecialStyleguide,
 SpecialUnlockdb,
 SpecialUnsubscribe,"Transactional Email"
-SpecialUnusedVideos,Video
+SpecialUnusedVideos,"Video(legacy)"
 SpecialUserData,
 SpecialVersion,
-SpecialVideos,Video
+SpecialVideos,"Video(legacy)"
 SpecialWithoutimages,
 SpitfiresContributionExperiments,
 SponsorshipDashboard,
@@ -275,10 +275,10 @@ UserPreferencesV2,User Profile
 UserProfilePageV3,User Profile
 UserRenameTool,"Staff tools"
 UserTools,User Profile
-VideoEmbedTool,Video
-VideoHandlers,Video
-VideoPageTool,Video
-VideosModule,Video
+VideoEmbedTool,"Video(legacy)"
+VideoHandlers,"Video(legacy)"
+VideoPageTool,"Video(legacy)"
+VideosModule,"Video(legacy)"
 VisitSource,
 VisualEditorTourExperiment,"Visual Editor"
 VKTag,

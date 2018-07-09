@@ -58,7 +58,7 @@ class Classifier(object):
         labels = report.get_labels()
 
         if HeliosSource.REPORT_LABEL in labels:
-            return self.PROJECT_SER, self.get_component_id('Helios')
+            return self.PROJECT_MAIN, self.get_component_id('Helios')
 
         if MercurySource.REPORT_LABEL in labels:
             return self.PROJECT_MAIN, self.get_component_id('Mercury')

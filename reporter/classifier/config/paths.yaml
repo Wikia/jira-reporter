@@ -140,8 +140,8 @@ paths:
   /extensions/wikia/SpecialNewWikis: CreateNewWiki
   /extensions/wikia/SpecialPromote: Special:Promote
   /extensions/wikia/SpecialUnsubscribe: Transactional Email
-  /extensions/wikia/SpecialUnusedVideos: Video
-  /extensions/wikia/SpecialVideos: Video
+  /extensions/wikia/SpecialUnusedVideos: Video(legacy)
+  /extensions/wikia/SpecialVideos: Video(legacy)
   /extensions/wikia/SpotifyTag: Core MediaWiki
   /extensions/wikia/TagsReport: Staff tools
   /extensions/wikia/ThemeDesigner: Theme Designer
@@ -154,10 +154,10 @@ paths:
   /extensions/wikia/UserProfilePageV3: User Profile
   /extensions/wikia/UserRenameTool: Staff tools
   /extensions/wikia/UserTools: User Profile
-  /extensions/wikia/VideoEmbedTool: Video
-  /extensions/wikia/VideoHandlers: Video
-  /extensions/wikia/VideoPageTool: Video
-  /extensions/wikia/VideosModule: Video
+  /extensions/wikia/VideoEmbedTool: Video(legacy)
+  /extensions/wikia/VideoHandlers: Video(legacy)
+  /extensions/wikia/VideoPageTool: Video(legacy)
+  /extensions/wikia/VideosModule: Video(legacy)
   /extensions/wikia/VisualEditorTourExperiment: Visual Editor
   /extensions/wikia/WAM: WAM
   /extensions/wikia/WAMPage: WAM
