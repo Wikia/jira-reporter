@@ -9,9 +9,9 @@ from backend import BackendSource
 from caching import NotCachedWikiaApiResponsesSource
 from helios import HeliosSource
 from mercury import MercurySource
-from php import *
+from mysql_kill import KilledDatabaseQueriesSource
 from pipe import ReportsPipeSource
-from pt_kill import KilledDatabaseQueriesSource
+from php import *
 from pandora import PandoraErrorsSource
 from vignette import VignetteThumbVerificationSource
 from chat import ChatLogsSource
