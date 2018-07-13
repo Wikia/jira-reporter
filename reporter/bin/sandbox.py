@@ -26,8 +26,7 @@ classifier = Classifier()
 #reports += source.query("PHP Fatal Error", threshold=5)
 #reports += source.query("PHP Notice", threshold=2000)
 
-#source = KilledDatabaseQueriesSource()
-#reports += source.query(threshold=0)
+reports += KilledDatabaseQueriesSource().query(threshold=0)
 
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
@@ -49,7 +48,7 @@ classifier = Classifier()
 #reports += MercurySource().query('error', threshold=50)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Helios%20errors
-reports += HeliosSource().query(threshold=0)
+#reports += HeliosSource().query(threshold=0)
 
 # @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
 #reports += AnemometerSource().query(threshold=0)
