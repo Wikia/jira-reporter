@@ -125,12 +125,12 @@ LandingPagesAsContent,Community Page
 LatestPhotos,
 LICENSE,
 Lightbox,Lightbox
-LinkSuggest,
+LinkSuggest,"Core MediaWiki"
 LinkToMobileApp,Mobile Apps
-Listusers,
+Listusers,"Staff tools"
 LocalSitemapPage,Community Page
-LookupContribs,
-LookupUser,
+LookupContribs,"Staff tools"
+LookupUser,"Staff tools"
 LyricsApi,"Lyrics Wiki"
 MagicLinks,
 MainPageTag,"Core MediaWiki"

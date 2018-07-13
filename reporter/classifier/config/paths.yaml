@@ -83,8 +83,12 @@ paths:
     CSS, JS, Insights, etc.)
   /extensions/wikia/LandingPagesAsContent: Community Page
   /extensions/wikia/Lightbox: Lightbox
+  /extensions/wikia/LinkSuggest: Core MediaWiki
   /extensions/wikia/LinkToMobileApp: Mobile Apps
+  /extensions/wikia/Listusers: Staff tools
   /extensions/wikia/LocalSitemapPage: Community Page
+  /extensions/wikia/LookupContribs: Staff tools
+  /extensions/wikia/LookupUser: Staff tools
   /extensions/wikia/LyricsApi: Lyrics Wiki
   /extensions/wikia/MainPageTag: Core MediaWiki
   /extensions/wikia/MediaGallery: New Gallery
