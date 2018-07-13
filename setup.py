@@ -15,10 +15,10 @@ setup(
     author_email='macbre@wikia-inc.com',
     install_requires=[
         'jira==0.32',
-        'pytest==3.4.0',
+        'pytest==3.6.3',
         'requests-oauthlib==0.4.2',
-        'wikia-common-kibana==2.2.4',
-        'PyYAML==3.11',
+        'wikia-common-kibana==2.2.5',
+        'PyYAML==3.13',
     ],
     include_package_data=True,
 )
