@@ -1,4 +1,5 @@
 import json
+import re
 
 from reporter.sources.common import KibanaSource
 from reporter.reports import Report
@@ -49,10 +50,14 @@ h6. Reported by {version} - https://github.com/macbre/index-digest#checks
         """
         Normalize given entry
         """
-        return 'index-digest-{}-{}-{}'.format(
+        message = entry.get('report').get('message')
+        message = re.sub(r'\d+ days ago', 'N days ago', message)
+
+        return 'index-digest-{}-{}-{}-{}'.format(
             entry.get('meta').get('database_name'),
             entry.get('report').get('type'),
-            entry.get('report').get('table')
+            entry.get('report').get('table'),
+            message,
         )
 
     def _get_report(self, entry):
