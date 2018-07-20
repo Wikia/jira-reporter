@@ -49,10 +49,11 @@ h6. Reported by {version} - https://github.com/macbre/index-digest#checks
         """
         Normalize given entry
         """
-        return 'index-digest-{}-{}-{}'.format(
+        return 'index-digest-{}-{}-{}-{}'.format(
             entry.get('meta').get('database_name'),
             entry.get('report').get('type'),
-            entry.get('report').get('table')
+            entry.get('report').get('table'),
+            entry.get('report').get('message'),
         )
 
     def _get_report(self, entry):
