@@ -31,7 +31,7 @@ reports += source.query("PHP Fatal Error", threshold=5)
 reports += source.query("PHP Catchable Fatal", threshold=5)
 reports += source.query("PHP Warning", threshold=50)
 reports += source.query("PHP Strict Standards", threshold=200)
-reports += source.query("PHP Notice", threshold=2000)
+reports += source.query("PHP Notice", threshold=1500)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Severity%20error
 reports += PHPExceptionsSource().query(query='error', threshold=50)
