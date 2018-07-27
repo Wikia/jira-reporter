@@ -148,6 +148,10 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
             '/usr/wikia/slot1/23724/src/includes/objectcache/MemcachedClient.php on line 1359',
         }) == 'PHP-PHP Warning: stream_select(): You MUST recompile PHP with a larger value of FD_SETSIZE.It is set to 1024, but you have descriptors numbered at least as high as N. --enable-fd-setsize=N is recommended, but you may want to set itto equal the maximum number of open files supported by your system,in order to avoid seeing this error again at a later date. in /includes/objectcache/MemcachedClient.php on line 1359-Production'
 
+        assert self._source._normalize({
+            '@message': 'PHP Notice: unserialize(): Error at offset 65532 of 3124123 bytes in /extensions/wikia/ImageServing/drivers/ImageServingDriverMainNS.class.php on line 101',
+        }) == 'PHP-PHP Notice: unserialize(): Error at offset N of N bytes in /extensions/wikia/ImageServing/drivers/ImageServingDriverMainNS.class.php on line 101-Production'
+
     def test_get_kibana_url(self):
         assert self._source._get_kibana_url({
             '@message': 'PHP Fatal Error: Maximum execution time of 180 seconds exceeded in /usr/wikia/slot1/2996/src/includes/Linker.php on line 184'
