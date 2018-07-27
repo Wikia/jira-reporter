@@ -114,8 +114,9 @@ class PHPErrorsSource(PHPLogsSource):
         # normalize swift paths
         message = re.sub(r'mwstore://swift-backend/[^ ]+', 'mwstore://swift-backend/X', message)
 
-        # normalize "17956864 bytes"
+        # normalize "17956864 bytes" and "offset 65532
         message = re.sub(r'\d+ bytes', 'N bytes', message)
+        message = re.sub(r'offset \d+', 'offset N', message)
 
         # normalize preg_match() related warnings
         message = re.sub(r'Unknown modifier \'\w+\'', 'Unknown modifier X', message)
