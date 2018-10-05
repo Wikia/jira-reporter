@@ -15,11 +15,11 @@ def is_from_production_host(entry):
     """
     if isinstance(entry, str):
         return re.search(r'^(ap|task|cron|job|liftium|staging|deploy|auth|staging-(ap|task))\-(s|r)', entry) is not None
-    else:
-        # MediaWiki: @fields.environment   prod
-        # Kubernetes: kubernetes.namespace_name	       	prod
-        return entry.get('@fields', {}).get('environment') in ['prod', 'preview', 'verify'] or \
-               entry.get('kubernetes', {}).get('namespace_name') == 'prod'
+
+    # MediaWiki: @fields.environment   prod
+    # Kubernetes: kubernetes.namespace_name	       	prod
+    return entry.get('@fields', {}).get('environment') in ['prod', 'preview', 'verify'] or \
+        entry.get('kubernetes', {}).get('namespace_name') == 'prod'
 
 
 def generalize_sql(sql):
