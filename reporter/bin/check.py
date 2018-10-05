@@ -13,7 +13,8 @@ from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrors
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, \
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
     ChatLogsSource, PHPExecutionTimeoutSource, BackendSource, PHPTriggeredSource, \
-    IndexDigestSource, ReportsPipeSource, DBReadQueryOnMaster, PHPTypeErrorsSource
+    IndexDigestSource, ReportsPipeSource, DBReadQueryOnMaster, PHPTypeErrorsSource, \
+    CeleryLogsSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -75,7 +76,6 @@ reports += AnemometerSource().query(threshold=0)
 reports += ChatLogsSource().query('uncaughtException', threshold=1)
 reports += ChatLogsSource().query('SyntaxError', threshold=1)
 
-# @see https://kibana5.wikia-inc.com/app/kibana#/discover/b4a08460-3633-11e7-8beb-4b869586dfbf?_g=(time%3A(from%3Anow-6h%2Cmode%3Aquick%2Cto%3Anow))
 reports += PHPExecutionTimeoutSource(period=21600).query(threshold=5)
 
 reports += BackendSource().query(threshold=2)
@@ -89,6 +89,8 @@ reports += ReportsPipeSource().query(threshold=1)
 reports += DBReadQueryOnMaster().query(threshold=1)
 
 reports += PHPTypeErrorsSource().query(threshold=5)
+
+reports += CeleryLogsSource().query(threshold=5)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
