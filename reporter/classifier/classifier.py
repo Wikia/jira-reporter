@@ -3,7 +3,7 @@ import re
 import yaml
 
 from reporter.sources import PandoraErrorsSource, MercurySource, HeliosSource, ChatLogsSource, \
-    PHPExecutionTimeoutSource, BackendSource
+    PHPExecutionTimeoutSource, BackendSource, CeleryLogsSource
 
 
 class ClassifierConfig(object):
@@ -77,6 +77,9 @@ class Classifier(object):
         if PHPExecutionTimeoutSource.REPORT_LABEL in labels:
             # no component specified for this project
             return self.PROJECT_COMMUNITY_TECHNICAL, None
+
+        if CeleryLogsSource.REPORT_LABEL in labels:
+            return self.PROJECT_MAIN, self.get_component_id('celery workers')
 
         # classify using the report content and the paths inside it (always report to MAIN)
         description = report.get_description()
