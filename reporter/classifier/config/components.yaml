@@ -19,6 +19,7 @@ components:
   Careers Page: 38405
   Categories: 27604
   Category Select: 11029
+  Celery: 38676
   Chat: 11030
   Comments: 13100
   Community Page: 22300
@@ -148,7 +149,6 @@ components:
   WikiFactory: 11028
   Wordpress: 33804
   aws: 35900
-  celery workers: 38676
   central-swagger-ui: 31400
   clickstream: 31401
   content-changed-ex.following: 31414

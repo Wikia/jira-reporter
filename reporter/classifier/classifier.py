@@ -79,7 +79,7 @@ class Classifier(object):
             return self.PROJECT_COMMUNITY_TECHNICAL, None
 
         if CeleryLogsSource.REPORT_LABEL in labels:
-            return self.PROJECT_MAIN, self.get_component_id('celery workers')
+            return self.PROJECT_MAIN, self.get_component_id('Celery')
 
         # classify using the report content and the paths inside it (always report to MAIN)
         description = report.get_description()
