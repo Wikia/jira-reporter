@@ -9,7 +9,7 @@ from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
     ChatLogsSource, BackendSource, PHPTriggeredSource, IndexDigestSource, ReportsPipeSource, \
-    DBReadQueryOnMaster, PHPTypeErrorsSource
+    DBReadQueryOnMaster, PHPTypeErrorsSource, CeleryLogsSource
 
 from reporter.classifier import Classifier
 
@@ -26,7 +26,7 @@ classifier = Classifier()
 #reports += source.query("PHP Fatal Error", threshold=5)
 #reports += source.query("PHP Notice", threshold=2000)
 
-reports += KilledDatabaseQueriesSource().query(threshold=0)
+# reports += KilledDatabaseQueriesSource().query(threshold=0)
 
 #source = DBQueryNoLimitSource()
 #reports += source.query(threshold=50)
@@ -68,6 +68,8 @@ reports += KilledDatabaseQueriesSource().query(threshold=0)
 #reports += DBReadQueryOnMaster().query(threshold=1)
 
 #reports += PHPTypeErrorsSource().query(threshold=5)
+
+reports += CeleryLogsSource().query(threshold=2)
 
 for report in reports:
     print(report)
