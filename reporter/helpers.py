@@ -14,12 +14,12 @@ def is_from_production_host(entry):
     :rtype: bool
     """
     if isinstance(entry, str):
-        return re.search(r'^(ap|task|cron|job|liftium|staging|deploy|auth|staging-(ap|task))\-(s|r)', entry) is not None
-    else:
-        # MediaWiki: @fields.environment   prod
-        # Kubernetes: kubernetes.namespace_name	       	prod
-        return entry.get('@fields', {}).get('environment') in ['prod', 'preview', 'verify'] or \
-               entry.get('kubernetes', {}).get('namespace_name') == 'prod'
+        return re.search(r'^(ap|task|cron|job|liftium|staging|deploy|auth|staging-(ap|task))-[sr]', entry) is not None
+
+    # MediaWiki: @fields.environment   prod
+    # Kubernetes: kubernetes.namespace_name	       	prod
+    return entry.get('@fields', {}).get('environment') in ['prod', 'preview', 'verify'] or \
+        entry.get('kubernetes', {}).get('namespace_name') == 'prod'
 
 
 def generalize_sql(sql):
@@ -61,7 +61,7 @@ def get_method_from_query(sql):
 
     Return: "Foo::bar"
     """
-    matches = re.search(r'/\*([^\*]+)\*/', sql)
+    matches = re.search(r'/\*([^*]+)\*/', sql)
 
     # return the first part of "Foo::Bar 157.55.39.174" (i.e. without IP)
     return matches.group(1).strip().split(' ')[0] if matches else None
