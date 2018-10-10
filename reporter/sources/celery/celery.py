@@ -1,6 +1,7 @@
+import json
+
 from reporter.sources.common import KibanaSource
 from reporter.reports import Report
-import json
 
 
 class CeleryLogsSource(KibanaSource):
@@ -55,9 +56,15 @@ h3. Details
         """
         Normalize given entry
         """
+        exception = entry.get('exception')
+
+        # improve normalization of SQL queries
+        if 'database error has occurred' in exception:
+            exception = 'RemoteExecuteError(u"A database error has occurred.")'
+
         return 'Celery-{}-{}'.format(
             entry.get('kubernetes').get('container_name'),
-            entry.get('exception'),
+            exception,
         )
 
     def _get_report(self, entry):
