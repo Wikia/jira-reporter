@@ -4,7 +4,7 @@ project_name = reporter
 coverage_options = --include='$(project_name)/*' --omit='$(project_name)/test/*,$(project_name)/config.py,*__init__.py'
 
 test:
-	py.test -x $(project_name)
+	py.test -x $(project_name) -vv
 
 coverage:
 	rm -f .coverage*
