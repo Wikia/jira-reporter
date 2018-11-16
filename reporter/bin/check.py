@@ -14,7 +14,7 @@ from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrors
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
     ChatLogsSource, PHPExecutionTimeoutSource, BackendSource, PHPTriggeredSource, \
     IndexDigestSource, ReportsPipeSource, DBReadQueryOnMaster, PHPTypeErrorsSource, \
-    CeleryLogsSource
+    CeleryLogsSource, KubernetesBackoffSource
 
 logging.basicConfig(
     level=logging.INFO,
@@ -91,6 +91,8 @@ reports += DBReadQueryOnMaster().query(threshold=1)
 reports += PHPTypeErrorsSource().query(threshold=5)
 
 reports += CeleryLogsSource().query(threshold=5)
+
+reports += KubernetesBackoffSource().query(threshold=1)
 
 logging.info('Reporting {} issues...'.format(len(reports)))
 reporter = Jira()
