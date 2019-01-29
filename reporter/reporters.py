@@ -192,6 +192,11 @@ class Jira(object):
         if classification:
             (project, component_id) = classification
 
+        # we do not want to file tickets in MAIN project anymore
+        if project == self._classifier.PROJECT_MAIN:
+            self._logger.info('MAIN tickets are now skipped')
+            return False
+
         if project:
             ticket_dict['project']['key'] = project
             # overwrite default fields with project specific ones
