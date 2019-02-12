@@ -16,7 +16,7 @@ setup(
     install_requires=[
         'jira==2.0.0',
         'pytest==3.6.3',
-        'requests-oauthlib==0.4.2',
+        'requests-oauthlib==0.6.1',
         'wikia-common-kibana==2.2.6',
         'PyYAML==3.13',
     ],
