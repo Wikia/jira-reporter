@@ -66,3 +66,7 @@ reporter/config.py
 
 # vim
 *.swp
+
+# Vault
+docker/vault/
+docker/secrets/
