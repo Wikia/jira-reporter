@@ -26,5 +26,3 @@ JIRA_CONFIG = {
         }
     }
 }
-
-print(JIRA_CONFIG)
