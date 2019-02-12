@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k8s-pod
+  namespace: prod
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: jira-reporter
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: k8s-pod
+          initContainers:
+          - args:
+            - secret/chef/jira/jira-reporter
+            env:
+            - name: VAULT_ADDR
+              value: active.vault.service.sjc.consul:8200
+            - name: ENV
+              value: prod
+            name: secrets
+            image: artifactory.wikia-inc.com/ops/init-vault:0.0.37
+            imagePullPolicy: Always
+            volumeMounts:
+            - name: secrets-dir
+              mountPath: /var/lib/secrets
+          containers:
+          - name: jira-reporter
+            image: artifactory.wikia-inc.com/sus/jira-reporter:latest
+            volumeMounts:
+            - name: secrets-dir
+              readOnly: true
+              mountPath: /var/lib/secrets
+            resources:
+              limits:
+                memory: 3000Mi
+              requests:
+                memory: 2000Mi
+          volumes:
+          - name: secrets-dir
+            emptyDir:
+              medium: Memory
+          restartPolicy: Never
