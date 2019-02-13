@@ -23,3 +23,31 @@ pip install -e .
 ```
 make test
 ```
+
+## CronJob: `jira-reporter`
+
+### Synopsis
+
+* script: `make check`
+* schedule: five minutes after every hour
+
+### Workflow
+
+Every time you make changes to any of the files in this repository, a new Docker
+image has to be built and pushed to Artifactory. `make cronjob-deploy` will do
+it for you. Refer to the `Makefile` for details.
+
+**IMPORTANT: Changes will affect production environment. If you want to work on `dev`,
+make sure to examime the files and make required changes.**
+
+### Useful Commands
+
+* `$ kubectl --context=kube-sjc-prod --namespace=prod get cronjob jira-reporter`:
+  display cronjob metadata
+
+* `kubectl --context=kube-sjc-prod --namespace=prod get pods | grep jira-reporter`:
+  list all pods associated with the cronjob
+
+* `kubectl --context=kube-sjc-prod --namespace=prod logs -f jira-reporter-1549370100-p7mmr`:
+  monitor the output of your script; remember to check the pod name with `get pods` command.
+
