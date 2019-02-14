@@ -9,7 +9,7 @@ kind: CronJob
 metadata:
   name: jira-reporter
 spec:
-  schedule: "* * * * *"
+  schedule: "5 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -26,7 +26,7 @@ spec:
             - name: ENV
               value: prod
             name: secrets
-            image: artifactory.wikia-inc.com/ops/init-vault:0.0.40
+            image: artifactory.wikia-inc.com/ops/init-vault:0.0.37
             imagePullPolicy: Always
             volumeMounts:
             - name: secrets-dir
