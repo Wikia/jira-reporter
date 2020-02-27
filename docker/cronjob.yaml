@@ -26,7 +26,7 @@ spec:
             - name: ENV
               value: prod
             name: secrets
-            image: artifactory.wikia-inc.com/ops/init-vault:0.0.37
+            image: artifactory.wikia-inc.com/ops/init-vault:0.0.41
             imagePullPolicy: Always
             volumeMounts:
             - name: secrets-dir
@@ -43,6 +43,9 @@ spec:
                 memory: 3000Mi
               requests:
                 memory: 2000Mi
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
           volumes:
           - name: secrets-dir
             emptyDir:
