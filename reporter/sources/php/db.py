@@ -3,8 +3,7 @@ import re
 
 from reporter.helpers import generalize_sql, is_from_production_host
 from reporter.reports import Report
-
-from common import PHPLogsSource
+from reporter.sources.php.common import PHPLogsSource
 
 
 class DBQueryErrorsSource(PHPLogsSource):
@@ -156,7 +155,7 @@ h3. Backtrace
         if message is None:
             return None
 
-        message = message.strip().encode('utf8')
+        message = message.strip()
 
         """
         A database error has occurred.  Did you forget to run maintenance/update.php after upgrading?  See: https://www.mediawiki.org/wiki/Manual:Upgrading#Run_the_update_script
@@ -178,7 +177,7 @@ h3. Backtrace
         func = re.sub(r'/usr/wikia/slot1/\d+/src', '', func)
 
         err_str = context.get('err', '')
-        err_str = err_str.encode('utf-8') if err_str else ''
+        err_str = err_str if err_str else ''
 
         context = {
             'query': parsed.get('Query'),

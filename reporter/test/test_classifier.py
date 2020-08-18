@@ -96,8 +96,8 @@ PHP Warning: Missing argument 1 for SpecialEditPage::execute(), called in /usr/w
     def test_classify_DPL_error_report(self):
         # https://wikia-inc.atlassian.net/browse/ER-14593
         report = Report(
-            summary='[Wikia\Util\AssertionException] DatabaseMysqli::mysqlNumRows',
-            description="""
+            summary=r'[Wikia\Util\AssertionException] DatabaseMysqli::mysqlNumRows',
+            description=r"""
 h1. Wikia\Util\AssertionException
 
 DatabaseMysqli::mysqlNumRows

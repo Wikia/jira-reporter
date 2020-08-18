@@ -6,7 +6,7 @@ Report slow queries killed by mysql-killer script
 
 import json
 
-from common import KibanaSource
+from .common import KibanaSource
 
 from reporter.helpers import generalize_sql
 from reporter.reports import Report

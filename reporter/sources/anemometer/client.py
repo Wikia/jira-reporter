@@ -1,7 +1,7 @@
 import logging
 import requests
 
-from  urllib import urlencode
+from urllib.parse import urlencode
 
 from requests.exceptions import RequestException
 

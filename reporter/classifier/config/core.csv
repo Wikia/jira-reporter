@@ -90,4 +90,4 @@ includes/actions/RollbackAction.php,
 maintenance/updateSpecialPages.php,Core MediaWiki
 includes/wikia/tasks/Tasks/CreateNewWikiTask.class.php,
 includes/api/ApiMove.php,
-extensions/Scribunto,"Lua & Scribunto"
+extensions/Scribunto,"Admin & Power user tools (Dashboard, Wiki Features, CSS, JS, Insights, etc.)"

@@ -2,10 +2,9 @@
 Report caching related problems
 """
 
-from common import KibanaSource
-
 from reporter.helpers import is_from_production_host
 from reporter.reports import Report
+from reporter.sources.common import KibanaSource
 
 
 class NotCachedWikiaApiResponsesSource(KibanaSource):

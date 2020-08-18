@@ -17,7 +17,7 @@ class ClassifierConfig(object):
 
         for section in ['components', 'paths']:
             with open('{}{}.yaml'.format(self.CLASSIFIER_CONFIG_DIR, section), mode='r') as fp:
-                self._config[section] = yaml.load(fp)[section]
+                self._config[section] = yaml.load(fp, Loader=yaml.BaseLoader)[section]
 
     def __getitem__(self, item):
         """
@@ -93,7 +93,7 @@ class Classifier(object):
 
         # scan them from top
         for backtrace_entry in backtrace_entries:
-            for path, component_name in self._paths.items():
+            for path, component_name in list(self._paths.items()):
                 if path in backtrace_entry:
                     self._logger.info('Found "{}" in ticket\'s description, setting "{}" component'.
                                       format(path, component_name))

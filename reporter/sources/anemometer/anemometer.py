@@ -59,7 +59,7 @@ h5. Raw stats
         return entry.get('checksum')  # Anenometer generates a hash for us
 
     def _get_report(self, entry):
-        stats = {k: v for k, v in entry.iteritems() if '_avg' in k or '_sum' in k or '_median' in k}
+        stats = {k: v for k, v in entry.items() if '_avg' in k or '_sum' in k or '_median' in k}
 
         url = '{}/index.php?action=show_query&datasource=localhost&checksum={}'.format(self.ANEMOMETER_URL, entry.get('checksum'))
 

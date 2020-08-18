@@ -2,7 +2,7 @@
 Base source for Kubernetes stuff
 """
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from reporter.sources.common import KibanaSource
 
@@ -59,4 +59,4 @@ h3. Details
     @staticmethod
     def get_dashboard_link(query):
         return 'https://dashboard.sjc.k8s.wikia.net:30080/#!/search?namespace=prod&q={}'.\
-            format(urllib.quote(query))
+            format(urllib.parse.quote(query))

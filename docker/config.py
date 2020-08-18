@@ -3,8 +3,8 @@ import json
 with open('/var/lib/secrets/secrets.json') as f:
     data = json.load(f)
 
-user = data['secret/chef/jira/jira-reporter']['user']
-password = data['secret/chef/jira/jira-reporter']['password']
+user = data['secret/app/prod/jira-reporter']['user_email']
+password = data['secret/app/prod/jira-reporter']['api_key']
 
 JIRA_CONFIG = {
     'url':       'https://wikia-inc.atlassian.net',

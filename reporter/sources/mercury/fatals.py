@@ -1,8 +1,7 @@
 import json
 
 from reporter.reports import Report
-
-from common import MercuryLogsSource
+from reporter.sources.mercury.common import MercuryLogsSource
 
 
 class MercurySource(MercuryLogsSource):

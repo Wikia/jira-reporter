@@ -23,7 +23,7 @@ class Jira(object):
     @see http://jira-python.readthedocs.org/en/latest/
     """
 
-    JQL = "description ~ '{hash_value}'"
+    JQL = "description ~ '{hash_value}' AND project = 'MAIN'"
 
     REOPEN_AFTER_DAYS = 14  # reopen still valid tickets when they were closed X days ago
     REOPEN_TRANSITION_COMMENT = '[~{assignee}], I reopened this ticket - logs say it is still valid'
@@ -34,7 +34,10 @@ class Jira(object):
 
     def __init__(self):
         self._logger = logging.getLogger('Jira')
-        self._jira = JIRA(server=JIRA_CONFIG['url'], basic_auth=[JIRA_CONFIG['user'], JIRA_CONFIG['password']])
+        self._jira = JIRA(
+            server=JIRA_CONFIG['url'],
+            basic_auth=(JIRA_CONFIG['user'], JIRA_CONFIG['password'])
+        )
 
         self._fields = JIRA_CONFIG.get('fields')
         self._last_seen_field = self._fields['custom']['last_seen']
