@@ -18,7 +18,7 @@ setup(
         'pytest==6.0.1',
         'pylint==2.5.3',
         'requests-oauthlib==1.3.0',
-        'wikia-common-kibana==2.2.6',
+        'wikia-common-kibana==2.2.7',
         'PyYAML==5.3.1',
     ],
     include_package_data=True,
