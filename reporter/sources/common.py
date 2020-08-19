@@ -5,7 +5,7 @@ Common classes allowing us to access logs from various sources
 import hashlib
 import logging
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from wikia_common_kibana import Kibana
 
@@ -102,7 +102,7 @@ class Source(object):
         """
         reports = list()
 
-        for key, item in items.iteritems():
+        for key, item in items.items():
             try:
                 report = self._get_report(item['entry'])
 
@@ -119,7 +119,7 @@ class Source(object):
 
             # update the report with the "hash" generated previously via _normalize
             m = hashlib.md5()
-            m.update(key)
+            m.update(key.encode('utf-8'))
             report.set_unique_id(m.hexdigest())
 
             report.set_counter(item['cnt'])
@@ -178,7 +178,7 @@ class KibanaSource(Source):
 
     PREVIEW_HOST = 'staging-s1'
 
-    KIBANA_URL = "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!({columns}),index:'{index}-*',query:(query_string:(analyze_wildcard:!t,query:'{query}')),sort:!('@timestamp',desc))"
+    KIBANA_URL = "https://kibana.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!({columns}),index:'{index}-*',query:(query_string:(analyze_wildcard:!t,query:'{query}')),sort:!('@timestamp',desc))"
 
     ELASTICSEARCH_INDEX_PREFIX = 'logstash-other'
 
@@ -201,7 +201,7 @@ class KibanaSource(Source):
 
         try:
             if fields.get('http_url'):
-                return fields.get('http_url').encode('utf8')
+                return fields.get('http_url')
         except UnicodeEncodeError:
             self._logger.error('URL parsing failed', exc_info=True)
 
@@ -236,7 +236,7 @@ class KibanaSource(Source):
         return env
 
     def format_kibana_url(self, query, columns=None, index=None):
-        # https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'@fields.app_name:chat')),sort:!('@timestamp',desc))
+        # https://kibana.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(index:'logstash-other-*',query:(query_string:(analyze_wildcard:!t,query:'@fields.app_name:chat')),sort:!('@timestamp',desc))
         columns = columns or ['@timestamp', '@source_host', '@message']
 
         # do not split the query into Kibana subqueries
@@ -248,7 +248,7 @@ class KibanaSource(Source):
         # it's rison-encode URL
         # @see https://discuss.elastic.co/t/access-discover-tab-with-parameters/50914/2
         return KibanaSource.KIBANA_URL.format(
-            query=urllib.quote(query),
+            query=urllib.parse.quote(query),
             columns="'{}'".format("','".join(columns)),
             index=index or self.ELASTICSEARCH_INDEX_PREFIX
         )

@@ -2,7 +2,8 @@
 paths:
   /api.php: Core MediaWiki
   /extensions/ParserFunctions/ParserFunctions_body.php: Core MediaWiki
-  /extensions/Scribunto: Lua & Scribunto
+  /extensions/Scribunto: Admin & Power user tools (Dashboard, Wiki Features, CSS,
+    JS, Insights, etc.)
   /extensions/VisualEditor: Visual Editor
   /extensions/wikia/AbPerformanceTesting: In House AB Testing Framework
   /extensions/wikia/AbTesting: In House AB Testing Framework
@@ -12,8 +13,6 @@ paths:
     CSS, JS, Insights, etc.)
   /extensions/wikia/AjaxPoll: Polls
   /extensions/wikia/AnalyticsEngine: Google, Universal Analytics
-  /extensions/wikia/Answers: Answers
-  /extensions/wikia/AntiSpamInput: API Spam Protection
   /extensions/wikia/ApiDocs: Core MediaWiki
   /extensions/wikia/ArticleAsJson: Core MediaWiki
   /extensions/wikia/ArticleComments: Comments
@@ -44,7 +43,6 @@ paths:
   /extensions/wikia/CreateNewWiki: CreateNewWiki
   /extensions/wikia/Custom404Page: Community Page
   /extensions/wikia/DesignSystem: Design System
-  /extensions/wikia/Development: Development platform and tools
   /extensions/wikia/Discussions: Discussions
   /extensions/wikia/EditPageLayout: Visual Editor
   /extensions/wikia/EditPreview: Visual Editor
@@ -66,10 +64,8 @@ paths:
   /extensions/wikia/GoogleDocs: Google, Universal Analytics
   /extensions/wikia/GoogleFormTag: Google, Universal Analytics
   /extensions/wikia/HideTags: Core MediaWiki
-  /extensions/wikia/HubRssFeed: Hubs
-  /extensions/wikia/ImageReview: D.I.R.T
-  /extensions/wikia/ImageReviewMercury: Mercury
-  /extensions/wikia/IndexingPipeline: Search (Legacy)
+  /extensions/wikia/ImageReview: image-review
+  /extensions/wikia/IndexingPipeline: unified-search
   /extensions/wikia/InfoboxBuilder: Portable Infoboxes
   /extensions/wikia/InsightsBlogpostRedirect: Blogs
   /extensions/wikia/JSMessages: Admin & Power user tools (Dashboard, Wiki Features,
@@ -82,7 +78,7 @@ paths:
   /extensions/wikia/JsonFormat: Admin & Power user tools (Dashboard, Wiki Features,
     CSS, JS, Insights, etc.)
   /extensions/wikia/LandingPagesAsContent: Community Page
-  /extensions/wikia/Lightbox: Lightbox
+  /extensions/wikia/Lightbox: Oasis (skin)
   /extensions/wikia/LinkSuggest: Core MediaWiki
   /extensions/wikia/LinkToMobileApp: Mobile Apps
   /extensions/wikia/Listusers: Staff tools
@@ -91,8 +87,8 @@ paths:
   /extensions/wikia/LookupUser: Staff tools
   /extensions/wikia/LyricsApi: Lyrics Wiki
   /extensions/wikia/MainPageTag: Core MediaWiki
-  /extensions/wikia/MediaGallery: New Gallery
-  /extensions/wikia/MercuryApi: Mercury
+  /extensions/wikia/MediaGallery: Gallery
+  /extensions/wikia/MercuryApi: Mobile Wiki
   /extensions/wikia/MiniEditor: Visual Editor
   /extensions/wikia/MinimalMainPage: Community Page
   /extensions/wikia/MobileAppTranslations: Mobile Apps
@@ -100,8 +96,7 @@ paths:
   /extensions/wikia/MostPopularCategories: Categories
   /extensions/wikia/MyHome: User Profile
   /extensions/wikia/Oasis: Oasis (skin)
-  /extensions/wikia/Optimizely: Optimizely A/B Testing Framework
-  /extensions/wikia/PageShare: Sharing
+  /extensions/wikia/PageShare: Oasis (skin)
   /extensions/wikia/ParserSpeed: Core MediaWiki
   /extensions/wikia/Parsoid: Core MediaWiki
   /extensions/wikia/PerSkinParserCache: Core MediaWiki
@@ -121,15 +116,15 @@ paths:
   /extensions/wikia/Recirculation: Recirculation
   /extensions/wikia/SEOTweaks: SEO
   /extensions/wikia/SEOTweaksGlobal: SEO
-  /extensions/wikia/Search: Search (Legacy)
-  /extensions/wikia/SearchDigest: Search (Legacy)
-  /extensions/wikia/SearchNearMatch: Search (Legacy)
+  /extensions/wikia/Search: unified-search
+  /extensions/wikia/SearchDigest: unified-search
+  /extensions/wikia/SearchNearMatch: unified-search
   /extensions/wikia/Security: Security
   /extensions/wikia/SemanticMediaWiki: Semantic MediaWiki
   /extensions/wikia/SeoCrossLink: SEO
   /extensions/wikia/SeoLinkHreflang: SEO
   /extensions/wikia/SeoTesting: SEO
-  /extensions/wikia/ShareButtons: Sharing
+  /extensions/wikia/ShareButtons: Oasis (skin)
   /extensions/wikia/SharedHelp: Shared help
   /extensions/wikia/ShowPerformanceStats: Staff tools
   /extensions/wikia/SoundCloudTag: Core MediaWiki
@@ -138,14 +133,11 @@ paths:
     CSS, JS, Insights, etc.)
   /extensions/wikia/SpecialDiscussions: Discussions
   /extensions/wikia/SpecialDiscussionsLog: Discussions
-  /extensions/wikia/SpecialEditHub: Hubs
   /extensions/wikia/SpecialEmailTest: Transactional Email
-  /extensions/wikia/SpecialManageWikiaHome: Home-page
   /extensions/wikia/SpecialNewWikis: CreateNewWiki
-  /extensions/wikia/SpecialPromote: Special:Promote
   /extensions/wikia/SpecialUnsubscribe: Transactional Email
-  /extensions/wikia/SpecialUnusedVideos: Video(legacy)
-  /extensions/wikia/SpecialVideos: Video(legacy)
+  /extensions/wikia/SpecialUnusedVideos: MediaWiki extensions
+  /extensions/wikia/SpecialVideos: MediaWiki extensions
   /extensions/wikia/SpotifyTag: Core MediaWiki
   /extensions/wikia/TagsReport: Staff tools
   /extensions/wikia/ThemeDesigner: Theme Designer
@@ -158,10 +150,10 @@ paths:
   /extensions/wikia/UserProfilePageV3: User Profile
   /extensions/wikia/UserRenameTool: Staff tools
   /extensions/wikia/UserTools: User Profile
-  /extensions/wikia/VideoEmbedTool: Video(legacy)
-  /extensions/wikia/VideoHandlers: Video(legacy)
-  /extensions/wikia/VideoPageTool: Video(legacy)
-  /extensions/wikia/VideosModule: Video(legacy)
+  /extensions/wikia/VideoEmbedTool: MediaWiki extensions
+  /extensions/wikia/VideoHandlers: MediaWiki extensions
+  /extensions/wikia/VideoPageTool: MediaWiki extensions
+  /extensions/wikia/VideosModule: MediaWiki extensions
   /extensions/wikia/VisualEditorTourExperiment: Visual Editor
   /extensions/wikia/WAM: WAM
   /extensions/wikia/WAMPage: WAM
@@ -171,13 +163,8 @@ paths:
   /extensions/wikia/WikiFactory: WikiFactory
   /extensions/wikia/WikiFactoryChangedHooks: WikiFactory
   /extensions/wikia/WikiaApi: Core MediaWiki
-  /extensions/wikia/WikiaHomePage: Home-page
-  /extensions/wikia/WikiaHubsServices: Hubs
-  /extensions/wikia/WikiaHubsV3: Hubs
-  /extensions/wikia/WikiaMaps: Interactive Maps
   /extensions/wikia/WikiaMobileEditor: Visual Editor
-  /extensions/wikia/WikiaPhotoGallery: New Gallery
-  /extensions/wikia/WikiaSpamRegexBatch: API Spam Protection
+  /extensions/wikia/WikiaPhotoGallery: Gallery
   /extensions/wikia/WikiaStats: Staff tools
   /includes/EditPage.php: Core MediaWiki
   /includes/api/ApiEditPage.php: Source Editor

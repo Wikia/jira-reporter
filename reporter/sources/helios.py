@@ -5,10 +5,9 @@ Report issues from Helios service
 """
 import json
 
-from common import KibanaSource
-
 from reporter.reports import Report
 from reporter.helpers import is_from_production_host
+from reporter.sources.common import KibanaSource
 
 
 class HeliosSource(KibanaSource):

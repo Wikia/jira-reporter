@@ -4,7 +4,7 @@ import re
 from reporter.helpers import is_from_production_host
 from reporter.reports import Report
 
-from common import PHPLogsSource
+from .common import PHPLogsSource
 
 
 class PHPExceptionsSource(PHPLogsSource):
@@ -57,8 +57,6 @@ h5. Backtrace
         # use a message from the generic exceptions
         if exception_class in ('WikiaException', 'Error'):
             message = exception.get('message')
-
-        message = message.encode('utf8')
 
         # Server #3 (10.8.38.41) is excessively lagged (126 seconds)
         message = re.sub(r'#\d+', '#X', message)

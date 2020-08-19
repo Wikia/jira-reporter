@@ -36,9 +36,9 @@ vault:
 	docker run --interactive --tty --rm \
 		--volume "${pwd}/docker/vault:/var/lib/secrets" \
 		--env USER=${$USER} \
-		artifactory.wikia-inc.com/ops/init-vault:0.0.37 \
+		artifactory.wikia-inc.com/ops/init-vault:0.0.42 \
 		--ldap \
-		"secret/chef/jira/jira-reporter"
+		"secret/app/prod/jira-reporter"
 	mkdir -p docker/secrets
 	cp docker/vault/secrets.json docker/secrets/
 	rm -rf docker/vault

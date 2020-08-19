@@ -101,7 +101,7 @@ class SourceTestClass(unittest.TestCase):
 
         # test the report
         report = reports[0]
-        print report  # print the report in case the assertion below fails
+        print(report)  # print the report in case the assertion below fails
 
         assert report.get_counter() == 2
         assert report.get_summary() == '[Error] Foo-Bar - http://example.com'

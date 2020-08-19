@@ -2,7 +2,6 @@
 components:
   3rd Party Extensions: 37701
   API Gateway: 21402
-  API Spam Protection: 21700
   Achievements: 11024
   Activity Feeds: 12100
   Ad Engineering: 13800
@@ -10,11 +9,11 @@ components:
   Answers: 11816
   Apester: 38421
   Article Video service: 38479
-  AssetsManager: 26000
   Athena: 38648
   Automatic Template Classification: 27602
   Backend Scripts: 26831
   Blogs: 11005
+  CDN: 38785
   CK Editor (RTE): 25713
   Careers Page: 38405
   Categories: 27604
@@ -23,85 +22,54 @@ components:
   Chat: 11030
   Comments: 13100
   Community Page: 22300
-  Comscore: 25202
-  Content Events: 36206
   Content Graph Service: 33808
+  Content Types: 38801
   Core MediaWiki: 11020
   Corporate Pages: 33800
   CreateNewWiki: 20201
   Curated Main Page: 19500
-  D.I.R.T: 21708
   Data Warehouse: 11037
   Deploy Tools: 11803
   Design System: 24501
-  Development platform and tools: 12207
   Discussions: 20101
   Discussions Following: 33818
-  Discussions Sitemap: 38553
   Documentation/Knowledge Sharing: 21600
   DynamicPageList: 11701
   ErrorReporter: 31601
-  Event Tracking Queue: 29900
-  ExactTarget: 20200
   Explore Wikis: 33801
   FANDOM Creator: 33809
   Fan Contributor Tools: 33802
   Fandom App: 33810
-  Fandom Taxonomy CMS: 33811
   Fandom-Stories: 20009
   Featured Video: 31439
-  Featured Video preroll: 35901
   File storage and Database: 11802
   Forum: 11033
   GDPR: 38599
-  GDPR-CAKE: 38587
   GDPR-COMSUP: 38583
-  GDPR-IRIS: 38580
-  GDPR-MOB: 38581
-  GDPR-N&S: 38576
-  GDPR-OPS: 38582
-  GDPR-PLAT: 38579
-  GDPR-SER: 38578
-  GDPR-SUS: 38577
-  GDPR-XWING: 38586
-  Gallery: 33814
+  Gallery: 28903
   Global Navigation: 11013
   Global Shortcuts: 27603
   Google, Universal Analytics: 17504
+  HTTPS and Fandom.com migration: 38686
   Helios: 21401
-  Home-page: 28907
-  Hubs: 28908
   ImageServing: 31701
   In House AB Testing Framework: 14301
   Infobox Builder: 25702
-  Interactive Maps: 15101
   JS Review Tool: 31300
   JW Player: 38422
   Jenkins: 38200
-  LFS: 38638
-  Lift Igniter Metadata service: 38300
-  Lightbox: 28905
   Login & Signup: 11014
-  Lua & Scribunto: 25715
   Lyrics Wiki: 35400
-  Media Kit: 33815
   Media Wiki: 21403
   MediaWiki extensions: 24900
-  Mercury: 19002
   Message Wall: 28900
-  Mini Editor: 25711
   Mobile Apps: 14101
-  Mobile Skin: 34101
   Mobile Wiki: 38480
-  Monobook: 28906
-  New Gallery: 28903
-  News + Stories (CMS): 33806
-  News + Stories (Web): 33803
+  News + Stories: 33806
   Nirvana API: 11000
   Notifications (New): 31419
   Notifications (Old): 11825
   Oasis (skin): 13500
-  Optimizely A/B Testing Framework: 14302
   Page Header: 33813
   Pandora: 21400
   Phalanx: 20005
@@ -110,75 +78,53 @@ components:
   Portability Metric: 27601
   Portable Infoboxes: 18502
   Portable Tables: 25701
-  Quantcast: 25203
   RSS: 25703
-  Rebranding: 26705
   Recirculation: 24401
-  RelatedPages: 29701
   Rename Tool: 29101
   SEO: 11003
-  Search (Legacy): 33807
-  Search (New): 11001
   Security: 21001
   Semantic MediaWiki: 11700
   Service Event Queue: 29902
   Services (SOA infrastructure and development platform): 11019
   Shared help: 11022
-  Sharing: 11010
-  Sony RSS: 34007
   Source Editor: 25712
-  Special:Promote: 13316
   Staff permissions: 23301
   Staff tools: 11025
   Tabber/Tabview: 32011
-  Tableau: 25201
   Theme Designer: 13103
   Thumbnailer: 30908
   Toolbar: 11007
   Transactional Email: 11039
+  Unified Community Platform (UCP): 38815
+  Unified-Search: 38828
   Unit Tests: 16800
   User Profile: 11036
-  User Template Classification: 27700
-  Video(legacy): 28904
-  Vignette: 17400
   Visual Editor: 25710
   WAM: 28909
   Welcome Tool: 11600
-  Widgets: 11706
-  Wiki following: 33816
   WikiFactory: 11028
   Wordpress: 33804
-  aws: 35900
-  central-swagger-ui: 31400
   clickstream: 31401
-  content-changed-ex.following: 31414
   dc-file-sync: 31402
-  device-messaging: 31423
-  email: 38643
   external-auth: 31403
-  following: 31418
   i18n: 11011
   image-review: 31404
+  irc feed: 38850
   kapacitor: 28602
   mobile-app-registry: 31424
   mobile-applications: 31425
   mobile-configurations: 31426
-  notification-stats: 31427
-  opengraph: 31421
-  paragon.gg: 35903
-  parsoid-feeder-worker: 31429
-  profile: 31435
+  mw->k8s: 38797
   proof-of-work: 31405
-  push-notifications-panel: 31428
-  revive: 20601
-  service-control: 31406
+  push-notifications: 31427
   spam wiki review: 38621
   static-assets: 31407
-  tcs-worker: 31430
-  template-classification-worker: 31432
+  towards-ucp: 38825
+  unified-search: 11001
   user-attribute: 31422
   user-avatar: 31408
   user-permissions: 31409
   user-preference: 31410
   user-registration: 31411
+  vignette: 38693
   whoami: 31412

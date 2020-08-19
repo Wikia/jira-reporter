@@ -1,4 +1,4 @@
-FROM python:2-alpine
+FROM python:3.8.5-alpine
 
 ENV PIP_INDEX_URL=https://artifactory.wikia-inc.com/artifactory/api/pypi/pypi/simple
 
@@ -12,13 +12,12 @@ RUN apk update && \
         build-base \
         libffi-dev \
         openssl-dev \
-        python-dev && \
+        python3-dev && \
     rm -rf /var/cache/apk/* && \
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --editable . && \
-    cp docker/config.py reporter/ && \
-    adduser -D -g '' -s /bin/ash wikia
+    cp docker/config.py reporter/
 
-USER wikia
+USER 65535:65535
 
 ENTRYPOINT [ "make", "check" ]

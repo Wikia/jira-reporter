@@ -1,8 +1,7 @@
 import re
 
 from reporter.reports import Report
-
-from common import PandoraLogsSource
+from reporter.sources.pandora.common import PandoraLogsSource
 
 
 class PandoraErrorsSource(PandoraLogsSource):
@@ -43,7 +42,7 @@ class PandoraErrorsSource(PandoraLogsSource):
         return self.format_kibana_url(
             query='appname: "{appname}" AND rawMessage: "{message}"'.format(
                 appname=appname,
-                message=message.encode('utf8')
+                message=message
             ),
             columns=['@timestamp', 'rawLevel', 'logger_name', 'rawMessage', 'thread_name'],
             index='logstash'  # search in all indices
@@ -53,7 +52,7 @@ class PandoraErrorsSource(PandoraLogsSource):
         """
         Normalize given entry
         """
-        message = entry.get('rawMessage').encode('utf8')
+        message = entry.get('rawMessage')
         logger_name = entry.get('logger_name')
         app_name = entry.get('appname')
 

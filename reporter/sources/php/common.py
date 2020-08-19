@@ -2,7 +2,6 @@ import re
 
 from reporter.sources.common import KibanaSource
 
-
 class PHPLogsSource(KibanaSource):
     """
     Base class for Kibana-powered PHP logs

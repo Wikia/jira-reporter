@@ -19,14 +19,14 @@ spec:
           serviceAccountName: k8s-pod
           initContainers:
           - args:
-            - secret/chef/jira/jira-reporter
+            - secret/app/prod/jira-reporter
             env:
             - name: VAULT_ADDR
               value: active.vault.service.sjc.consul:8200
             - name: ENV
               value: prod
             name: secrets
-            image: artifactory.wikia-inc.com/ops/init-vault:0.0.41
+            image: artifactory.wikia-inc.com/ops/init-vault:0.0.42
             imagePullPolicy: Always
             volumeMounts:
             - name: secrets-dir
@@ -43,9 +43,6 @@ spec:
                 memory: 3000Mi
               requests:
                 memory: 2000Mi
-            securityContext:
-              runAsNonRoot: true
-              runAsUser: 1000
           volumes:
           - name: secrets-dir
             emptyDir:

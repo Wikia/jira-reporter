@@ -204,7 +204,7 @@ class PHPErrorsSourceTestClass(unittest.TestCase):
         self._source._normalize(entry)
 
         report = self._source._get_report(entry)
-        print report  # print out to stdout, pytest will show it in case of a failure
+        print(report)  # print out to stdout, pytest will show it in case of a failure
 
         # report should be sent with a normalized summary set
         assert report.get_summary() == 'PHP Fatal Error: Call to a member function getText() on a non-object in /includes/wikia/services/ArticleService.class.php on line 187'
@@ -272,7 +272,7 @@ class DBErrorsSourceTestClass(unittest.TestCase):
         self._source._normalize(self._entry)
 
         report = self._source._get_report(self._entry)
-        print report  # print out to stdout, pytest will show it in case of a failure
+        print(report)  # print out to stdout, pytest will show it in case of a failure
 
         assert 'DB error 1317 Query execution was interrupted' in report.get_summary()
         assert 'DatabaseBase::sourceFile' in report.get_summary()

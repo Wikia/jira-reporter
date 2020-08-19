@@ -14,11 +14,12 @@ setup(
     author='macbre',
     author_email='macbre@wikia-inc.com',
     install_requires=[
-        'jira==2.0.0',
-        'pytest==3.6.3',
-        'requests-oauthlib==0.6.1',
+        'jira==3.0a2',
+        'pytest==6.0.1',
+        'pylint==2.5.3',
+        'requests-oauthlib==1.3.0',
         'wikia-common-kibana==2.2.6',
-        'PyYAML==3.13',
+        'PyYAML==5.3.1',
     ],
     include_package_data=True,
 )
