@@ -76,4 +76,4 @@ class PandoraErrorsSourceTestClass(unittest.TestCase):
             'rawMessage': 'ga is not defined'
         }
 
-        assert source._get_kibana_url(entry) == "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!('@timestamp','rawLevel','logger_name','rawMessage','thread_name'),index:'logstash-*',query:(query_string:(analyze_wildcard:!t,query:'appname%3A%20%22event-logger%22%20AND%20rawMessage%3A%20%22ga%20is%20not%20defined%22')),sort:!('@timestamp',desc))"
+        assert source._get_kibana_url(entry) == "https://kibana.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!('@timestamp','rawLevel','logger_name','rawMessage','thread_name'),index:'logstash-*',query:(query_string:(analyze_wildcard:!t,query:'appname%3A%20%22event-logger%22%20AND%20rawMessage%3A%20%22ga%20is%20not%20defined%22')),sort:!('@timestamp',desc))"

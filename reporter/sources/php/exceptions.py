@@ -39,6 +39,13 @@ h5. Backtrace
         if not is_from_production_host(entry):
             return False
 
+        exception = entry.get('@exception', {})
+        exception_class = exception.get('class')
+
+        # Ignore 4xx errors
+        if exception_class in ('BadTitleError', 'PermissionsError'):
+            return False
+
         # ignore PHP Fatal errors with backtrace here - they're handled by PHPErrorsSource
         message = entry.get('@message', '')
         if message.startswith('PHP Fatal '):

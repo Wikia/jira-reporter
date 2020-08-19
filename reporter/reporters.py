@@ -23,7 +23,7 @@ class Jira(object):
     @see http://jira-python.readthedocs.org/en/latest/
     """
 
-    JQL = "description ~ '{hash_value}' AND project = 'MAIN'"
+    JQL = "description ~ '{hash_value}' AND project = 'ER'"
 
     REOPEN_AFTER_DAYS = 14  # reopen still valid tickets when they were closed X days ago
     REOPEN_TRANSITION_COMMENT = '[~{assignee}], I reopened this ticket - logs say it is still valid'
