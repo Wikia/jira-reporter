@@ -13,7 +13,7 @@ from reporter.sources import PHPErrorsSource, PHPExceptionsSource, DBQueryErrors
     PHPAssertionsSource, PandoraErrorsSource, PHPSecuritySource, \
     MercurySource, HeliosSource, VignetteThumbVerificationSource, AnemometerSource, \
     ChatLogsSource, PHPExecutionTimeoutSource, BackendSource, PHPTriggeredSource, \
-    IndexDigestSource, ReportsPipeSource, DBReadQueryOnMaster, PHPTypeErrorsSource, \
+    IndexDigestSource, ReportsPipeSource, PHPTypeErrorsSource, \
     CeleryLogsSource, KubernetesBackoffSource
 
 logging.basicConfig(
@@ -85,8 +85,6 @@ reports += PHPTriggeredSource().query(threshold=1)
 reports += IndexDigestSource().query(threshold=1)
 
 reports += ReportsPipeSource().query(threshold=1)
-
-reports += DBReadQueryOnMaster().query(threshold=1)
 
 reports += PHPTypeErrorsSource().query(threshold=5)
 

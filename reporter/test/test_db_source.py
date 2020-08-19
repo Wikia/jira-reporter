@@ -74,7 +74,7 @@ class DBQueryErrorsSourceTestClass(unittest.TestCase):
             }
         }
 
-        assert source._get_kibana_url(entry) == "https://kibana5.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!('@timestamp','@source_host','@context.errno','@context.err','@fields.db_name','@fields.http_url'),index:'logstash-mediawiki-*',query:(query_string:(analyze_wildcard:!t,query:'%40exception.class%3A%20%22DBQueryError%22%20AND%20%40exception.message%3A%20%22DWDimensionApiController%3A%3AgetWikiImagesData%22')),sort:!('@timestamp',desc))"
+        assert source._get_kibana_url(entry) == "https://kibana.wikia-inc.com/app/kibana#/discover?_g=(time:(from:now-6h,mode:quick,to:now))&_a=(columns:!('@timestamp','@source_host','@context.errno','@context.err','@fields.db_name','@fields.http_url'),index:'logstash-mediawiki-*',query:(query_string:(analyze_wildcard:!t,query:'%40exception.class%3A%20%22DBQueryError%22%20AND%20%40exception.message%3A%20%22DWDimensionApiController%3A%3AgetWikiImagesData%22')),sort:!('@timestamp',desc))"
 
     def test_normalize(self):
         source = DBQueryErrorsSource()

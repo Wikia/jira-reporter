@@ -49,6 +49,9 @@ class PHPExceptionsSourceTestClass(unittest.TestCase):
         # PHP Fatal errors with the exception backtrace should be ignored
         assert self._source._filter({'@message': 'PHP Fatal error: Maximum execution', "@exception": {"class": "Exception"}, '@fields': {'environment': 'prod'}}) is False
 
+        assert self._source._filter({'@message': 'MWExceptionHandler::report', "@exception": {"class": "BadTitleError"}, '@fields': {'environment': 'prod'}}) is False
+        assert self._source._filter({'@message': 'MWExceptionHandler::report', "@exception": {"class": "PermissionsError"}, '@fields': {'environment': 'prod'}}) is False
+
 
 class PHPTypeErrorsSourceTestClass(unittest.TestCase):
     """
