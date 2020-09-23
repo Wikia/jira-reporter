@@ -18,3 +18,5 @@ from .pandora import PandoraErrorsSource
 from .vignette import VignetteThumbVerificationSource
 from .chat import ChatLogsSource
 from .indexdigest import IndexDigestSource
+from .ucp import UCPErrorsSource
+
