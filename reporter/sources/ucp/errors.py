@@ -23,7 +23,7 @@ class UCPErrorsSource(KibanaSource):
 
     def _get_entries(self, query):
         return self._kibana.query_by_string(
-            query='NOT @message:"Wikimedia\\Rdbms" AND (event.type:"error" OR event.type:"fatal" OR event.type:"exception")',
+            query='NOT @message:"Wikimedia\\\\Rdbms" AND (event.type:"error" OR event.type:"fatal" OR event.type:"exception")',
             limit=self.LIMIT
         )
 
