@@ -82,6 +82,7 @@ class UCPErrorsSource(KibanaSource):
         # remove index name / offset from notices
         message = re.sub(r'Undefined index: [^\s]+ in', 'Undefined index: X in', message)
         message = re.sub(r'Undefined offset: \d+ in', 'Undefined offset: N in', message)
+        message = re.sub(r'Could not resolve cluster for DB name: (.*)', 'Could not resolve cluster for DB name: X', message)
 
         entry['@message_normalized'] = message
 
