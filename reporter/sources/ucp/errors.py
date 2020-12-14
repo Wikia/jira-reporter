@@ -115,7 +115,7 @@ class UCPErrorsSource(KibanaSource):
             stack_trace=entry.get('stack_trace')
         ).strip()
 
-        priority = ERRORS_MAP[entry.get('event,type').replace("\"","")]
+        priority = ERRORS_MAP[entry.get('event.type').replace("\"","")]
         report = Report(
             summary=entry.get('@message_normalized'),
             description=description,
