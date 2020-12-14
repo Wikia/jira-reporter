@@ -20,6 +20,11 @@ class UCPErrorsSource(KibanaSource):
     """
 
     ELASTICSEARCH_INDEX_PREFIX = 'logstash-mediawiki-unified-platform'
+    ERRORS_MAP = {
+        'fatal': {'id': '9'}, #P2
+        'error': {'id': '8'}, #P3
+        'exception': {'id': '6'} #Minor - team grooming
+    }
 
     def _get_entries(self, query):
         return self._kibana.query_by_string(
@@ -110,9 +115,11 @@ class UCPErrorsSource(KibanaSource):
             stack_trace=entry.get('stack_trace')
         ).strip()
 
+        priority = ERRORS_MAP[entry.get('event,type').replace("\"","")]
         report = Report(
             summary=entry.get('@message_normalized'),
-            description=description
+            description=description,
+            priority=priority
         )
 
         report.add_label('unified-platform')

@@ -6,8 +6,9 @@ A report wrapper
 class Report(object):
     """ A report wrapper """
 
-    def __init__(self, summary, description, label=False):
+    def __init__(self, summary, description, label=False, priority=False):
         """ Set up the report """
+        self._priority = priority
         self._summary = summary
         self._description = description
 
