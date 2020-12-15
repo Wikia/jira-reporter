@@ -55,9 +55,6 @@ class Jira(object):
     def _get_issue_url(self, issue_id):
         return '{server}/browse/{issue_id}'.format(server=self._server, issue_id=issue_id)
 
-    def get_fields(self):
-        return self._fields
-
     def set_fields(self, fields):
         self._fields = fields
 
@@ -167,10 +164,11 @@ class Jira(object):
         """
         self._logger.info('Reporting "{}"'.format(report.get_summary()))
 
+        fields = JIRA_CONFIG.get('fields')
         if priority:
-            fields = self.get_fields()
+            fields = self._fields
             fields['default']['priority'] = priority
-            self.set_fields(fields)
+        self.set_fields(fields)
 
         # let's first check if the report is already in JIRA
         # use "hash" added to a ticket description
