@@ -1,10 +1,23 @@
-.PHONY: test coverage lint vault docker-image docker-push cronjob-delete cronjob-apply
+.PHONY: setup clean test_local test coverage lint vault docker-image docker-push cronjob-delete cronjob-apply
 
 project_name = reporter
 coverage_options = --include='$(project_name)/*' --omit='$(project_name)/test/*,$(project_name)/config.py,*__init__.py'
 pwd = $(shell pwd)
 k8s_context = kube-sjc-prod
 k8s_namespace = prod
+venv_name = venv
+
+setup:
+	python3 -m venv $(venv_name); \
+	. ./$(venv_name)/bin/activate; \
+	pip install .
+
+clean:
+	rm -rf $(venv_name)
+
+test_local: setup
+	. ./$(venv_name)/bin/activate; \
+	py.test -x $(project_name) -vv
 
 test:
 	py.test -x $(project_name) -vv
