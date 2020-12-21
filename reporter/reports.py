@@ -65,6 +65,10 @@ class Report(object):
         """ Get report labels """
         return self._labels
 
+    def get_priority(self):
+        """ Get priority for the report """
+        return self._priority
+
     def __repr__(self):
         """ Returns human readable representation of the object """
         return '<Report: {summary} [{labels}] ({unique_id})>\n{description}'.format(

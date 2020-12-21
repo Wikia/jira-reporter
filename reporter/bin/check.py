@@ -101,12 +101,7 @@ reported = 0
 for report in reports:
     sleep(1)  # avoid hitting Jira with too many searches for ticket hash (we perform 150+ of them)
 
-    # allow overwriting default priority of issue
-    priority = False
-    if report['priority']:
-        priority = report['priority']
-
-    if reporter.report(report, priority):
+    if reporter.report(report):
         reported += 1
 
 logging.info('Reported {} tickets'.format(reported))

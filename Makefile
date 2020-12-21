@@ -10,7 +10,7 @@ venv_name = venv
 setup:
 	python3 -m venv $(venv_name); \
 	. ./$(venv_name)/bin/activate; \
-	pip install .
+	pip install --no-cache --editable .
 
 clean:
 	rm -rf $(venv_name)
@@ -18,6 +18,10 @@ clean:
 test_local: setup
 	. ./$(venv_name)/bin/activate; \
 	py.test -x $(project_name) -vv
+
+sandbox_local: setup
+	. ./$(venv_name)/bin/activate; \
+	python $(project_name)/bin/sandbox.py 2>&1 | less
 
 test:
 	py.test -x $(project_name) -vv
@@ -58,8 +62,11 @@ vault:
 
 docker-image:
 	docker build --no-cache --rm \
-		--tag artifactory.wikia-inc.com/sus/jira-reporter:latest \
+		--tag artifactory.wikia-inc.com/sus/jira-reporter:ttomalak-test \
 		--file docker/Dockerfile .
+
+docker-run:
+	docker run --volume "${pwd}/docker/secrets:/var/lib/secrets" --user=root --rm --entrypoint=/bin/sh -it artifactory.wikia-inc.com/sus/jira-reporter:ttomalak-test
 
 docker-push:
 	docker push artifactory.wikia-inc.com/sus/jira-reporter:latest

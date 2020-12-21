@@ -55,9 +55,6 @@ class Jira(object):
     def _get_issue_url(self, issue_id):
         return '{server}/browse/{issue_id}'.format(server=self._server, issue_id=issue_id)
 
-    def set_fields(self, fields):
-        self._fields = fields
-
     def ticket_exists(self, unique_id):
         """
         Checks if ticket with a given unique_id exists
@@ -153,22 +150,19 @@ class Jira(object):
 
         return resolution_date is not None and resolution_date < resolution_threshold
 
-    def report(self, report, priority=False):
+    def report(self, report):
         """
         Send given report to JIRA
 
         It checks if it hasn't been reported already
 
-        :param priority: when passed allow to specify ticket priority other than default P3
         :type report reporter.reports.Report
         """
         self._logger.info('Reporting "{}"'.format(report.get_summary()))
 
-        fields = JIRA_CONFIG.get('fields')
+        priority = report.get_priority()
         if priority:
-            fields = self._fields
-            fields['default']['priority'] = priority
-        self.set_fields(fields)
+            self._fields['default']['priority'] = priority
 
         # let's first check if the report is already in JIRA
         # use "hash" added to a ticket description
