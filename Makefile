@@ -62,11 +62,11 @@ vault:
 
 docker-image:
 	docker build --no-cache --rm \
-		--tag artifactory.wikia-inc.com/sus/jira-reporter:ttomalak-test \
+		--tag artifactory.wikia-inc.com/sus/jira-reporter:latest \
 		--file docker/Dockerfile .
 
 docker-run:
-	docker run --volume "${pwd}/docker/secrets:/var/lib/secrets" --user=root --rm --entrypoint=/bin/sh -it artifactory.wikia-inc.com/sus/jira-reporter:ttomalak-test
+	docker run --volume "${pwd}/docker/secrets:/var/lib/secrets" --user=root --rm --entrypoint=/bin/sh -it artifactory.wikia-inc.com/sus/jira-reporter:latest
 
 docker-push:
 	docker push artifactory.wikia-inc.com/sus/jira-reporter:latest
