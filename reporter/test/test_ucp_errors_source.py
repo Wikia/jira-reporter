@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Set of unit tests for PHPExceptionsSource
+Set of unit tests for UCPErrorsSource
 """
 import unittest
+import json
+import os.path
 
-from ..sources import UCPErrorsSource, PHPTypeErrorsSource
+from ..sources import UCPErrorsSource
 
 class UCPErrorsSourceTestClass(unittest.TestCase):
     """
-    Unit tests for PHPTypeErrorsSource class
+    Unit tests for UCPErrorsSource class
     """
     def setUp(self):
         self._source = UCPErrorsSource()
@@ -57,7 +59,6 @@ class UCPErrorsSourceTestClass(unittest.TestCase):
         assert report.get_summary() == 'PHP Notice: Undefined property: StubObject::$mOutput in ' \
                                        '/extensions/fandom/Blogs/src/BlogTemplate.php on line 961 '
 
-
     def test_report_fatal(self):
         event_type = {'event': {'type': 'fatal'}}
         self.entry.update(event_type)
@@ -89,3 +90,40 @@ class UCPErrorsSourceTestClass(unittest.TestCase):
 
         self.default_assert(report)
         assert report.get_priority() == False
+
+    def test_report_unique_hash(self):
+        with open(os.path.dirname(__file__) + '/resources/ucp_error_titles.json') as f:
+            titles = json.load(f)['unique_titles']
+
+            hash_dict = {}
+            for title in titles:
+                message_update = {
+                    '@message': title,
+                    '@message_normalized': title,
+                }
+                self.entry.update(message_update)
+                report = self._source._get_report(self.entry)
+                hash_dict[report.get_unique_id()] = 1
+
+            # Check if length of titles is same as final dict of hashes
+            assert len(titles) == len(hash_dict)
+
+    def test_report_duplicate_hash(self):
+        first_title = "InvalidArgumentException from line 100 of /includes/Revision/RevisionStoreRecord.php: The given Title does not belong to page ID 3434 but actually belongs to 248729"
+        second_title = "InvalidArgumentException from line 100 of /includes/Revision/RevisionStoreRecord.php: The given Title does not belong to page ID 2777 but actually belongs to 18440"
+
+        first_message_update = {
+            '@message': first_title,
+            '@message_normalized': first_title,
+        }
+        self.entry.update(first_message_update)
+        first_report = self._source._get_report(self.entry)
+
+        second_message_update = {
+            '@message': second_title,
+            '@message_normalized': second_title,
+        }
+        self.entry.update(second_message_update)
+        second_report = self._source._get_report(self.entry)
+
+        assert first_report.get_unique_id() == second_report.get_unique_id()
