@@ -117,7 +117,7 @@ class UCPErrorsSource(KibanaSource):
 
         priority = False
         if entry.get('event') is not None and entry.get('event').get('type') is not None:
-            error_type = entry.get('event').get('type').replace("\"", "")
+            error_type = entry.get('event').get('type').replace('"', '')
 
             if error_type in self.ERRORS_MAP:
                 priority = self.ERRORS_MAP[error_type]
