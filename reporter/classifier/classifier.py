@@ -3,7 +3,7 @@ import re
 import yaml
 
 from reporter.sources import PandoraErrorsSource, MercurySource, HeliosSource, ChatLogsSource, \
-    PHPExecutionTimeoutSource, BackendSource, CeleryLogsSource
+    PHPExecutionTimeoutSource, BackendSource, CeleryLogsSource, UCPErrorsSource
 
 
 class ClassifierConfig(object):
@@ -15,7 +15,7 @@ class ClassifierConfig(object):
     def __init__(self):
         self._config = {}
 
-        for section in ['components', 'paths']:
+        for section in ['components', 'paths', 'ucp_owners']:
             with open('{}{}.yaml'.format(self.CLASSIFIER_CONFIG_DIR, section), mode='r') as fp:
                 self._config[section] = yaml.load(fp, Loader=yaml.BaseLoader)[section]
 
@@ -41,6 +41,7 @@ class Classifier(object):
 
         self._components = config['components']
         self._paths = config['paths']
+        self._ucp_owners = config['ucp_owners']
 
     def get_component_id(self, component_name):
         """
@@ -90,6 +91,21 @@ class Classifier(object):
         # use the ticket description as a fallback when there's no backtrace
         if not backtrace_entries:
             backtrace_entries = [description]
+
+        if UCPErrorsSource.REPORT_LABEL in labels:
+            """
+            # Commented out until we figure out the components in JIRA
+            for backtrace_entry in backtrace_entries:
+                owners = []
+                for path, owner in list(self._ucp_owners.items()):
+                    pos = backtrace_entry.find(path)
+                    if pos >= 0:
+                        owners.append((pos, owner))
+                if len(owners) > 0:
+                    o = sorted(owners, key=lambda x: x[0])[0][1]
+                    return self.PROJECT_ERROR_REPORTER, o
+            """
+            return self.PROJECT_ERROR_REPORTER, None
 
         # scan them from top
         for backtrace_entry in backtrace_entries:

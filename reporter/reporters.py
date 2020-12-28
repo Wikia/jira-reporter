@@ -214,6 +214,9 @@ class Jira(object):
         # report the ticket
         self._logger.info('Reporting {}'.format(json.dumps(ticket_dict)))
 
+        # dry mode, remove before merging!
+        return True
+
         try:
             new_issue = self._jira.create_issue(fields=ticket_dict)
             issue_id = new_issue.key

@@ -6,6 +6,7 @@ from reporter.sources.common import KibanaSource
 
 """Reports PHP errors, fatals and uncaught exceptions from Unified Community Platform (UCP)"""
 class UCPErrorsSource(KibanaSource):
+    REPORT_LABEL = 'unified-platform'
 
     REPORT_TEMPLATE = """
 {full_message}
@@ -99,7 +100,7 @@ class UCPErrorsSource(KibanaSource):
     def _get_url_from_entry(self, entry):
         fields = entry.get('@fields', {})
 
-        return 'https://' + fields.get('http_url_domain') + fields.get('http_url_path')
+        return 'https://%s%s' % (fields.get('http_url_domain'), fields.get('http_url_path'))
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
@@ -115,6 +116,6 @@ class UCPErrorsSource(KibanaSource):
             description=description
         )
 
-        report.add_label('unified-platform')
+        report.add_label(self.REPORT_LABEL)
 
         return report
