@@ -1,4 +1,5 @@
 import re
+import hashlib
 import urllib.parse
 
 from reporter.reports import Report
@@ -127,6 +128,15 @@ class UCPErrorsSource(KibanaSource):
             description=description,
             priority=priority
         )
+
+        # Most of the not detected duplicates are caused by wikiId or ArticleID
+        # we should remove them from hash, as message summary should be sufficient
+        # enough the deliver "unique" key for the issue because of the error message or
+        # path to the file were it was thrown.
+        m = hashlib.md5()
+        hash_text = re.sub(r'\d', '', report.get_summary())
+        m.update(hash_text.encode('utf-8'))
+        report.set_unique_id(m.hexdigest())
 
         report.add_label('unified-platform')
 
