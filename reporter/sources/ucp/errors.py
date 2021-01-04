@@ -105,7 +105,10 @@ class UCPErrorsSource(KibanaSource):
     def _get_url_from_entry(self, entry):
         fields = entry.get('@fields', {})
 
-        return 'https://' + fields.get('http_url_domain') + fields.get('http_url_path')
+        if fields.get('http_url_domain') is None and fields.get('http_url_path') is None:
+            return False
+
+        return 'https://' + fields.get('http_url_domain') + fields.get('http_url_path', '')
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
