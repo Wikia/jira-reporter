@@ -3,6 +3,7 @@
 This script is a sandbox for testing new sources
 """
 import logging
+import json
 
 from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
@@ -79,6 +80,6 @@ for report in reports:
     print(report)
 
     if report.get_priority():
-        print("priority:" + report.get_priority())
+        print("priority:" + json.dumps(report.get_priority()))
 
     print(classifier.classify(report))
