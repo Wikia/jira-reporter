@@ -1,4 +1,5 @@
 import re
+import hashlib
 import urllib.parse
 
 from reporter.reports import Report
@@ -20,6 +21,11 @@ class UCPErrorsSource(KibanaSource):
     """
 
     ELASTICSEARCH_INDEX_PREFIX = 'logstash-mediawiki-unified-platform'
+    ERRORS_MAP = {
+        'fatal': {'id': '9'}, #P2
+        'error': {'id': '8'}, #P3
+        'exception': {'id': '6'} #Minor - team grooming
+    }
 
     def _get_entries(self, query):
         return self._kibana.query_by_string(
@@ -99,7 +105,10 @@ class UCPErrorsSource(KibanaSource):
     def _get_url_from_entry(self, entry):
         fields = entry.get('@fields', {})
 
-        return 'https://' + fields.get('http_url_domain') + fields.get('http_url_path')
+        if fields.get('http_url_domain') is None and fields.get('http_url_path') is None:
+            return False
+
+        return 'https://' + fields.get('http_url_domain') + fields.get('http_url_path', '')
 
     def _get_report(self, entry):
         """ Format the report to be sent to JIRA """
@@ -110,10 +119,27 @@ class UCPErrorsSource(KibanaSource):
             stack_trace=entry.get('stack_trace')
         ).strip()
 
+        priority = False
+        if entry.get('event') is not None and entry.get('event').get('type') is not None:
+            error_type = entry.get('event').get('type').replace('"', '')
+
+            if error_type in self.ERRORS_MAP:
+                priority = self.ERRORS_MAP[error_type]
+
         report = Report(
             summary=entry.get('@message_normalized'),
-            description=description
+            description=description,
+            priority=priority
         )
+
+        # Most of the not detected duplicates are caused by wikiId or ArticleID
+        # we should remove them from hash, as message summary should be sufficient
+        # enough the deliver "unique" key for the issue because of the error message or
+        # path to the file were it was thrown.
+        m = hashlib.md5()
+        hash_text = re.sub(r'\d', '', report.get_summary())
+        m.update(hash_text.encode('utf-8'))
+        report.set_unique_id(m.hexdigest())
 
         report.add_label('unified-platform')
 

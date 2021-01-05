@@ -3,13 +3,14 @@
 This script is a sandbox for testing new sources
 """
 import logging
+import json
 
 from reporter.reporters import Jira
 from reporter.sources import KilledDatabaseQueriesSource, PHPErrorsSource, \
     DBQueryNoLimitSource, DBQueryErrorsSource, PHPAssertionsSource, PHPExceptionsSource, \
     PandoraErrorsSource, PHPSecuritySource, MercurySource, HeliosSource, AnemometerSource, \
     ChatLogsSource, BackendSource, PHPTriggeredSource, IndexDigestSource, ReportsPipeSource, \
-    PHPTypeErrorsSource, CeleryLogsSource, KubernetesBackoffSource
+    PHPTypeErrorsSource, CeleryLogsSource, KubernetesBackoffSource, UCPErrorsSource
 
 from reporter.classifier import Classifier
 
@@ -71,8 +72,14 @@ classifier = Classifier()
 
 #reports += CeleryLogsSource().query(threshold=2)
 
-reports += KubernetesBackoffSource().query(threshold=2)
+#reports += KubernetesBackoffSource().query(threshold=2)
+
+reports += UCPErrorsSource(period=60).query(threshold=5)
 
 for report in reports:
     print(report)
+
+    if report.get_priority():
+        print("priority:" + json.dumps(report.get_priority()))
+
     print(classifier.classify(report))

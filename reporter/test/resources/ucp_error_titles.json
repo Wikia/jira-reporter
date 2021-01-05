@@ -1,0 +1,21 @@
+{
+	"unique_titles": [
+		"PHP Notice: Undefined property: StubObject::$mOutput in /extensions/fandom/Blogs/src/BlogTemplate.php on line 961",
+		"PHP Fatal Error: OOUI\\Exception: OOUI\\Theme::singleton was called with no singleton theme set. in /usr/wikia/slot1/current/src/vendor/oojs/oojs-ui/php/Theme.php:31",
+		"PHP Notice: Undefined index: X in /extensions/TippingOver/includes/WikiTooltips.php on line 538",
+		"PHP Notice: Undefined offset: N in /extensions/fandom/WikiaInYourLang/src/WikiaInYourLangService.php on line 83",
+		"PHP Notice: Trying to get property 'name' of non-object in /extensions/RSSPie/RSSPieHooks.php on line 221",
+		"PHP Warning: Illegal string offset 'title' in /extensions/fandom/Blogs/src/BlogTemplate.php on line 424",
+		"TypeError from line 20 of /extensions/fandom/FandomIncludes/src/Image/Image.php: Argument 4 passed to Fandom\\Includes\\Image\\Image::__construct() must be an instance of Fandom\\Includes\\Image\\ImageMetadata, null given, called in /usr/wikia/slot1/current/src/extensions/fandom/FandomIncludes/src/Image/Internal/DBImageRepository.php on line 221",
+		"PHP Notice: Undefined offset: N in /extensions/Cargo/includes/CargoSQLQuery.php on line 601",
+		"PHP Notice: Undefined index: X in /includes/libs/filebackend/FileBackend.php on line 1086",
+		"PHP Warning: Invalid argument supplied for foreach() in /includes/libs/filebackend/FileBackendStore.php on line 822",
+		"PHP Notice: Undefined index: X in /extensions/fandom/FandomIncludes/src/Image/Internal/DBImageRepository.php on line 221",
+		"PHP Warning: Mixed numeric and associative arrays are not supported in /extensions/fandom/FandomIncludes/src/Util/MustacheService.php on line 162",
+		"PHP Warning: Declaration of SpecialCategorySkins::execute(?string $path = NULL) should be compatible with SpecialPage::execute($subPage) in /extensions/CategorySkins/specials/SpecialCategorySkins.php on line 0",
+		"PHP Notice: Undefined variable: title in /extensions/fandom/MercuryApi/src/MercuryApiController.php on line 390",
+		"Error from line 390 of /extensions/fandom/MercuryApi/src/MercuryApiController.php: Call to a member function isExternal() on null",
+		"PHP Notice: Undefined index: X in /extensions/fandom/Lightbox/LightboxController.php on line 208",
+		"PHP Warning: Illegal string offset 'ns' in /extensions/fandom/Blogs/src/BlogTemplate.php on line 424"
+	]
+}

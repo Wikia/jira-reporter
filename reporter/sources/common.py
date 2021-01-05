@@ -118,9 +118,11 @@ class Source(object):
                 continue
 
             # update the report with the "hash" generated previously via _normalize
-            m = hashlib.md5()
-            m.update(key.encode('utf-8'))
-            report.set_unique_id(m.hexdigest())
+            # also allow to override unique_id implementation by eg. Source classes
+            if not report.get_unique_id():
+                m = hashlib.md5()
+                m.update(key.encode('utf-8'))
+                report.set_unique_id(m.hexdigest())
 
             report.set_counter(item['cnt'])
             reports.append(report)

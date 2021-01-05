@@ -160,6 +160,10 @@ class Jira(object):
         """
         self._logger.info('Reporting "{}"'.format(report.get_summary()))
 
+        priority = report.get_priority()
+        if priority:
+            self._fields['default']['priority'] = priority
+
         # let's first check if the report is already in JIRA
         # use "hash" added to a ticket description
         try:
