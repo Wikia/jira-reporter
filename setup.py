@@ -19,7 +19,7 @@ setup(
         'pylint==2.6.0',
         'requests-oauthlib==1.3.0',
         'wikia-common-kibana==2.2.7',
-        'PyYAML==5.3.1',
+        'PyYAML==5.4',
     ],
     include_package_data=True,
 )
