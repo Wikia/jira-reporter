@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: jira-reporter
   labels:
-    team: core-platform
+    team: platform
 spec:
   schedule: "5 * * * *"
   successfulJobsHistoryLimit: 1
@@ -12,12 +12,12 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        team: core-platform
+        team: platform
     spec:
       template:
         metadata:
           labels:
-            team: core-platform
+            team: platform
         spec:
           serviceAccountName: k8s-pod
           initContainers:
