@@ -1,20 +1,23 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: k8s-pod
-  namespace: prod
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: jira-reporter
+  labels:
+    team: platform
 spec:
   schedule: "5 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
+    metadata:
+      labels:
+        team: platform
     spec:
       template:
+        metadata:
+          labels:
+            team: platform
         spec:
           serviceAccountName: k8s-pod
           initContainers:
