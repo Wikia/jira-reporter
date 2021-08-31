@@ -15,7 +15,7 @@ setup(
     author_email='macbre@wikia-inc.com',
     install_requires=[
         'jira==3.0a2',
-        'pytest==6.1.2',
+        'pytest==6.2.5',
         'pylint==2.6.0',
         'requests-oauthlib==1.3.0',
         'wikia-common-kibana==2.2.7',
