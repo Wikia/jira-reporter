@@ -55,7 +55,7 @@ class ClassifierTestClass(unittest.TestCase):
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 12)
 
     def test_classify_chat_error_report(self):
-        # https://wikia-inc.atlassian.net/browse/SUS-977
+        # https://fandom.atlassian.net/browse/SUS-977
         report = Report(
             summary='[Exception] HTTP request failed - ChatServerApiClient:makeRequest',
             description="""
@@ -80,7 +80,7 @@ h5. Backtrace
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 5)  # Chat
 
     def test_classify_CreatePage_error_report(self):
-        # https://wikia-inc.atlassian.net/browse/MAIN-7876
+        # https://fandom.atlassian.net/browse/MAIN-7876
         report = Report(
             summary='PHP Warning: Missing argument 1 for SpecialEditPage::execute(), called in /extensions/wikia/CreatePage/monobook/SpecialCreatePage.class.php on line 49 and defined in /extensions/wikia/CreatePage/monobook/SpecialEditPage.class.php on line 25',
             description="""
@@ -94,7 +94,7 @@ PHP Warning: Missing argument 1 for SpecialEditPage::execute(), called in /usr/w
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 6)  # CreatePage
 
     def test_classify_DPL_error_report(self):
-        # https://wikia-inc.atlassian.net/browse/ER-14593
+        # https://fandom.atlassian.net/browse/ER-14593
         report = Report(
             summary=r'[Wikia\Util\AssertionException] DatabaseMysqli::mysqlNumRows',
             description=r"""
@@ -128,7 +128,7 @@ h5. Backtrace
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 7)  # DPL
 
     def test_classify_CreateNewWiki_error_report(self):
-        # https://wikia-inc.atlassian.net/browse/SUS-974
+        # https://fandom.atlassian.net/browse/SUS-974
         report = Report(
             summary='[Exception] Wikia\CreateNewWiki\Tasks\TaskRunner::run task Wikia\CreateNewWiki\Tasks\ImportStarterData failed',
             description="""
@@ -153,7 +153,7 @@ h5. Backtrace
         assert self.classifier.classify(report) == (Classifier.PROJECT_MAIN, 8)  # CreateNewWiki
 
     def test_classify_LuaException_report(self):
-        # https://wikia-inc.atlassian.net/browse/SUS-2029
+        # https://fandom.atlassian.net/browse/SUS-2029
         report = Report(
             summary='[ScribuntoException] MWExceptionHandler::report',
             description="""

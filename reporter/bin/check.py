@@ -69,7 +69,7 @@ reports += HeliosSource().query(threshold=5)
 # @see https://kibana.wikia-inc.com/index.html#/dashboard/elasticsearch/Vigniette%20Thumb%20Verifier
 reports += VignetteThumbVerificationSource().query(threshold=5)
 
-# @see https://wikia-inc.atlassian.net/browse/PLATFORM-2180
+# @see https://fandom.atlassian.net/browse/PLATFORM-2180
 reports += AnemometerSource().query(threshold=0)
 
 # @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/Chat%20Server%20errors

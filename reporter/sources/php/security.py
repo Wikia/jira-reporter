@@ -92,7 +92,7 @@ h5. Backtrace
 *A [Cross-site request forgery|https://cwe.mitre.org/data/definitions/352.html] attack is possible here*!
 An attacker can make a request on behalf of a current Wikia user.
 
-Please refer to [documentation on Confluence|https://wikia-inc.atlassian.net/wiki/display/SEC/Cross-Site+Request+Forgery] on how to protect your code.
+Please refer to [documentation on Confluence|https://fandom.atlassian.net/wiki/display/SEC/Cross-Site+Request+Forgery] on how to protect your code.
 
 *Transaction*: {{{{{transaction}}}}}
 *Action performed*: {{{{{action_performed}}}}}

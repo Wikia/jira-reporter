@@ -27,7 +27,7 @@ h3. The Camel says "{{{{{full_message}}}}}"
     ELASTICSEARCH_INDEX_PREFIX = 'logstash-backend'
     LIMIT = 150000
 
-    # @see https://wikia-inc.atlassian.net/browse/SUS-3449
+    # @see https://fandom.atlassian.net/browse/SUS-3449
     ELASTICSEARCH_QUERY = '@message: "LB::error" AND @context.error: *'
 
     REPORT_LABEL = 'BackendErrors'
