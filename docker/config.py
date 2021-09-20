@@ -7,7 +7,7 @@ user = data['secret/app/prod/jira-reporter']['user_email']
 password = data['secret/app/prod/jira-reporter']['api_key']
 
 JIRA_CONFIG = {
-    'url':       'https://wikia-inc.atlassian.net',
+    'url':       'https://fandom.atlassian.net',
     'user':      user,
     'password':  password,
     'project':   'ER',

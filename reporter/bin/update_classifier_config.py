@@ -1,7 +1,7 @@
 """
 This maintenace script is used to update Component name to Component ID mapping for tickets classifier
 
-It uses https://wikia-inc.atlassian.net/rest/api/2/project/MAIN/components API call
+It uses https://fandom.atlassian.net/rest/api/2/project/MAIN/components API call
 
 Run it via "make update_classifier_config" from the base directory of this repository
 """

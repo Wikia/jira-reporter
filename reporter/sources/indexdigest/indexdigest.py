@@ -34,7 +34,7 @@ h6. Reported by {version} - https://github.com/macbre/index-digest#checks
 
     ELASTICSEARCH_INDEX_PREFIX = 'logstash-index-digest'
 
-    # @see https://wikia-inc.atlassian.net/browse/SUS-3566
+    # @see https://fandom.atlassian.net/browse/SUS-3566
     # https://github.com/macbre/index-digest#syslog
     ELASTICSEARCH_QUERY = 'report.type: *'
 
