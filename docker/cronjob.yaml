@@ -1,5 +1,5 @@
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: jira-reporter
@@ -29,7 +29,7 @@ spec:
             - name: ENV
               value: prod
             name: secrets
-            image: artifactory.wikia-inc.com/ops/init-vault:0.0.42
+            image: artifactory.wikia-inc.com/ops/init-vault:0.13
             imagePullPolicy: Always
             volumeMounts:
             - name: secrets-dir
