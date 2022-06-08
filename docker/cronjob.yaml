@@ -34,6 +34,14 @@ spec:
             volumeMounts:
             - name: secrets-dir
               mountPath: /var/lib/secrets
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
           containers:
           - name: jira-reporter
             image: artifactory.wikia-inc.com/sus/jira-reporter:latest
@@ -46,6 +54,14 @@ spec:
                 memory: 3000Mi
               requests:
                 memory: 2000Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
           volumes:
           - name: secrets-dir
             emptyDir:
