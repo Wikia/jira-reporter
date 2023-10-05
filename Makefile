@@ -62,14 +62,14 @@ vault:
 
 docker-image:
 	docker build --no-cache --rm \
-		--tag artifactory.wikia-inc.com/sus/jira-reporter:latest \
+		--tag artifactory.wikia-inc.com/sus/jira-reporter:e3c8988 \
 		--file docker/Dockerfile .
 
 docker-run:
-	docker run --volume "${pwd}/docker/secrets:/var/lib/secrets" --user=root --rm --entrypoint=/bin/sh -it artifactory.wikia-inc.com/sus/jira-reporter:latest
+	docker run --volume "${pwd}/docker/secrets:/var/lib/secrets" --user=root --rm --entrypoint=/bin/sh -it artifactory.wikia-inc.com/sus/jira-reporter:e3c8988
 
 docker-push:
-	docker push artifactory.wikia-inc.com/sus/jira-reporter:latest
+	docker push artifactory.wikia-inc.com/sus/jira-reporter:e3c8988
 
 cronjob-delete:
 	kubectl --context=${k8s_context} --namespace=${k8s_namespace} delete cronjob --ignore-not-found=true jira-reporter

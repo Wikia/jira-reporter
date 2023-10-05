@@ -44,7 +44,7 @@ spec:
                 type: RuntimeDefault
           containers:
           - name: jira-reporter
-            image: artifactory.wikia-inc.com/sus/jira-reporter:latest
+            image: artifactory.wikia-inc.com/sus/jira-reporter:e3c8988
             volumeMounts:
             - name: secrets-dir
               readOnly: true
