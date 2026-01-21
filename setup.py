@@ -17,7 +17,7 @@ setup(
         'jira==3.0a2',
         'pytest==6.1.2',
         'pylint==2.6.0',
-        'requests-oauthlib==1.3.0',
+        'requests-oauthlib==1.3.1',
         'wikia-common-kibana==2.2.7',
         'PyYAML==5.3.1',
     ],
