@@ -63,7 +63,7 @@ class PandoraErrorsSource(PandoraLogsSource):
         message = re.sub(r'\d+', 'N', message)
 
         # normalize URLs
-        # Exception purging https://service.fandom.com/user-attribute/user/5430694
+        # Exception purging https://services.fandom.com/user-attribute/user/5430694
         message = re.sub(r'https?://[^\s]+', '<URL>', message)
 
         # remove JSON
