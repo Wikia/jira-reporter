@@ -27,7 +27,7 @@ class PandoraErrorsSourceTestClass(unittest.TestCase):
         }) == 'Pandora-foo N-lib.foo-Service'
 
         assert self._source._normalize({
-            'rawMessage': 'Exception purging https://services.wikia.com/user-attribute/user/5430694',
+            'rawMessage': 'Exception purging https://services.fandom.com/user-attribute/user/5430694',
             'logger_name': 'lib.foo',
             'appname': 'Service'
         }) == 'Pandora-Exception purging <URL>-lib.foo-Service'
