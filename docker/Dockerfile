@@ -1,4 +1,4 @@
-FROM python:3.8.5-alpine
+FROM python:3.12.16-alpine
 
 ENV PIP_INDEX_URL=https://artifactory.wikia-inc.com/artifactory/api/pypi/pypi/simple
 
