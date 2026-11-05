@@ -11,7 +11,7 @@ persistent = no
 
 [MESSAGES CONTROL]
 # Messages to disable
-disable = star-args,too-few-public-methods,too-many-public-methods,too-many-arguments,abstract-method
+disable = too-few-public-methods,too-many-public-methods,too-many-arguments,abstract-method
 
 [REPORTS]
 # Colorize output

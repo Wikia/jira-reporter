@@ -15,9 +15,9 @@ setup(
     author_email='macbre@wikia-inc.com',
     packages=find_packages(include=['reporter', 'reporter.*']),
     install_requires=[
-        'jira==3.0a2',
-        'pytest==6.1.2',
-        'pylint==2.6.0',
+        'jira==3.10.5',
+        'pytest==9.2.0',
+        'pylint==4.1.3',
         'requests-oauthlib==1.3.0',
         'wikia-common-kibana==2.2.7',
         'PyYAML==6.0.1',
