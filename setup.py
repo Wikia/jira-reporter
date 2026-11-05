@@ -16,8 +16,8 @@ setup(
     packages=find_packages(include=['reporter', 'reporter.*']),
     install_requires=[
         'jira==3.10.5',
-        'pytest==6.1.2',
-        'pylint==2.6.0',
+        'pytest==9.2.0',
+        'pylint==4.1.3',
         'requests-oauthlib==1.3.0',
         'wikia-common-kibana==2.2.7',
         'PyYAML==6.0.1',
